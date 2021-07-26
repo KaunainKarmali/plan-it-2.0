@@ -1,7 +1,7 @@
 import Card, {
   Title,
   Description,
-  CloseIconBtn,
+  TaskCloseIconBtn,
   CardFooter,
   DateContainer,
   DateIconBtn,
@@ -19,24 +19,24 @@ const Task = (props) => {
       <Card>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <CloseIconBtn>
-          <i class="fas fa-times"></i>
-        </CloseIconBtn>
+        <TaskCloseIconBtn>
+          <i className="fas fa-times"></i>
+        </TaskCloseIconBtn>
 
         {/* Card Footer */}
         <CardFooter>
           <DateContainer>
             <DateIconBtn>
-              <i class="fas fa-calendar-alt" />
+              <i className="fas fa-calendar-alt" />
             </DateIconBtn>
             <DueDate>{due}</DueDate>
           </DateContainer>
           <Options>
             <DurationIconBtn>
-              <i class="fas fa-stopwatch" />
+              <i className="fas fa-stopwatch" />
             </DurationIconBtn>
             <EditIconBtn>
-              <i class="fas fa-edit" />
+              <i className="fas fa-edit" />
             </EditIconBtn>
           </Options>
         </CardFooter>

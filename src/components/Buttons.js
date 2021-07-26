@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
-import { black, grey1 } from "../variables/colours";
+import { black, blue3, grey1 } from "../variables/colours";
 import { smlSpace } from "../variables/spacing";
 
 const Button = styled.button`
@@ -20,6 +20,18 @@ export const IconButton = styled(Button)`
   &:hover,
   &:focus {
     color: ${grey1};
+  }
+`;
+
+export const CloseIconBtn = styled(IconButton)`
+  color: ${blue3};
+  font-size: 0.9rem;
+  margin: ${smlSpace};
+  right: ${smlSpace};
+
+  &:hover,
+  &:focus {
+    background-color: ${blue3};
   }
 `;
 

@@ -12,7 +12,7 @@ const Search = () => {
           <label className="sr-only">Search board</label>
           <SearchInput type="text" placeholder="Search board..." />
           <SearchIconBtn>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </SearchIconBtn>
         </SearchBar>
       </form>

@@ -14,8 +14,8 @@ const List = (props) => {
       <ListTitle list={list} />
       <TasksWrapper>
         <Tasks>
-          {tasks.map((task) => (
-            <Task task={task} />
+          {tasks.map((task, index) => (
+            <Task key={index} task={task} />
           ))}
         </Tasks>
       </TasksWrapper>

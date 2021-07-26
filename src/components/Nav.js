@@ -25,8 +25,8 @@ const Nav = () => {
   return (
     <NavWrapper>
       <ul>
-        {navLinks.map((navItem) => (
-          <NavLink name={navItem.name} link={navItem.link} />
+        {navLinks.map((navItem, index) => (
+          <NavLink key={index} name={navItem.name} link={navItem.link} />
         ))}
       </ul>
     </NavWrapper>

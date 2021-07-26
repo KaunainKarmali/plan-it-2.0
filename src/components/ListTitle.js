@@ -20,15 +20,15 @@ const ListTitle = (props) => {
     <ListTitleWrapper list={list}>
       <TitleContainer>
         <DragIconBtn>
-          <i class="fas fa-grip-vertical"></i>
+          <i className="fas fa-grip-vertical"></i>
         </DragIconBtn>
         <h2>{list}</h2>
       </TitleContainer>
       <AddIconBtn>
-        <i class="fas fa-plus"></i>
+        <i className="fas fa-plus"></i>
       </AddIconBtn>
       <OptionsIconBtn>
-        <i class="fas fa-ellipsis-h"></i>
+        <i className="fas fa-ellipsis-h"></i>
       </OptionsIconBtn>
     </ListTitleWrapper>
   );

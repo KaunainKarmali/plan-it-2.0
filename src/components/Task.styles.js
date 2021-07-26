@@ -1,7 +1,6 @@
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components/macro";
 import { stdBR } from "../variables/borders";
 import {
-  blue3,
   green3 as green4,
   grey1,
   grey4,
@@ -11,7 +10,7 @@ import {
   purple1,
 } from "../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
-import { IconButton } from "./Buttons";
+import { CloseIconBtn, IconButton } from "./Buttons";
 
 export const Title = styled.h3`
   font-size: 1.3rem;
@@ -26,20 +25,11 @@ export const Description = styled.p`
   margin-bottom: ${medSpace};
 `;
 
-export const CloseIconBtn = styled(IconButton)`
-  color: ${blue3};
-  font-size: 0.9rem;
-  position: absolute;
-  margin: ${smlSpace};
-  top: 0px;
-  right: ${smlSpace};
+export const TaskCloseIconBtn = styled(CloseIconBtn)`
   visibility: hidden;
   transition: none;
-
-  &:hover,
-  &:focus {
-    background-color: ${blue3};
-  }
+  position: absolute;
+  top: 0px;
 `;
 
 export const CardFooter = styled.div`
@@ -105,19 +95,19 @@ const Card = styled.div`
   padding: ${stdSpace};
 
   &:active
-    ${CloseIconBtn},
+    ${TaskCloseIconBtn},
     &:active
     ${DurationIconBtn},
     &:active
     ${EditIconBtn},
     &:hover
-    ${CloseIconBtn},
+    ${TaskCloseIconBtn},
     &:hover
     ${DurationIconBtn},
     &:hover
     ${EditIconBtn},
     &:focus-within
-    ${CloseIconBtn},
+    ${TaskCloseIconBtn},
     &:focus-within
     ${DurationIconBtn},
     &:focus-within
