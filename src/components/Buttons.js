@@ -1,7 +1,14 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
-import { black, blue3, grey1 } from "../variables/colours";
-import { smlSpace } from "../variables/spacing";
+import {
+  black,
+  blue1,
+  blue3,
+  blue4,
+  grey1,
+  white1,
+} from "../variables/colours";
+import { smlSpace, stdSpace } from "../variables/spacing";
 
 const Button = styled.button`
   border: none;
@@ -9,6 +16,21 @@ const Button = styled.button`
   border-radius: ${stdBR};
   padding: ${smlSpace};
   transition: 0.3s all linear;
+`;
+
+export const PrimaryButton = styled(Button)`
+  background-color: ${blue1};
+  padding: ${stdSpace};
+  color: ${blue1};
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid ${blue1};
+
+  &:hover,
+  &:active {
+    color: ${white1};
+    background-color: ${blue4};
+  }
 `;
 
 export const IconButton = styled(Button)`

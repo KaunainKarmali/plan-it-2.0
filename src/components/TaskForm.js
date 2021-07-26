@@ -1,32 +1,43 @@
 import styled, { css } from "styled-components/macro";
 import { useState } from "react";
-import {
-  black,
-  blue1,
-  blue2,
-  blue3,
-  green1,
-  grey1,
-  orange1,
-  orange2,
-  red1,
-  white1,
-} from "../variables/colours";
-import { getRGBvalue, getTodaysDate } from "../utils";
+import { blue1, blue2, red1, white1 } from "../variables/colours";
+import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
-import { white } from "jest-matcher-utils/node_modules/chalk";
-import Button, { CloseIconBtn } from "./Buttons";
+import Button, { CloseIconBtn, PrimaryButton } from "./Buttons";
+import {
+  Input,
+  InputContainer,
+  TextLabel,
+  Textarea,
+  Select,
+} from "./Inputs.styles";
+import { ModalInner, ModalOuter } from "./Modal.styles";
+import InputField from "./InputField";
+import TextareaField from "./TextareaField";
+import Dropdown from "./Dropdown";
 
 const TaskForm = () => {
   const today = getTodaysDate();
+
+  const priorityOptions = [
+    { value: "low", name: "Low" },
+    { value: "medium", name: "Medium" },
+    { value: "high", name: "High" },
+  ];
+
+  const listOptions = [
+    { value: "to do", name: "To do" },
+    { value: "doing", name: "Doing" },
+    { value: "done", name: "Done" },
+  ];
 
   // Tracks if the form inputs
   const [task, setTask] = useState({
     title: "",
     description: "",
-    priority: "",
-    list: "",
+    priority: "low",
+    list: "to do",
     dueDate: today,
     creationDate: today,
   });
@@ -82,12 +93,12 @@ const TaskForm = () => {
     }
   };
 
-  const handleReset = (e) => {
+  const handleReset = () => {
     setTask({
       title: "",
       description: "",
-      priority: "",
-      list: "",
+      priority: "low",
+      list: "to do",
       dueDate: today,
       creationDate: today,
     });
@@ -103,8 +114,8 @@ const TaskForm = () => {
   };
 
   return (
-    <Wrapper>
-      <FormWrapper>
+    <ModalOuter>
+      <ModalInner>
         <form action="submit">
           {/* Form header */}
           <FormHeader>
@@ -115,147 +126,98 @@ const TaskForm = () => {
           </FormHeader>
 
           {/* Form main */}
-          <FormMain>
-            <label htmlFor="title" className="sr-only">
-              Task title
-            </label>
-            <FormInput
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Task title..."
-              value={task.title}
-              onChange={handleChange}
-              isValid={isValid.title}
-            />
+          <FormMainWrapper>
+            <FormMain>
+              <InputField
+                type="text"
+                id="title"
+                name="title"
+                value={task.title}
+                onChange={handleChange}
+                isValid={isValid.title}
+                inputLength={task.title.length}
+                label="Task title"
+              />
+              <TextareaField
+                id="description"
+                name="description"
+                rows="5"
+                value={task.description}
+                onChange={handleChange}
+                isValid={isValid.description}
+                inputLength={task.description.length}
+                label="Description"
+              />
+              <DropdownContainer>
+                <Dropdown
+                  type="text"
+                  id="priority"
+                  name="priority"
+                  onChange={handleChange}
+                  isValid={isValid.priority}
+                  value={task.priority}
+                  options={priorityOptions}
+                  inputLength={task.priority.length}
+                  label="Priority"
+                />
 
-            <label htmlFor="description" className="sr-only">
-              Description
-            </label>
-            <Textarea
-              id="description"
-              name="description"
-              placeholder="Description..."
-              rows="5"
-              value={task.description}
-              onChange={handleChange}
-              isValid={isValid.description}
-            />
+                <Dropdown
+                  id="list"
+                  name="list"
+                  onChange={handleChange}
+                  isValid={isValid.list}
+                  value={task.list}
+                  options={listOptions}
+                  inputLength={task.list.length}
+                  label="List"
+                />
+              </DropdownContainer>
 
-            <label htmlFor="priority" className="sr-only">
-              Priority
-            </label>
-
-            <Select
-              type="text"
-              id="priority"
-              name="priority"
-              onChange={handleChange}
-              isValid={isValid.priority}
-            >
-              <option value="notSelected" selected disabled>
-                Select priority
-              </option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </Select>
-
-            <label htmlFor="list" className="sr-only">
-              List
-            </label>
-            <Select
-              type="text"
-              id="list"
-              name="list"
-              onChange={handleChange}
-              isValid={isValid.list}
-            >
-              <option value="notSelected" selected disabled>
-                Select a list
-              </option>
-              <option value="to do">To do</option>
-              <option value="doing">Doing</option>
-              <option value="done">Done</option>
-            </Select>
-
-            <label htmlFor="dueDate" className="sr-only">
-              Due date
-            </label>
-            <CalendarInput
-              type="date"
-              id="dueDate"
-              name="dueDate"
-              min={today}
-              value={task.dueDate}
-              onChange={handleChange}
-              isValid={isValid.dueDate}
-            />
-          </FormMain>
+              <InputField
+                type="date"
+                id="dueDate"
+                name="dueDate"
+                value={task.dueDate}
+                onChange={handleChange}
+                isValid={isValid.dueDate}
+                inputLength={task.dueDate.length}
+                label="Due date"
+                labelClass={"sr-only"}
+              />
+            </FormMain>
+          </FormMainWrapper>
 
           {/* Form footer */}
           <FormFooter>
             <ClearButton type="reset" onClick={handleReset}>
               Clear
             </ClearButton>
-            <SubmitButton type="submit" onClick={handleSubmit}>
+            <PrimaryButton type="submit" onClick={handleSubmit}>
               Create
-            </SubmitButton>
+            </PrimaryButton>
           </FormFooter>
         </form>
-      </FormWrapper>
-    </Wrapper>
+      </ModalInner>
+    </ModalOuter>
   );
 };
-
-const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(${getRGBvalue(black)}, 0);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-`;
-
-const FormWrapper = styled.div`
-  max-width: 80vw;
-  max-height: 80vh;
-  background-color: ${blue1};
-  color: ${white};
-  border-radius: ${stdBR};
-  padding: ${medSpace};
-  position: relative;
-`;
 
 const FormHeader = styled.div`
   margin-bottom: ${stdSpace};
 `;
 
-const FormMain = styled.div`
+const FormMainWrapper = styled.div`
   overflow-y: auto;
+  height: 55vh;
 
   /* Whole scrollbar */
   &::-webkit-scrollbar {
-    width: 5px;
-    height: 3px;
-    margin-left: 3px;
-    background-color: ${blue1};
-    border-radius: ${stdBR};
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    border-radius: ${stdBR};
+    width: 6px;
   }
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
+    height: 3px;
     background: ${blue2};
     border-radius: ${stdBR};
   }
@@ -265,13 +227,7 @@ const FormFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: ${stdSpace};
-  padding-top: ${stdSpace};
-`;
-
-const Title = styled.h3`
-  font-size: 2rem;
-  color: ${blue2};
-  margin-bottom: ${stdSpace};
+  margin-right: 5px;
 `;
 
 const TaskFormCloseIconBtn = styled(CloseIconBtn)`
@@ -289,72 +245,18 @@ const TaskFormCloseIconBtn = styled(CloseIconBtn)`
   }
 `;
 
-const FormInput = styled.input`
-  border: 2px solid ${blue1};
-  padding: ${smlSpace};
-  width: 100%;
-  margin-bottom: ${smlSpace};
-
-  ${({ isValid }) =>
-    isValid === false &&
-    css`
-      border: 2px solid ${red1};
-    `}
+const Title = styled.h3`
+  font-size: 2rem;
+  color: ${blue2};
+  margin-bottom: ${stdSpace};
 `;
 
-const Textarea = styled.textarea`
-  border: 2px solid ${blue1};
-  padding: ${smlSpace};
-
-  margin-bottom: ${smlSpace};
-  width: 100%;
-
-  ${({ isValid }) =>
-    isValid === false &&
-    css`
-      border: 2px solid ${red1};
-    `}
-`;
-
-const Select = styled.select`
-  border: 2px solid ${blue1};
-  padding: ${smlSpace};
-  margin-bottom: ${smlSpace};
-  width: 50%;
-
-  ${({ isValid }) =>
-    isValid === false &&
-    css`
-      border: 2px solid ${red1};
-    `}
-`;
-
-const CalendarInput = styled.input`
-  border: 2px solid ${blue1};
-  padding: ${smlSpace};
-  margin-bottom: ${smlSpace};
-  width: 100%;
-
-  ${({ isValid }) =>
-    isValid === false &&
-    css`
-      border: 2px solid ${red1};
-    `}
-`;
-
-const SubmitButton = styled(Button)`
-  background-color: ${blue2};
-  padding: ${stdSpace};
-  color: ${blue1};
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 2px solid ${blue2};
-
-  &:hover,
-  &:active {
-    color: ${blue2};
-    background-color: ${blue1};
-  }
+const DropdownContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  column-gap: 20px;
+  justify-content: space-between;
 `;
 
 const ClearButton = styled(Button)`
@@ -371,6 +273,10 @@ const ClearButton = styled(Button)`
     color: ${blue1};
     background-color: ${blue2};
   }
+`;
+
+const FormMain = styled.div`
+  margin-right: 5px;
 `;
 
 export default TaskForm;
