@@ -4,19 +4,22 @@ import { black, grey2, grey3 } from "../variables/colours";
 import { stdSpace } from "../variables/spacing";
 import ListTitle from "./ListTitle";
 import Task from "./Task";
-import tasks from "../dummyData/tasks";
+import dummyTasks from "../dummyData/tasks";
 
 const List = (props) => {
-  const { list } = props;
+  const { list, tasks } = props;
+
+  console.log(tasks);
 
   return (
     <ListWrapper>
       <ListTitle list={list} />
       <TasksWrapper>
         <Tasks>
-          {tasks.map((task, index) => (
-            <Task key={index} task={task} />
-          ))}
+          {tasks &&
+            tasks.map((task) => (
+              <Task key={task.key} taskId={task.key} task={task.value} />
+            ))}
         </Tasks>
       </TasksWrapper>
     </ListWrapper>

@@ -22,7 +22,7 @@ const TextareaField = (props) => {
         row="5"
         onChange={onChange}
         isValid={isValid}
-        value={value.toLowerCase()}
+        value={value}
         className={inputClass}
       />
       <TextLabel htmlFor={id} inputLength={inputLength} className={labelClass}>

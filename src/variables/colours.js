@@ -7,6 +7,7 @@ export const grey1 = "rgb(20, 20, 20)";
 export const grey2 = "rgb(51, 51, 51)";
 export const grey3 = "rgb(128, 129, 135)";
 export const grey4 = "rgb(219, 237, 243)";
+export const grey5 = "rgb(245, 245, 245)";
 
 export const blue1 = "rgb(54, 79, 107)";
 export const blue2 = "rgb(63, 193, 201)";

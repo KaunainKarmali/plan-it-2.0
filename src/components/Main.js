@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import firebase from "firebase";
 import styled from "styled-components";
 import { white2 } from "../variables/colours";
 import List from "./List";
@@ -7,6 +9,30 @@ import { stdSpace } from "../variables/spacing";
 
 const Main = () => {
   const lists = ["to do", "doing", "done"];
+  const [tasksByList, setTasksByList] = useState([]);
+
+  useEffect(() => {
+    const dbRef = firebase.database().ref("/tasks");
+    dbRef.on("value", (response) => {
+      const data = response.val();
+
+      const tempTasksByList = {};
+
+      // Organize the data retrieved into an object with each property being a list of tasks
+      for (const key in data) {
+        const list = data[key].list;
+        const taskObj = { key: key, value: data[key] };
+
+        if (list in tempTasksByList) {
+          tempTasksByList[list].push(taskObj);
+        } else {
+          tempTasksByList[list] = [taskObj];
+        }
+      }
+
+      setTasksByList(tempTasksByList);
+    });
+  }, []);
 
   return (
     <MainWrapper>
@@ -16,7 +42,7 @@ const Main = () => {
       <ListsWrapper>
         <Lists>
           {lists.map((list, index) => (
-            <List key={index} list={list} />
+            <List key={index} list={list} tasks={tasksByList[list]} />
           ))}
         </Lists>
       </ListsWrapper>

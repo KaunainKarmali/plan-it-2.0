@@ -54,6 +54,8 @@ const defaultInputStyle = css`
   &:active {
     outline: 0;
     border-color: ${blue2};
+    border-width: 2px;
+    padding: calc(${paddingY} - 1px) calc(${paddingX} - 1px);
   }
 `;
 

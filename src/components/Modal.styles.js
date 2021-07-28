@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { getRGBvalue } from "../utils";
 import { black, white1 } from "../variables/colours";
-import { medSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
+import { tablet, mobile } from "../variables/screen";
 
 export const ModalOuter = styled.div`
   position: fixed;
@@ -15,17 +15,26 @@ export const ModalOuter = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(${getRGBvalue(black)}, 0.8);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 `;
 
 export const ModalInner = styled.div`
   width: 80vw;
   max-width: 800px;
-  height: 85vh;
+  max-height: 85vh;
   background-color: ${white1};
   color: ${white1};
   border-radius: ${stdBR};
   padding: 30px 50px;
   position: relative;
+
+  @media (max-width: ${tablet}) {
+    width: 90vw;
+    max-height: 90vh;
+  }
+
+  @media (max-width: ${mobile}) {
+    padding: 20px 30px;
+  }
 `;

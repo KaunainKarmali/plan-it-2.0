@@ -28,7 +28,7 @@ const Dropdown = (props) => {
         value={value.toLowerCase()}
         className={selectClass}
       >
-        <option value="" disabled optionClass={optionClass}>
+        <option value="" disabled className={optionClass}>
           {label}
         </option>
         {options.map((option, index) => {
@@ -36,18 +36,14 @@ const Dropdown = (props) => {
             <option
               key={index}
               value={option.value.toLowerCase()}
-              optionClass={optionClass}
+              className={optionClass}
             >
               {option.name}
             </option>
           );
         })}
       </Select>
-      <TextLabel
-        htmlFor={id}
-        inputLength={inputLength}
-        optionClass={labelClass}
-      >
+      <TextLabel htmlFor={id} inputLength={inputLength} className={labelClass}>
         {label}
       </TextLabel>
     </InputContainer>

@@ -22,7 +22,7 @@ const InputField = (props) => {
         type={type}
         id={id}
         name={name}
-        value={value.toLowerCase()}
+        value={value}
         onChange={onChange}
         min={min}
         isValid={isValid}

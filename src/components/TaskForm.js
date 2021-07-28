@@ -1,23 +1,22 @@
-import styled, { css } from "styled-components/macro";
-import { useState } from "react";
-import { blue1, blue2, red1, white1 } from "../variables/colours";
+import styled from "styled-components/macro";
+import { useState, useEffect, useRef } from "react";
+import firebase from "../firebase";
+import { v4 as uuidv4 } from "uuid";
+import { blue1, white1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
-import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
-import Button, { CloseIconBtn, PrimaryButton } from "./Buttons";
-import {
-  Input,
-  InputContainer,
-  TextLabel,
-  Textarea,
-  Select,
-} from "./Inputs.styles";
+import { stdSpace } from "../variables/spacing";
+import { CloseIconBtn, PrimaryButton, SecondaryButton } from "./Buttons";
 import { ModalInner, ModalOuter } from "./Modal.styles";
 import InputField from "./InputField";
 import TextareaField from "./TextareaField";
 import Dropdown from "./Dropdown";
+import { mobile, tablet } from "../variables/screen";
 
-const TaskForm = () => {
+const TaskForm = (props) => {
+  const { openTask, setOpenTask, editTask, setEditTask, taskObj, taskId } =
+    props;
+
   const today = getTodaysDate();
 
   const priorityOptions = [
@@ -52,6 +51,19 @@ const TaskForm = () => {
     creationDate: true,
   });
 
+  // Hold dbref between re-renders
+  const dbRef = useRef(null);
+
+  useEffect(() => {
+    // Create reference to firebase db on mount
+    dbRef.current = firebase.database().ref("tasks/");
+
+    // Set task if its an edit operation
+    if (editTask) {
+      setTask(taskObj);
+    }
+  }, []);
+
   // Update state on changes to form element
   const handleChange = (e) => {
     const name = e.target.name;
@@ -84,12 +96,30 @@ const TaskForm = () => {
     }
 
     // Update validation state if errors are found, otherwise submit form
-    if (validationErrors.length !== 0) {
+    if (Object.keys(validationErrors).length !== 0) {
       setIsValid({ ...isValid, ...validationErrors });
-      console.log();
     } else {
-      // submit
-      console.log("no errors found");
+      // Create a new task if its a new task
+      if (openTask) {
+        // Submit to firebase
+        const newRef = dbRef.current.push();
+        newRef.set(task, (error) => {
+          if (error) {
+            // TODO: Error handling if data is not saved, create prompt to user
+          } else {
+            // Reset form and states after submit
+            handleReset();
+          }
+        });
+      }
+
+      // update the existing task on firebase
+      else {
+        const response = dbRef.current.child(taskId).update(task);
+        response.then(() => {
+          handleReset();
+        });
+      }
     }
   };
 
@@ -113,14 +143,20 @@ const TaskForm = () => {
     });
   };
 
+  const handleClose = (e) => {
+    e.preventDefault();
+    openTask && setOpenTask(false);
+    editTask && setEditTask(false);
+  };
+
   return (
     <ModalOuter>
       <ModalInner>
         <form action="submit">
           {/* Form header */}
           <FormHeader>
-            <Title>Create a new task</Title>
-            <TaskFormCloseIconBtn>
+            <Title>{editTask ? "Edit task" : "Create a new task"}</Title>
+            <TaskFormCloseIconBtn onClick={handleClose}>
               <i className="fas fa-times"></i>
             </TaskFormCloseIconBtn>
           </FormHeader>
@@ -182,18 +218,19 @@ const TaskForm = () => {
                 isValid={isValid.dueDate}
                 inputLength={task.dueDate.length}
                 label="Due date"
-                labelClass={"sr-only"}
               />
             </FormMain>
           </FormMainWrapper>
 
           {/* Form footer */}
           <FormFooter>
-            <ClearButton type="reset" onClick={handleReset}>
-              Clear
-            </ClearButton>
+            <ButtonContainer>
+              <SecondaryButton type="reset" onClick={handleReset}>
+                Clear
+              </SecondaryButton>
+            </ButtonContainer>
             <PrimaryButton type="submit" onClick={handleSubmit}>
-              Create
+              {editTask ? "Edit" : "Create"}
             </PrimaryButton>
           </FormFooter>
         </form>
@@ -208,7 +245,7 @@ const FormHeader = styled.div`
 
 const FormMainWrapper = styled.div`
   overflow-y: auto;
-  height: 55vh;
+  max-height: 55vh;
 
   /* Whole scrollbar */
   &::-webkit-scrollbar {
@@ -218,37 +255,54 @@ const FormMainWrapper = styled.div`
   /* Handle */
   &::-webkit-scrollbar-thumb {
     height: 3px;
-    background: ${blue2};
+    background: ${blue1};
     border-radius: ${stdBR};
   }
 `;
 
 const FormFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  text-align: right;
   margin-top: ${stdSpace};
   margin-right: 5px;
+
+  @media (max-width: ${mobile}) {
+    text-align: center;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: inline-block;
+  margin-right: 20px;
 `;
 
 const TaskFormCloseIconBtn = styled(CloseIconBtn)`
   background-color: transparent;
-  color: ${blue2};
+  color: ${blue1};
   position: absolute;
-  margin: ${medSpace};
+  margin: 30px 50px;
+
   top: 0;
   right: 0;
 
   &:hover,
   &:focus {
-    color: ${blue1};
-    background-color: ${blue2};
+    color: ${white1};
+    background-color: ${blue1};
+  }
+
+  @media (max-width: ${mobile}) {
+    margin: 20px 30px;
   }
 `;
 
 const Title = styled.h3`
   font-size: 2rem;
-  color: ${blue2};
+  color: ${blue1};
   margin-bottom: ${stdSpace};
+
+  @media (max-width: ${mobile}) {
+    font-size: 1.5rem;
+  }
 `;
 
 const DropdownContainer = styled.div`
@@ -257,21 +311,10 @@ const DropdownContainer = styled.div`
   grid-template-rows: 1fr;
   column-gap: 20px;
   justify-content: space-between;
-`;
 
-const ClearButton = styled(Button)`
-  background-color: ${blue1};
-  padding: ${stdSpace};
-  color: ${blue2};
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 2px solid ${blue2};
-  margin-right: ${medSpace};
-
-  &:hover,
-  &:active {
-    color: ${blue1};
-    background-color: ${blue2};
+  @media (max-width: ${tablet}) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr;
   }
 `;
 
