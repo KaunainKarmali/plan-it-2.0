@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { stdBR } from "../variables/borders";
-import { grey1, white1, blue3, blue2, grey4 } from "../variables/colours";
+import { grey1, white1, blue2, grey4 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { IconButton } from "./Buttons";
 

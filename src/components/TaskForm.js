@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
 import { useState, useEffect, useRef } from "react";
 import firebase from "../firebase";
-import { v4 as uuidv4 } from "uuid";
 import { blue1, white1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
@@ -62,7 +61,7 @@ const TaskForm = (props) => {
     if (editTask) {
       setTask(taskObj);
     }
-  }, []);
+  }, [editTask, taskObj]);
 
   // Update state on changes to form element
   const handleChange = (e) => {

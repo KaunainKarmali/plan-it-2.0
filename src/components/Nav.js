@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
-import { black, grey1, grey2 } from "../variables/colours";
+import { black, grey1 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { navWidth } from "../variables/widths";
 import NavLink from "./NavLink";
-import Logo from "./Logo";
 
 const Nav = () => {
   const navLinks = [

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import firebase from "../firebase";
 import { black, blue1, grey3, grey4, grey5 } from "../variables/colours";
@@ -18,7 +18,7 @@ const DeleteConfirmation = (props) => {
   useEffect(() => {
     // Create reference to firebase db on mount
     dbRef.current = firebase.database().ref("tasks/" + taskId);
-  }, []);
+  }, [taskId]);
 
   const handleDeleteClick = () => {
     dbRef.current.remove();

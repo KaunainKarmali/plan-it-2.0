@@ -23,7 +23,7 @@ const Timer = () => {
   const [isCounting, setIsCounting] = useContext(TimerContext);
 
   // Tracks the newest task Id to track
-  const [counterId, setCounterId] = useContext(CounterIdContext);
+  const [counterId] = useContext(CounterIdContext);
 
   // Tracks the task Id that is currently being tracked -> it will be an empty string if nothing is being tracked
   const [taskId, setTaskId] = useState("");

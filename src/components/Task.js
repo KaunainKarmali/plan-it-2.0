@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import CounterIdContext from "../contexts/CounterIdContext";
 import TimerContext from "../contexts/TimerContext";
-import firebase from "../firebase";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Card, {
   Title,

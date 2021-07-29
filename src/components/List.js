@@ -4,7 +4,6 @@ import { black, grey2, grey3 } from "../variables/colours";
 import { stdSpace } from "../variables/spacing";
 import ListTitle from "./ListTitle";
 import Task from "./Task";
-import dummyTasks from "../dummyData/tasks";
 
 const List = (props) => {
   const { list, tasks } = props;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { blue1, grey1, white2 } from "../variables/colours";
+import { grey1, white2 } from "../variables/colours";
 import { footerHeight } from "../variables/heights";
 import { stdSpace } from "../variables/spacing";
 import { FooterAnchor } from "./Anchor";

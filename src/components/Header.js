@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { headerHeight } from "../variables/heights";
 import Logo from "./Logo";
-import Nav from "./Nav";
 
 const Header = () => {
   return (
