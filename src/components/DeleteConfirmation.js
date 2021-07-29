@@ -21,8 +21,6 @@ const DeleteConfirmation = (props) => {
   }, []);
 
   const handleDeleteClick = () => {
-    console.log("delete task");
-    console.log(taskId);
     dbRef.current.remove();
     setDeleteTask(false);
   };

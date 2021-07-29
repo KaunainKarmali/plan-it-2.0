@@ -9,8 +9,6 @@ import dummyTasks from "../dummyData/tasks";
 const List = (props) => {
   const { list, tasks } = props;
 
-  console.log(tasks);
-
   return (
     <ListWrapper>
       <ListTitle list={list} />

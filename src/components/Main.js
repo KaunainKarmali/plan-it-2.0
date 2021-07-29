@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
 import { white2 } from "../variables/colours";
@@ -6,6 +6,9 @@ import List from "./List";
 import Search from "./Search";
 import { footerHeight, headerHeight, searchHeight } from "../variables/heights";
 import { stdSpace } from "../variables/spacing";
+import TimerContext from "../contexts/TimerContext";
+import Timer from "./Timer";
+import CounterIdContext from "../contexts/CounterIdContext";
 
 const Main = () => {
   const lists = ["to do", "doing", "done"];
@@ -34,19 +37,27 @@ const Main = () => {
     });
   }, []);
 
+  const [isCounting, setIsCounting] = useState(false);
+  const [counterId, setCounterId] = useState("");
+
   return (
-    <MainWrapper>
-      <SearchWrapper>
-        <Search />
-      </SearchWrapper>
-      <ListsWrapper>
-        <Lists>
-          {lists.map((list, index) => (
-            <List key={index} list={list} tasks={tasksByList[list]} />
-          ))}
-        </Lists>
-      </ListsWrapper>
-    </MainWrapper>
+    <TimerContext.Provider value={[isCounting, setIsCounting]}>
+      <CounterIdContext.Provider value={[counterId, setCounterId]}>
+        <MainWrapper>
+          <SearchWrapper>
+            <Search />
+          </SearchWrapper>
+          <ListsWrapper>
+            <Lists>
+              {lists.map((list, index) => (
+                <List key={index} list={list} tasks={tasksByList[list]} />
+              ))}
+            </Lists>
+          </ListsWrapper>
+          {isCounting && <Timer />}
+        </MainWrapper>
+      </CounterIdContext.Provider>
+    </TimerContext.Provider>
   );
 };
 

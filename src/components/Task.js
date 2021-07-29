@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import CounterIdContext from "../contexts/CounterIdContext";
+import TimerContext from "../contexts/TimerContext";
 import firebase from "../firebase";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Card, {
@@ -21,12 +23,38 @@ const Task = (props) => {
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
+  const [isCounting, setIsCounting] = useContext(TimerContext);
+  const [counterId, setCounterId] = useContext(CounterIdContext);
+
   const handleEditClick = () => {
     setEditTask(true);
   };
 
   const handleDeleteClick = () => {
     setDeleteTask(true);
+  };
+
+  const handleTimerClick = () => {
+    // Scenario 1: Counter is off and user is turning it on
+    if (!isCounting) {
+      setIsCounting(true);
+      setCounterId(taskId);
+    }
+
+    // Scenario 2 / 3: Counter is turned on
+    else if (isCounting) {
+      // Scenario 2: counter is on and user is clicking the same button to toggle it off
+      if (taskId === counterId) {
+        setIsCounting(false);
+      }
+
+      // Scenario 3: counter is on and user is clicking a different button to transfer the counter
+      else {
+        // Turn off the counter to save the old task's counter
+        setIsCounting(true);
+        setCounterId(taskId);
+      }
+    }
   };
 
   return (
@@ -47,7 +75,7 @@ const Task = (props) => {
             <DueDate>{due}</DueDate>
           </DateContainer>
           <Options>
-            <DurationIconBtn>
+            <DurationIconBtn onClick={handleTimerClick}>
               <i className="fas fa-stopwatch" />
             </DurationIconBtn>
             <EditIconBtn onClick={handleEditClick}>
