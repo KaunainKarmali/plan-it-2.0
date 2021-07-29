@@ -18,7 +18,7 @@ import TaskForm from "./TaskForm";
 
 const Task = (props) => {
   const { task, taskId } = props;
-  const { title, description, due } = task;
+  const { title, description, dueDate } = task;
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
@@ -71,7 +71,7 @@ const Task = (props) => {
             <DateIconBtn>
               <i className="fas fa-calendar-alt" />
             </DateIconBtn>
-            <DueDate>{due}</DueDate>
+            <DueDate>{dueDate}</DueDate>
           </DateContainer>
           <Options>
             <DurationIconBtn onClick={handleTimerClick}>

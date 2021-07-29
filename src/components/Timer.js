@@ -42,6 +42,8 @@ const Timer = () => {
   useEffect(() => {
     // Start tracking if counter is turned on and there is a new task to track
     if (isCounting) {
+      console.log(taskId);
+
       // Scenario 2: counter is on and user is clicking a different button to transfer the counter
       if (taskId !== "" && taskId !== counterId) {
         // Save old counter
