@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { black } from "../variables/colours";
-import { footerHeight, headerHeight } from "../variables/heights";
+import { footerHeight } from "../variables/heights";
 import { navWidth } from "../variables/widths";
 
 const Wrapper = styled.div`

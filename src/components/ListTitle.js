@@ -9,7 +9,6 @@ import {
   orange1,
   purple1,
   red1,
-  white2,
 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { IconButton } from "./Buttons";

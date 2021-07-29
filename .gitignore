@@ -24,3 +24,6 @@ yarn-error.log*
 
 # planning folder
 /planning
+
+# dummy data
+./src/dummyData

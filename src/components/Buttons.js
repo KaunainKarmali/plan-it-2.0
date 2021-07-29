@@ -1,15 +1,7 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
-import {
-  black,
-  blue1,
-  blue3,
-  blue4,
-  blue5,
-  grey1,
-  white1,
-} from "../variables/colours";
-import { smlSpace, stdSpace } from "../variables/spacing";
+import { blue1, blue3, blue4, grey1, white1 } from "../variables/colours";
+import { smlSpace } from "../variables/spacing";
 import { getRGBvalue } from "../utils";
 
 const Button = styled.button`
