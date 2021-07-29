@@ -1,7 +1,18 @@
+import Wrapper from "./components/Wrapper";
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Footer from "./components/Footer";
+import Nav from "./components/Nav";
+
 const App = () => {
   return (
-    <div className="App">
-      <h1>Hello</h1>
+    <div>
+      <Wrapper>
+        <Header />
+        <Nav />
+        <Main />
+      </Wrapper>
+      <Footer />
     </div>
   );
 };
