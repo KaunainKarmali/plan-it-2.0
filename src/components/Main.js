@@ -61,14 +61,10 @@ const MainWrapper = styled.main`
   grid-area: main;
   color: ${white2};
   padding: ${stdSpace};
-
-  @media (max-width: 1000px) {
-  }
 `;
 
 const ListsWrapper = styled.section`
   display: grid;
-  overflow: auto;
 `;
 
 const Lists = styled.ul`
@@ -76,13 +72,11 @@ const Lists = styled.ul`
   grid-template-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
-  max-height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px);
 
   @media (max-width: 1000px) {
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 1fr;
     row-gap: 10px;
-    max-height: none;
   }
 `;
 

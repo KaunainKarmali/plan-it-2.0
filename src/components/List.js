@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
 import { black, grey2, grey3 } from "../variables/colours";
+import { footerHeight, headerHeight } from "../variables/heights";
 import { stdSpace } from "../variables/spacing";
 import { tabletWidthLrg } from "../variables/widths";
 import ListTitle from "./ListTitle";
@@ -39,6 +40,7 @@ const Tasks = styled.ul`
 
 const TasksWrapper = styled.div`
   overflow: auto;
+  height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px - 81px);
 
   @media (max-width: ${tabletWidthLrg}) {
     max-height: 50vh;
