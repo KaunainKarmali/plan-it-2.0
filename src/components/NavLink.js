@@ -1,4 +1,4 @@
-import { NavAnchor } from "./Anchor";
+import { NavAnchor } from "./Anchor.styles";
 
 const NavLink = (props) => {
   const { link, name } = props;

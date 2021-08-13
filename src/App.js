@@ -1,4 +1,4 @@
-import Wrapper from "./components/Wrapper";
+import Wrapper from "./components/Wrapper.styles";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
