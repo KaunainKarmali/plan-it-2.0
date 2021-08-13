@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { stdBR } from "../variables/borders";
 import { black, grey2, grey3 } from "../variables/colours";
 import { stdSpace } from "../variables/spacing";
+import { tabletWidthLrg } from "../variables/widths";
 import ListTitle from "./ListTitle";
 import Task from "./Task";
 
@@ -28,28 +29,6 @@ const ListWrapper = styled.li`
   border-radius: ${stdBR};
   padding: ${stdSpace};
   border: 2px solid ${grey2};
-
-  overflow: auto;
-
-  /* Whole scrollbar */
-  &::-webkit-scrollbar {
-    width: 5px;
-    height: 3px;
-    margin-left: 3px;
-    background-color: ${black};
-    border-radius: ${stdBR};
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    border-radius: ${stdBR};
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: ${grey3};
-    border-radius: ${stdBR};
-  }
 `;
 
 const Tasks = styled.ul`
@@ -58,6 +37,12 @@ const Tasks = styled.ul`
   row-gap: 5px;
 `;
 
-const TasksWrapper = styled.div``;
+const TasksWrapper = styled.div`
+  overflow: auto;
+
+  @media (max-width: ${tabletWidthLrg}) {
+    max-height: 50vh;
+  }
+`;
 
 export default List;

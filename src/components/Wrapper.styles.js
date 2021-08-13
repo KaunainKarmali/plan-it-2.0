@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { black } from "../variables/colours";
 import { footerHeight } from "../variables/heights";
 import { navWidth } from "../variables/widths";
+import { tabletWidthLrg } from "../variables/widths";
 
 const Wrapper = styled.div`
   display: grid;
@@ -10,6 +11,11 @@ const Wrapper = styled.div`
   grid-template-areas: "header nav" "main nav";
   min-height: calc(100vh - ${footerHeight});
   background: ${black};
+
+  @media (max-width: ${tabletWidthLrg}) {
+    grid-template-rows: auto;
+    grid-template-areas: "header header" "main main";
+  }
 `;
 
 export default Wrapper;
