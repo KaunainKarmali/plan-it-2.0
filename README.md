@@ -16,12 +16,12 @@ The following key features exist:
 
 ### Project status
 
-While this project is functional, it is a re-factored version of the original planIt app and I am working on migrating additional key functionalities. Therefore, this project is currently in development. 
+While this project is functional, it is a re-factored version of the original planIt (version 1) app, and I am working on migrating additional key functionalities. Therefore, this project is currently in development. 
 
 Currently working on the following features:
 * Shifting away from firebase and migrating the backend functionality from version 1.0
 * Migrating the functionality for users to have their task board
-* Migrating the funtionality to create multiple projects
+* Migrating the functionality to create multiple projects
 * Improving site responsiveness
 
 ## Getting started
@@ -52,13 +52,13 @@ The following tech stack was used in the development of planIt:
 
 ### How I got started
 
-This project began as a to-do list in jQuery, then evolved into an app identical to Google's Keep app, and now has been transformed into a Trello-like project management app. planIt (version 1) project goals included learning how to build a full stack application by incorporating new technologies including Node, Express, and Mongo. This repo is for planIt (version 2), and its project goals include re-factoring key functionality from version 1.0, while improving on code quality. This includes, but is not limited to, incorporating best practices, improving responsiveness and making the site more accessible. These are all practices I learned since making version 1.0. 
+This project began as a to-do list in jQuery, then evolved into an app identical to Google's Keep app, and now has been transformed into a Trello-like project management app. planIt (version 1) project goals included learning how to build a full stack application by incorporating new technologies including Node, Express, and Mongo. This repo is for planIt (version 2), and its project goals include re-factoring key functionality from version 1.0, while improving on code quality. This includes, but is not limited to, incorporating best practices, improving responsiveness, and making the site more accessible. These are all practices I learned since making version 1.0. 
 
 ### The inspiration and journey of planIt
 
 While building planIt (version 1), I was working at Ernst and Young in a client-facing role that requires working on multiple projects simultaneously. In this role, we are required to submit timesheets on a weekly basis for client billings. When time sheeting at the end of each week, I frequently ran into the dilemma of trying to recall how much time I spent on a task. This was the inspiration behind planIt, where users can track tasks by project and how much time was spent on tasks.
 
-My technical challenge for planIt (version 2) was around making incremental decisions regarding what and how to re-factor key functionality from version 1.0 while researching and incorporating coding / accessibility best practices as I work to improve code quality. These incremental decisions have resulted in incorporating Styled Components to build my own custom components instead of relying on material-UI library, as well as breaking down components into smaller pieces in order to improve future scalability.  
+My technical challenge for planIt (version 2) was around making incremental decisions regarding what and how to re-factor key functionality from version 1.0 while researching and incorporating coding / accessibility best practices as I work to improve code quality. These incremental decisions have resulted in incorporating Styled Components to build my own custom components instead of relying on material-UI library, as well as breaking down components into smaller pieces to improve future scalability.  
 
 Refer to the README of planIt (version 1) [here](https://github.com/KaunainKarmali/planIt/tree/production) for technical challenges in version 1. 
 
@@ -68,7 +68,7 @@ I am currently working on developing version 2.0 of planIt using my own custom c
 
 ## Contribute
 
-Looking for contributors to improve this software's functionality for free users. I would love to hear from you, if you are interested!
+Looking for contributors to improve this software's functionality for free users. I would love to hear from you if you are interested!
 
 ## Licence
 
