@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# planIt (version 2.0)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
 
-## Available Scripts
+### Description
 
-In the project directory, you can run:
+planIt is a Trello inspired project management tool designed for service-professionals (e.g. Freelancers, Developers, Accountants, Lawyers etc.). Its purpose is to help organize tasks and deliverables by project, as well as track time. You can access the live app [here](https://just-plan-it.netlify.app/).
 
-### `npm start`
+This is a re-factored version of planIt (version 1.0). The original version's repo can be found [here](https://github.com/KaunainKarmali/planIt/tree/production) and the live version can be accessed [here](https://plan-it-v1.netlify.app/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Key features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The following key features exist:
+* Create, edit, and delete multiple tasks with deadlines
+* Track time spent on each task
 
-### `npm test`
+### Project status
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+While this project is functional, it is a re-factored version of the original planIt app and I am working on migrating additional key functionalities. Therefore, this project is currently in development. 
 
-### `npm run build`
+Currently working on the following features:
+* Shifting away from firebase and migrating the backend functionality from version 1.0
+* Migrating the functionality for users to have their task board
+* Migrating the funtionality to create multiple projects
+* Improving site responsiveness
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Begin using the app by performing the following:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone down this repository. You will need `node` or `nodemon` and `npm` installed globally on your machine.
 
-### `npm run eject`
+2. Begin running the app in your terminal
+  * Run `npm i` to install dependencies
+  * Run `npm start` while in the root folder
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. To use the app, go to `localhost:3000` on your browser
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Technology used
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The following tech stack was used in the development of planIt:
+* HTML5
+* CSS
+* JavaScript (ES6)
+* React
+* Node JS
+* Express
+* MongoDB
+* Material-UI library
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Reflection
 
-## Learn More
+### How I got started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project began as a to-do list in jQuery, then evolved into an app identical to Google's Keep app, and now has been transformed into a Trello-like project management app. planIt (version 1) project goals included learning how to build a full stack application by incorporating new technologies including Node, Express, and Mongo. This repo is for planIt (version 2), and its project goals include re-factoring key functionality from version 1.0, while improving on code quality. This includes, but is not limited to, incorporating best practices, improving responsiveness and making the site more accessible. These are all practices I learned since making version 1.0. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### The inspiration and journey of planIt
 
-### Code Splitting
+While building planIt (version 1), I was working at Ernst and Young in a client-facing role that requires working on multiple projects simultaneously. In this role, we are required to submit timesheets on a weekly basis for client billings. When time sheeting at the end of each week, I frequently ran into the dilemma of trying to recall how much time I spent on a task. This was the inspiration behind planIt, where users can track tasks by project and how much time was spent on tasks.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+My technical challenge for planIt (version 2) was in making incremental decisions regarding what and how to re-factor key functionality from version 1.0 while incorporating coding and accessibility best practices as I work to improve code quality. These incremental decisions have resulted in incorporating Styled Components to build my own custom components instead of relying on material-UI library. As well as breaking down components into smaller pieces in order to improve future scalability.  
 
-### Analyzing the Bundle Size
+Refer to the README of planIt (version 1) [here](https://github.com/KaunainKarmali/planIt/tree/production) for technical challenges in version 1. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Next steps
 
-### Making a Progressive Web App
+I am currently working on developing version 2.0 of planIt using my own custom components, instead of relying on the material-UI library. Version 2.0 is also aimed at incorporating coding best practices and accessibility considerations that I learned throughout my bootcamp.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Contribute
 
-### Advanced Configuration
+Looking for contributors to improve this software's functionality for free users. I would love to hear from you, if you are interested!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Licence
 
-### Deployment
+MIT License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Copyright (c) 2021 Kaunain Karmali
 
-### `npm run build` fails to minify
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
