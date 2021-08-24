@@ -58,7 +58,7 @@ This project began as a to-do list in jQuery, then evolved into an app identical
 
 While building planIt (version 1), I was working at Ernst and Young in a client-facing role that requires working on multiple projects simultaneously. In this role, we are required to submit timesheets on a weekly basis for client billings. When time sheeting at the end of each week, I frequently ran into the dilemma of trying to recall how much time I spent on a task. This was the inspiration behind planIt, where users can track tasks by project and how much time was spent on tasks.
 
-My technical challenge for planIt (version 2) was in making incremental decisions regarding what and how to re-factor key functionality from version 1.0 while incorporating coding and accessibility best practices as I work to improve code quality. These incremental decisions have resulted in incorporating Styled Components to build my own custom components instead of relying on material-UI library. As well as breaking down components into smaller pieces in order to improve future scalability.  
+My technical challenge for planIt (version 2) was around making incremental decisions regarding what and how to re-factor key functionality from version 1.0 while researching and incorporating coding / accessibility best practices as I work to improve code quality. These incremental decisions have resulted in incorporating Styled Components to build my own custom components instead of relying on material-UI library, as well as breaking down components into smaller pieces in order to improve future scalability.  
 
 Refer to the README of planIt (version 1) [here](https://github.com/KaunainKarmali/planIt/tree/production) for technical challenges in version 1. 
 
