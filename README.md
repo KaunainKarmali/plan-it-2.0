@@ -20,7 +20,7 @@ While this project is functional, it is a re-factored version of the original pl
 
 Currently working on the following features:
 * Shifting away from firebase and migrating the backend functionality from version 1.0
-* Migrating the functionality for users to have their task board
+* Migrating the functionality for each user to have a personal task board
 * Migrating the functionality to create multiple projects
 * Improving site responsiveness
 
