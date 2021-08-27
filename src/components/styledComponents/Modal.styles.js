@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { getRGBvalue } from "../utils";
-import { black, white1 } from "../variables/colours";
-import { stdBR } from "../variables/borders";
-import { tablet, mobile } from "../variables/screen";
+import { getRGBvalue } from "../../utils";
+import { black, white1 } from "../../variables/colours";
+import { stdBR } from "../../variables/borders";
+import { tablet, mobile } from "../../variables/screen";
 
 export const ModalOuter = styled.div`
   position: fixed;

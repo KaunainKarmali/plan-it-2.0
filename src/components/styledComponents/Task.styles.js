@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { stdBR } from "../variables/borders";
+import { stdBR } from "../../variables/borders";
 import {
   green3 as green4,
   grey1,
@@ -8,9 +8,9 @@ import {
   grey2,
   orange1,
   purple1,
-} from "../variables/colours";
-import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
-import { CloseIconBtn, IconButton } from "./Buttons";
+} from "../../variables/colours";
+import { medSpace, smlSpace, stdSpace } from "../../variables/spacing";
+import { CloseIconBtn, IconButton } from "./Buttons.styles";
 
 export const Title = styled.h3`
   font-size: 1.3rem;

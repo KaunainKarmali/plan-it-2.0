@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { black, blue2, grey2, orange1, white2 } from "../variables/colours";
-import { stdSpace } from "../variables/spacing";
+import { black, blue2, grey2, orange1, white2 } from "../../variables/colours";
+import { stdSpace } from "../../variables/spacing";
 
 const Anchor = styled.a`
   font-size: 1rem;

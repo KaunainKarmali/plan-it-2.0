@@ -5,8 +5,12 @@ import { blue1, white1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
 import { stdSpace } from "../variables/spacing";
-import { CloseIconBtn, PrimaryButton, SecondaryButton } from "./Buttons";
-import { ModalInner, ModalOuter } from "./Modal.styles";
+import {
+  CloseIconBtn,
+  PrimaryButton,
+  SecondaryButton,
+} from "./styledComponents/Buttons.styles";
+import { ModalInner, ModalOuter } from "./styledComponents/Modal.styles";
 import InputField from "./InputField";
 import TextareaField from "./TextareaField";
 import Dropdown from "./Dropdown";

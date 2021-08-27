@@ -11,7 +11,7 @@ import {
   red1,
 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
-import { IconButton } from "./Buttons";
+import { IconButton } from "./styledComponents/Buttons.styles";
 import TaskForm from "./TaskForm";
 
 const ListTitle = (props) => {

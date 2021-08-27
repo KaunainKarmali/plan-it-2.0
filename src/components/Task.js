@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import CounterIdContext from "../contexts/CounterIdContext";
 import TimerContext from "../contexts/TimerContext";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Card, {
@@ -13,7 +12,7 @@ import Card, {
   Options,
   DurationIconBtn,
   EditIconBtn,
-} from "./Task.styles";
+} from "./styledComponents/Task.styles";
 import TaskForm from "./TaskForm";
 
 const Task = (props) => {
@@ -22,8 +21,8 @@ const Task = (props) => {
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
-  const [isCounting, setIsCounting] = useContext(TimerContext);
-  const [counterId, setCounterId] = useContext(CounterIdContext);
+  // State to track when timer details
+  const [timer, setTimer] = useContext(TimerContext);
 
   const handleEditClick = () => {
     setEditTask(true);
@@ -35,23 +34,21 @@ const Task = (props) => {
 
   const handleTimerClick = () => {
     // Scenario 1: Counter is off and user is turning it on
-    if (!isCounting) {
-      setIsCounting(true);
-      setCounterId(taskId);
+    if (!timer.on) {
+      setTimer({ on: true, taskId: taskId });
     }
 
     // Scenario 2 / 3: Counter is turned on
-    else if (isCounting) {
+    else {
       // Scenario 2: counter is on and user is clicking the same button to toggle it off
-      if (taskId === counterId) {
-        setIsCounting(false);
+      if (taskId === timer.taskId) {
+        setTimer({ ...timer, on: false });
       }
 
       // Scenario 3: counter is on and user is clicking a different button to transfer the counter
       else {
         // Turn off the counter to save the old task's counter
-        setIsCounting(true);
-        setCounterId(taskId);
+        setTimer({ on: true, taskId: taskId });
       }
     }
   };

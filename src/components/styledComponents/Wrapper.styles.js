@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { black } from "../variables/colours";
-import { footerHeight } from "../variables/heights";
-import { navWidth } from "../variables/widths";
-import { tabletWidthLrg } from "../variables/widths";
+import { black } from "../../variables/colours";
+import { footerHeight } from "../../variables/heights";
+import { navWidth } from "../../variables/widths";
+import { tabletWidthLrg } from "../../variables/widths";
 
 const Wrapper = styled.div`
   display: grid;

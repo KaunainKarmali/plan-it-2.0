@@ -5,8 +5,11 @@ import { black, blue1, grey3, grey4, grey5 } from "../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
 
-import { ModalOuter, ModalInner } from "./Modal.styles";
-import { PrimaryButton, SecondaryButton } from "./Buttons";
+import { ModalOuter, ModalInner } from "./styledComponents/Modal.styles";
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from "./styledComponents/Buttons.styles";
 import { mobile, tablet } from "../variables/screen";
 
 const DeleteConfirmation = (props) => {
