@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import CounterIdContext from "../contexts/CounterIdContext";
 import TimerContext from "../contexts/TimerContext";
 import firebase from "../firebase";
 import { stdBR } from "../variables/borders";
@@ -19,11 +18,8 @@ const Timer = () => {
   // Hold dbref -> useRef is used instead of useState as a re-render is not necessary
   const dbRef = useRef(null);
 
-  // Tracks whether counter is on or off
-  const [isCounting, setIsCounting] = useContext(TimerContext);
-
-  // Tracks the newest task Id to track
-  const [counterId] = useContext(CounterIdContext);
+  // Tracks timer details
+  const [timer, setTimer] = useContext(TimerContext);
 
   // Tracks the task Id that is currently being tracked -> it will be an empty string if nothing is being tracked
   const [taskId, setTaskId] = useState("");
@@ -41,9 +37,9 @@ const Timer = () => {
 
   useEffect(() => {
     // Start tracking if counter is turned on and there is a new task to track
-    if (isCounting) {
+    if (timer.on) {
       // Scenario 2: counter is on and user is clicking a different button to transfer the counter
-      if (taskId !== "" && taskId !== counterId) {
+      if (taskId !== "" && taskId !== timer.taskId) {
         // Save old counter
         const dbRef = firebase.database().ref("tasks/" + taskId);
         dbRef.once("value", (data) => {
@@ -58,7 +54,7 @@ const Timer = () => {
       }
 
       // Create reference to firebase db on mount
-      dbRef.current = firebase.database().ref("tasks/" + counterId);
+      dbRef.current = firebase.database().ref("tasks/" + timer.taskId);
 
       // Initialize starting point for counter
       dbRef.current.once("value", (data) => {
@@ -73,7 +69,7 @@ const Timer = () => {
       });
 
       // Update local state to track the task currently tracked
-      setTaskId(counterId);
+      setTaskId(timer.taskId);
 
       // Start tracking time
       timeoutRef.current = setInterval(() => {
@@ -100,10 +96,11 @@ const Timer = () => {
     };
 
     // Added both dependendencies to ensure when user switches timing between tasks, the progress is saved and new timer begins
-  }, [isCounting, counterId]);
+  }, [timer]);
 
   const handleTurnOffTimer = () => {
-    setIsCounting(false);
+    setTimer({ ...timer, on: false });
+    // setIsCounting(false);
   };
 
   return (

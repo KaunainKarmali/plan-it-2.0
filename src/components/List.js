@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { stdBR } from "../variables/borders";
-import { black, grey2, grey3 } from "../variables/colours";
+import { black, grey2 } from "../variables/colours";
 import { footerHeight, headerHeight } from "../variables/heights";
 import { stdSpace } from "../variables/spacing";
 import { tabletWidthLrg } from "../variables/widths";

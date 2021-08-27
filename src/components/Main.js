@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import firebase from "firebase";
 import styled from "styled-components";
 import { white2 } from "../variables/colours";
 import List from "./List";
-import { footerHeight, headerHeight } from "../variables/heights";
 import { stdSpace } from "../variables/spacing";
-import TimerContext from "../contexts/TimerContext";
+import TimerContext from "../contexts/TimerContext/TimerContext";
 import Timer from "./Timer";
-import CounterIdContext from "../contexts/CounterIdContext";
 
 const Main = () => {
   const lists = ["to do", "doing", "done"];
@@ -36,24 +34,20 @@ const Main = () => {
     });
   }, []);
 
-  const [isCounting, setIsCounting] = useState(false);
-  const [counterId, setCounterId] = useState("");
+  // State to track when timer is turned on or off
+  const [timer] = useContext(TimerContext);
 
   return (
-    <TimerContext.Provider value={[isCounting, setIsCounting]}>
-      <CounterIdContext.Provider value={[counterId, setCounterId]}>
-        <MainWrapper>
-          <ListsWrapper>
-            <Lists>
-              {lists.map((list, index) => (
-                <List key={index} list={list} tasks={tasksByList[list]} />
-              ))}
-            </Lists>
-          </ListsWrapper>
-          {isCounting && <Timer />}
-        </MainWrapper>
-      </CounterIdContext.Provider>
-    </TimerContext.Provider>
+    <MainWrapper>
+      <ListsWrapper>
+        <Lists>
+          {lists.map((list, index) => (
+            <List key={index} list={list} tasks={tasksByList[list]} />
+          ))}
+        </Lists>
+      </ListsWrapper>
+      {timer.on && <Timer />}
+    </MainWrapper>
   );
 };
 
