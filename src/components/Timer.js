@@ -12,7 +12,7 @@ import {
   black,
 } from "../variables/colours";
 import { mobile, tablet } from "../variables/screen";
-import { DurationIconBtn } from "./Task.styles";
+import { DurationIconBtn } from "./styledComponents/Task.styles";
 
 const Timer = () => {
   // Hold dbref -> useRef is used instead of useState as a re-render is not necessary
@@ -29,7 +29,8 @@ const Timer = () => {
 
   // Both tracks the time elapsed
   const [counter, setCounter] = useState(0); // Used to render most recent time to the screen for the user
-  // Used to keep track of the most recent time to be accessed and saved when component unmounts. Usestate values are not available when the component unmounts
+
+  // Used to keep track of the most recent time to be accessed and saved when component unmounts. Usestate values are not available when the component unmounts therefore useRef is used
   const counterRef = useRef(null);
 
   // Hold setTimeout id to cancel timeouts
@@ -42,6 +43,7 @@ const Timer = () => {
       if (taskId !== "" && taskId !== timer.taskId) {
         // Save old counter
         const dbRef = firebase.database().ref("tasks/" + taskId);
+
         dbRef.once("value", (data) => {
           const taskObj = data.val();
           taskObj.duration = counter;

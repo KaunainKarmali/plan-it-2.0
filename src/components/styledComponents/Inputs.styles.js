@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components/macro";
-import { stdBR } from "../variables/borders";
-import { blue1, blue2, red1, white1 } from "../variables/colours";
-import { smlSpace } from "../variables/spacing";
+import { stdBR } from "../../variables/borders";
+import { blue1, blue2, red1, white1 } from "../../variables/colours";
+import { smlSpace } from "../../variables/spacing";
 
 // *************************************
 // Variables

@@ -12,7 +12,7 @@ import Card, {
   Options,
   DurationIconBtn,
   EditIconBtn,
-} from "./Task.styles";
+} from "./styledComponents/Task.styles";
 import TaskForm from "./TaskForm";
 
 const Task = (props) => {

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { stdBR } from "../variables/borders";
-import { blue1, blue3, blue4, grey1, white1 } from "../variables/colours";
-import { smlSpace } from "../variables/spacing";
-import { getRGBvalue } from "../utils";
+import { stdBR } from "../../variables/borders";
+import { blue1, blue3, blue4, grey1, white1 } from "../../variables/colours";
+import { smlSpace } from "../../variables/spacing";
+import { getRGBvalue } from "../../utils";
 
 const Button = styled.button`
   border: none;

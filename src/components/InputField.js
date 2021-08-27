@@ -1,4 +1,8 @@
-import { Input, InputContainer, TextLabel } from "./Inputs.styles";
+import {
+  Input,
+  InputContainer,
+  TextLabel,
+} from "./styledComponents/Inputs.styles";
 
 const InputField = (props) => {
   const {
