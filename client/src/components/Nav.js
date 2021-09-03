@@ -10,15 +10,11 @@ const Nav = () => {
   const navLinks = [
     {
       name: "Dashboard",
-      link: "#dashboard",
+      to: "/dashboard",
     },
     {
       name: "Projects",
-      link: "#projects",
-    },
-    {
-      name: "Tasks",
-      link: "#tasks",
+      to: "/projects",
     },
   ];
 
@@ -26,7 +22,7 @@ const Nav = () => {
     <NavWrapper>
       <ul>
         {navLinks.map((navItem, index) => (
-          <NavLink key={index} name={navItem.name} link={navItem.link} />
+          <NavLink key={index} name={navItem.name} to={navItem.to} />
         ))}
       </ul>
     </NavWrapper>

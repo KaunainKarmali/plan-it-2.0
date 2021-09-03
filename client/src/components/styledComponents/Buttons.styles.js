@@ -24,9 +24,7 @@ export const PrimaryButton = styled(Button)`
   font-size: 0.9rem;
 
   &:hover,
-  &:focus,
-  &:focus-visible,
-  &:active {
+  &:focus-visible {
     box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
       0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
     color: ${white1};
@@ -41,8 +39,7 @@ export const SecondaryButton = styled(PrimaryButton)`
   box-shadow: none;
 
   &:hover,
-  &:focus,
-  &:active {
+  &:focus-visible {
     box-shadow: none;
     color: ${blue1};
     background-color: rgba(${getRGBvalue(blue1)}, 0.2);
@@ -56,9 +53,7 @@ export const IconButton = styled(Button)`
   background-color: ${grey1};
 
   &:hover,
-  &:active,
-  &:focus-visible,
-  &:focus {
+  &:focus-visible {
     color: ${grey1};
     outline: none;
   }
@@ -71,8 +66,7 @@ export const CloseIconBtn = styled(IconButton)`
   right: ${smlSpace};
 
   &:hover,
-  &:active,
-  &:focus {
+  &:focus-visible {
     background-color: ${blue3};
   }
 `;

@@ -4,7 +4,6 @@ import firebase from "../firebase";
 import { black, blue1, grey3, grey4, grey5 } from "../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
-
 import { ModalOuter, ModalInner } from "./styledComponents/Modal.styles";
 import {
   PrimaryButton,

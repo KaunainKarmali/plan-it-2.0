@@ -85,6 +85,7 @@ const TaskForm = (props) => {
     });
   };
 
+  // TODO: Update validation for dates to match project form
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -161,6 +162,7 @@ const TaskForm = (props) => {
             <Title>{editTask ? "Edit task" : "Create a new task"}</Title>
             <TaskFormCloseIconBtn onClick={handleClose}>
               <i className="fas fa-times"></i>
+              <span className="sr-only">Close modal</span>
             </TaskFormCloseIconBtn>
           </FormHeader>
 
