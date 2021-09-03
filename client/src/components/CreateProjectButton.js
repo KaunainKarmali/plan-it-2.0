@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { black, blue3, blue4 } from "../variables/colours";
+import { black, green1, green3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
 import ProjectCardWrapper from "./styledComponents/ProjectCardWrapper.styles";
 
@@ -13,9 +13,7 @@ const CreateProjectButton = (props) => {
   return (
     <CreateButton onClick={handleClick}>
       <ProjectCardWrapper>
-        <Wrapper>
-          <h3>Create a project</h3>
-        </Wrapper>
+        <h3>Create a project</h3>
       </ProjectCardWrapper>
     </CreateButton>
   );
@@ -23,20 +21,15 @@ const CreateProjectButton = (props) => {
 
 export default CreateProjectButton;
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100%;
-`;
-
 const CreateButton = styled(PrimaryButton)`
-  background-color: ${blue4};
+  background-color: ${green1};
+  font-size: 1rem;
+  padding: 10px;
+  margin: 0px 10px 10px 0px;
 
   &:hover,
   &:focus-visible {
-    background-color: ${blue3};
+    background-color: ${green3};
     color: ${black};
   }
 `;

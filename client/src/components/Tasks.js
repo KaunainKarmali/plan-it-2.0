@@ -7,7 +7,7 @@ import { stdSpace } from "../variables/spacing";
 import TimerContext from "../contexts/TimerContext/TimerContext";
 import Timer from "./Timer";
 
-const Main = () => {
+const Tasks = () => {
   const lists = ["to do", "doing", "done"];
   const [tasksByList, setTasksByList] = useState([]);
 
@@ -74,4 +74,4 @@ const Lists = styled.ul`
   }
 `;
 
-export default Main;
+export default Tasks;

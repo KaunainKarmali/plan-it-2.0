@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import TimerContextProvider from "./contexts/TimerContext/TimerContextProvider";
-import Main from "./components/Main";
+import Tasks from "./components/Tasks";
 import Projects from "./components/Projects";
 import MainWrapper from "./components/styledComponents/MainWrapper.styles";
 
@@ -19,7 +19,7 @@ const App = () => {
             <MainWrapper>
               <Switch>
                 <Route exact path="/">
-                  <Main />
+                  <Tasks />
                 </Route>
                 <Route exact path="/projects">
                   <Projects />

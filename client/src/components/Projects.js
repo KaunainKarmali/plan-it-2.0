@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 import CreateProjectButton from "./CreateProjectButton";
 import CreateProjectForm from "./CreateProjectForm";
 import MainHeader from "./MainHeader";
@@ -8,6 +9,14 @@ const Projects = () => {
   const projects = [
     { name: "New project", dueDate: "2021-09-02" },
     { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
+    { name: "Another new project", dueDate: "2021-09-10" },
   ];
 
   const [createProject, setCreateProject] = useState(false);
@@ -15,15 +24,15 @@ const Projects = () => {
   return (
     <div>
       <MainHeader heading="Your projects" />
-      <CreateProjectButton
-        createProject={createProject}
-        setCreateProject={setCreateProject}
-      />
-      <ul>
+      <Wrapper>
+        <CreateProjectButton
+          createProject={createProject}
+          setCreateProject={setCreateProject}
+        />
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project}></ProjectCard>
         ))}
-      </ul>
+      </Wrapper>
       {createProject && (
         <CreateProjectForm setCreateProject={setCreateProject} />
       )}
@@ -32,3 +41,8 @@ const Projects = () => {
 };
 
 export default Projects;
+
+const Wrapper = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+`;
