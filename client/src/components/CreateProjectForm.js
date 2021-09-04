@@ -11,12 +11,12 @@ import {
 } from "./styledComponents/Buttons.styles";
 import { ModalInner, ModalOuter } from "./styledComponents/Modal.styles";
 import InputField from "./InputField";
-import { mobile, tablet } from "../variables/screen";
+import { mobile } from "../variables/screen";
 
 // TODO: Refactor with task form
 const CreateProjectForm = (props) => {
   // Used to open / close the modal
-  const { setCreateProject } = props;
+  const { setOpenCreateProjectForm, createProject } = props;
 
   // Generates the current date
   const today = getTodaysDate();
@@ -63,7 +63,7 @@ const CreateProjectForm = (props) => {
 
   const handleClose = (e) => {
     e.preventDefault();
-    setCreateProject(false);
+    setOpenCreateProjectForm(false);
   };
 
   // Resets the user inputted values
@@ -117,9 +117,10 @@ const CreateProjectForm = (props) => {
     // Trigger to user if any input is not valid
     setIsValid(tempIsValid);
 
-    // TODO: Add connection to backend to create a project
+    // Create a project in the back end if validations pass
     if (readyToSubmit) {
-      console.log(projectDetails);
+      createProject(projectDetails);
+      setOpenCreateProjectForm(false);
     }
   };
 
@@ -256,19 +257,6 @@ const Title = styled.h3`
 
   @media (max-width: ${mobile}) {
     font-size: 1.5rem;
-  }
-`;
-
-const DropdownContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  column-gap: 20px;
-  justify-content: space-between;
-
-  @media (max-width: ${tablet}) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 2fr;
   }
 `;
 

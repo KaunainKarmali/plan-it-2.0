@@ -25,7 +25,6 @@ const CreateButton = styled(PrimaryButton)`
   background-color: ${green1};
   font-size: 1rem;
   padding: 10px;
-  margin: 0px 10px 10px 0px;
 
   &:hover,
   &:focus-visible {

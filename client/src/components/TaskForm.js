@@ -1,12 +1,11 @@
 import styled from "styled-components/macro";
 import { useState, useEffect, useRef } from "react";
 import firebase from "../firebase";
-import { blue1, white1 } from "../variables/colours";
+import { blue1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
 import { stdSpace } from "../variables/spacing";
 import {
-  CloseIconBtn,
   PrimaryButton,
   SecondaryButton,
 } from "./styledComponents/Buttons.styles";
@@ -15,6 +14,8 @@ import InputField from "./InputField";
 import TextareaField from "./TextareaField";
 import Dropdown from "./Dropdown";
 import { mobile, tablet } from "../variables/screen";
+import ClosePopup from "./ClosePopup";
+import FormTitle from "./styledComponents/FormTitle.styles";
 
 const TaskForm = (props) => {
   const { openTask, setOpenTask, editTask, setEditTask, taskObj, taskId } =
@@ -159,11 +160,10 @@ const TaskForm = (props) => {
         <form action="submit">
           {/* Form header */}
           <FormHeader>
-            <Title>{editTask ? "Edit task" : "Create a new task"}</Title>
-            <TaskFormCloseIconBtn onClick={handleClose}>
-              <i className="fas fa-times"></i>
-              <span className="sr-only">Close modal</span>
-            </TaskFormCloseIconBtn>
+            <FormTitle>
+              {editTask ? "Edit task" : "Create a new task"}
+            </FormTitle>
+            <ClosePopup handleClose={handleClose} />
           </FormHeader>
 
           {/* Form main */}
@@ -278,36 +278,6 @@ const FormFooter = styled.div`
 const ButtonContainer = styled.div`
   display: inline-block;
   margin-right: 20px;
-`;
-
-const TaskFormCloseIconBtn = styled(CloseIconBtn)`
-  background-color: transparent;
-  color: ${blue1};
-  position: absolute;
-  margin: 30px 50px;
-
-  top: 0;
-  right: 0;
-
-  &:hover,
-  &:focus {
-    color: ${white1};
-    background-color: ${blue1};
-  }
-
-  @media (max-width: ${mobile}) {
-    margin: 20px 30px;
-  }
-`;
-
-const Title = styled.h3`
-  font-size: 2rem;
-  color: ${blue1};
-  margin-bottom: ${stdSpace};
-
-  @media (max-width: ${mobile}) {
-    font-size: 1.5rem;
-  }
 `;
 
 const DropdownContainer = styled.div`

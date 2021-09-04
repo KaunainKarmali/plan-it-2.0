@@ -33,7 +33,6 @@ const ProjectLink = styled(Link)`
     0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   font-size: 1rem;
   text-decoration: none;
-  margin: 0px 10px 10px 0px;
 
   &:visited {
     color: ${white1};
