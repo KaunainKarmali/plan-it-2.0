@@ -28,15 +28,13 @@ const Tasks = (props) => {
   const [timer] = useContext(TimerContext);
 
   useEffect(() => {
-    if (projectId) {
+    if (projectId !== undefined) {
       const url = new URL(`${serverUrl}/list/get-lists`);
       const params = { projectId: projectId };
       url.search = new URLSearchParams(params).toString();
 
       fetch(url)
         .then((res) => {
-          console.log(res);
-
           // Check if response was successful
           if (res.ok) {
             // If projects were found, 200 status is returned
@@ -58,7 +56,7 @@ const Tasks = (props) => {
         .then((res) => {
           console.log(res);
           // Save lists found
-          setLists([...res]);
+          setLists(res);
         })
         .catch((error) => {
           // If errors are found, generate an error message and update error state to display error to user
@@ -150,14 +148,7 @@ const Tasks = (props) => {
       <MainHeader heading="Your tasks" />
       <Container>
         <Wrapper>
-          {lists &&
-            lists.map((list, index) => (
-              <List
-                key={index}
-                list={list}
-                // tasks={tasksByList[list]}
-              />
-            ))}
+          {lists && lists.map((list) => <List key={list._id} list={list} />)}
           <CreateList handleClick={() => setOpenCreateListForm(true)} />
           {timer.on && <Timer />}
         </Wrapper>

@@ -45,6 +45,8 @@ const Projects = (props) => {
           }
         })
         .then((res) => {
+          console.log(typeof res);
+
           // Save projects found
           setProjects(res);
         })

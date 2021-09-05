@@ -8,19 +8,19 @@ import ListTitle from "./ListTitle";
 import Task from "./Task";
 
 const List = (props) => {
-  const { list, tasks } = props;
+  const { list } = props;
 
   return (
     <ListWrapper>
-      <ListTitle list={list} />
-      <TasksWrapper>
+      <ListTitle list={list.listName} />
+      {/* <TasksWrapper>
         <Tasks>
           {tasks &&
             tasks.map((task) => (
               <Task key={task.key} taskId={task.key} task={task.value} />
             ))}
         </Tasks>
-      </TasksWrapper>
+      </TasksWrapper> */}
     </ListWrapper>
   );
 };
