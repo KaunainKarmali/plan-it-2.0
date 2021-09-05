@@ -32,7 +32,7 @@ const App = () => {
                     <Projects setError={setError} />
                   </Route>
                   <Route exact path="/tasks/:projectId">
-                    <Tasks />
+                    <Tasks setError={setError} />
                   </Route>
                 </Switch>
               </MainWrapper>

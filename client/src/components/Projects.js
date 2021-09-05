@@ -19,7 +19,7 @@ const Projects = (props) => {
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
   useEffect(() => {
-    if (user.fp) {
+    if (user.fp !== undefined) {
       const url = new URL(`${serverUrl}/project/get-projects`);
       const params = { fp: user.fp };
       url.search = new URLSearchParams(params).toString();

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import firebase from "firebase";
+// import firebase from "firebase";
 import styled from "styled-components";
 import List from "./List";
-import UserContext from "../contexts/UserContext";
+// import UserContext from "../contexts/UserContext";
 import TimerContext from "../contexts/TimerContext/TimerContext";
 import Timer from "./Timer";
 import CreateList from "./CreateList";
@@ -11,53 +11,108 @@ import MainHeader from "./MainHeader";
 import CreateListForm from "./CreateListForm";
 import { serverUrl } from "../settings";
 
-const Tasks = () => {
+const Tasks = (props) => {
+  const { setError } = props;
+
   // Retrieve the project id that the tasks are associated with
   const { projectId } = useParams();
-
-  const [user, setUser] = useContext(UserContext);
 
   // Tracks when the user clicks on the button to create a new custom list
   const [openCreateListForm, setOpenCreateListForm] = useState(false);
 
-  const lists = ["to do", "doing", "done"];
-  const [tasksByList, setTasksByList] = useState([]);
+  // Tracks and saves list details
+  const [lists, setLists] = useState([]);
+  // const [tasksByList, setTasksByList] = useState([]);
 
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
 
   useEffect(() => {
-    const dbRef = firebase.database().ref("/tasks");
-    dbRef.on("value", (response) => {
-      const data = response.val();
+    if (projectId) {
+      const url = new URL(`${serverUrl}/list/get-lists`);
+      const params = { projectId: projectId };
+      url.search = new URLSearchParams(params).toString();
 
-      const tempTasksByList = {};
+      fetch(url)
+        .then((res) => {
+          console.log(res);
 
-      // Organize the data retrieved into an object with each property being a list of tasks
-      for (const key in data) {
-        const list = data[key].list;
-        const taskObj = { key: key, value: data[key] };
+          // Check if response was successful
+          if (res.ok) {
+            // If projects were found, 200 status is returned
+            if (res.status === 200) {
+              return res.json();
+            }
 
-        if (list in tempTasksByList) {
-          tempTasksByList[list].push(taskObj);
-        } else {
-          tempTasksByList[list] = [taskObj];
-        }
-      }
+            // If request was successful, but project cannot be found, return false to indicate that no project was found
+            else {
+              throw new Error(res.status);
+            }
+          }
 
-      setTasksByList(tempTasksByList);
-    });
-  }, []);
+          // Throw error if errors are found
+          else {
+            throw new Error(res.status);
+          }
+        })
+        .then((res) => {
+          console.log(res);
+          // Save lists found
+          setLists([...res]);
+        })
+        .catch((error) => {
+          // If errors are found, generate an error message and update error state to display error to user
+          const status = parseInt(error.message);
+          let message = "";
 
+          if (status === 500) {
+            message = "Lists cannot be found. Please try again later.";
+          } else if (status === 400) {
+            message =
+              "Project ID was not provided. Please contact the database administrator.";
+          } else {
+            message = "An error occurred while retrieving your lists.";
+          }
+
+          setError({ error: true, message: message });
+        });
+    }
+  }, [projectId, setError]);
+
+  // useEffect(() => {
+  //   const dbRef = firebase.database().ref("/tasks");
+  //   dbRef.on("value", (response) => {
+  //     const data = response.val();
+
+  //     const tempTasksByList = {};
+
+  //     // Organize the data retrieved into an object with each property being a list of tasks
+  //     for (const key in data) {
+  //       const list = data[key].list;
+  //       const taskObj = { key: key, value: data[key] };
+
+  //       if (list in tempTasksByList) {
+  //         tempTasksByList[list].push(taskObj);
+  //       } else {
+  //         tempTasksByList[list] = [taskObj];
+  //       }
+  //     }
+
+  //     setTasksByList(tempTasksByList);
+  //   });
+  // }, []);
+
+  // Create a new list in the database
   const createList = (listName) => {
     const url = `${serverUrl}/list/create-list`;
+
+    console.log(projectId);
 
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        data: listName,
-        fp: user.fp,
+        data: { listName: listName },
         projectId: projectId,
       }),
     })
@@ -68,23 +123,25 @@ const Tasks = () => {
           throw new Error(res.status);
         }
       })
-      .then((res) => console.log(res))
+      .then((res) => setLists(res[1]))
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
-        // const status = parseInt(error.message);
-        // let message = "";
-        // if (status === 400) {
-        //   message =
-        //     "Incomplete data provided in the request. Please contact the database administrator.";
-        // } else if (status === 500) {
-        //   message = "User cannot be found. Please try again later.";
-        // } else if (status === 400) {
-        //   message =
-        //     "Project cannot be created. Please contact the database administrator.";
-        // } else {
-        //   message = "An error occurred. Project cannot be created.";
-        // }
-        // setError({ error: true, message: message });
+        const status = parseInt(error.message);
+        let message = "";
+
+        if (status === 400) {
+          message =
+            "Incomplete data provided in the request. Please contact the database administrator.";
+        } else if (status === 500) {
+          message = "Project cannot be found. Please try again later.";
+        } else if (status === 400) {
+          message =
+            "Project cannot be created. Please contact the database administrator.";
+        } else {
+          message = "An error occurred. List cannot be created.";
+        }
+
+        setError({ error: true, message: message });
       });
   };
 
@@ -95,7 +152,11 @@ const Tasks = () => {
         <Wrapper>
           {lists &&
             lists.map((list, index) => (
-              <List key={index} list={list} tasks={tasksByList[list]} />
+              <List
+                key={index}
+                list={list}
+                // tasks={tasksByList[list]}
+              />
             ))}
           <CreateList handleClick={() => setOpenCreateListForm(true)} />
           {timer.on && <Timer />}
