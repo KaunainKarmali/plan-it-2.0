@@ -1,19 +1,23 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
-import CreateProjectButton from "./CreateProjectButton";
 import CreateProjectForm from "./CreateProjectForm";
 import MainHeader from "./MainHeader";
 import ProjectCard from "./ProjectCard";
 import { serverUrl } from "../settings";
 import UserContext from "../contexts/UserContext";
+import CreateButton from "./CreateButton";
 
-const Projects = () => {
+const Projects = (props) => {
+  const { setError } = props;
+
   const [user, setUser] = useContext(UserContext);
 
+  // Tracks whether to open or close the modal to allow user to create a new project
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
+  // Function that submits api post request to create a new project in the database
   const createProject = (projectDetails) => {
-    const url = `${serverUrl}/${user.fp}/project`;
+    const url = `${serverUrl}/${user.fp}/project/create-project`;
 
     fetch(url, {
       method: "POST",
@@ -33,15 +37,19 @@ const Projects = () => {
         const status = parseInt(error.message);
         let message = "";
 
-        // TODO: Complete error handling
-        // if (status === 500) {
-        //   message = "User cannot be found. Please try again later.";
-        // } else if (status === 400) {
-        //   message =
-        //     "User ID was not provided. Please contact the database administrator.";
-        // }
+        if (status === 400) {
+          message =
+            "Incomplete data provided in the request. Please contact the database administrator.";
+        } else if (status === 500) {
+          message = "User cannot be found. Please try again later.";
+        } else if (status === 400) {
+          message =
+            "Project cannot be created. Please contact the database administrator.";
+        } else {
+          message = "An error occurred. Project cannot be created.";
+        }
 
-        // setError({ error: true, message: message });
+        setError({ error: true, message: message });
       });
   };
 
@@ -50,9 +58,9 @@ const Projects = () => {
       <MainHeader heading="Your projects" />
       <Container>
         <Wrapper>
-          <CreateProjectButton
-            createProject={openCreateProjectForm}
-            setCreateProject={setOpenCreateProjectForm}
+          <CreateButton
+            text="Create a project"
+            handleClick={() => setOpenCreateProjectForm(true)}
           />
           {user &&
             user.projects &&

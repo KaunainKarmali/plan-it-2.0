@@ -30,7 +30,7 @@ const UserContextProvider = (props) => {
       // Tracks if a valid user was found in the database or not
       let userFound = false;
 
-      const url = new URL(`${serverUrl}/user`);
+      const url = new URL(`${serverUrl}/user/get-user`);
       const params = { fp: fp };
       url.search = new URLSearchParams(params).toString();
 
@@ -81,7 +81,7 @@ const UserContextProvider = (props) => {
     // Create the user's fingerprint if it none has been created in the database
     const createUser = async (fp) => {
       // Make fetch request to back end to create user
-      const url = `${serverUrl}/user`;
+      const url = `${serverUrl}/user/create-user`;
 
       await fetch(url, {
         method: "POST",
@@ -111,6 +111,8 @@ const UserContextProvider = (props) => {
           } else if (status === 400) {
             message =
               "User ID was not provided. Please contact the database administrator.";
+          } else {
+            message = "An error occurred. User cannot be found or created.";
           }
 
           setError({ error: true, message: message });

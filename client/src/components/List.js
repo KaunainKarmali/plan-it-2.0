@@ -30,6 +30,7 @@ const ListWrapper = styled.li`
   border-radius: ${stdBR};
   padding: ${stdSpace};
   border: 2px solid ${grey2};
+  min-width: 300px;
 `;
 
 const Tasks = styled.ul`
@@ -40,7 +41,7 @@ const Tasks = styled.ul`
 
 const TasksWrapper = styled.div`
   overflow: auto;
-  height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px - 81px);
+  height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px - 150px);
 
   @media (max-width: ${tabletWidthLrg}) {
     max-height: 50vh;

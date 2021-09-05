@@ -3,28 +3,31 @@ import { black, green1, green3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
 import ProjectCardWrapper from "./styledComponents/ProjectCardWrapper.styles";
 
-const CreateProjectButton = (props) => {
-  const { setCreateProject } = props;
-
-  const handleClick = () => {
-    setCreateProject(true);
-  };
+const CreateList = (props) => {
+  const { handleClick } = props;
 
   return (
-    <CreateButton onClick={handleClick}>
-      <ProjectCardWrapper>
-        <h3>Create a project</h3>
-      </ProjectCardWrapper>
-    </CreateButton>
+    <Wrapper>
+      <CustomButton onClick={() => handleClick()}>
+        <ProjectCardWrapper>
+          <h3>Create a list</h3>
+        </ProjectCardWrapper>
+      </CustomButton>
+    </Wrapper>
   );
 };
 
-export default CreateProjectButton;
+export default CreateList;
 
-const CreateButton = styled(PrimaryButton)`
+const Wrapper = styled.li`
+  min-width: 300px;
+`;
+
+const CustomButton = styled(PrimaryButton)`
   background-color: ${green1};
   font-size: 1rem;
   padding: 10px;
+  width: 100%;
 
   &:hover,
   &:focus-visible {

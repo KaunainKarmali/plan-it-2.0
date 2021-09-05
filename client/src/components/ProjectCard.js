@@ -8,7 +8,10 @@ const ProjectCard = (props) => {
   const { project } = props;
 
   return (
-    <ProjectLink to="/projects">
+    <ProjectLink
+      to={`/tasks/${project._id}`}
+      params={{ projectId: project._id }}
+    >
       <ProjectCardWrapper>
         <h3>{project.name}</h3>
         <DueDate>{project.dueDate}</DueDate>
