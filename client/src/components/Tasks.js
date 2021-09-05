@@ -50,7 +50,7 @@ const Tasks = () => {
   }, []);
 
   const createList = (listName) => {
-    const url = `${serverUrl}/${user.fp}/list/create-list`;
+    const url = `${serverUrl}/list/create-list`;
 
     fetch(url, {
       method: "POST",

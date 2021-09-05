@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import CreateProjectForm from "./CreateProjectForm";
 import MainHeader from "./MainHeader";
@@ -12,12 +12,64 @@ const Projects = (props) => {
 
   const [user, setUser] = useContext(UserContext);
 
+  // Store the projects found for the user
+  const [projects, setProjects] = useState([]);
+
   // Tracks whether to open or close the modal to allow user to create a new project
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
+  useEffect(() => {
+    if (user.fp) {
+      const url = new URL(`${serverUrl}/project/get-projects`);
+      const params = { fp: user.fp };
+      url.search = new URLSearchParams(params).toString();
+
+      fetch(url)
+        .then((res) => {
+          // Check if response was successful
+          if (res.ok) {
+            // If projects were found, 200 status is returned
+            if (res.status === 200) {
+              return res.json();
+            }
+
+            // If request was successful, but project cannot be found, return false to indicate that no project was found
+            else {
+              throw new Error(res.status);
+            }
+          }
+
+          // Throw error if errors are found
+          else {
+            throw new Error(res.status);
+          }
+        })
+        .then((res) => {
+          // Save projects found
+          setProjects(res);
+        })
+        .catch((error) => {
+          // If errors are found, generate an error message and update error state to display error to user
+          const status = parseInt(error.message);
+          let message = "";
+
+          if (status === 500) {
+            message = "Projects cannot be found. Please try again later.";
+          } else if (status === 400) {
+            message =
+              "User ID was not provided. Please contact the database administrator.";
+          } else {
+            message = "An error occurred while retrieving your projects.";
+          }
+
+          setError({ error: true, message: message });
+        });
+    }
+  }, [user, setError]);
+
   // Function that submits api post request to create a new project in the database
   const createProject = (projectDetails) => {
-    const url = `${serverUrl}/${user.fp}/project/create-project`;
+    const url = `${serverUrl}/project/create-project`;
 
     fetch(url, {
       method: "POST",
@@ -31,7 +83,7 @@ const Projects = (props) => {
           throw new Error(res.status);
         }
       })
-      .then((res) => setUser(res))
+      .then((res) => setUser(res[1]))
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
         const status = parseInt(error.message);
@@ -62,9 +114,8 @@ const Projects = (props) => {
             text="Create a project"
             handleClick={() => setOpenCreateProjectForm(true)}
           />
-          {user &&
-            user.projects &&
-            user.projects.map((project, index) => (
+          {projects &&
+            projects.map((project, index) => (
               <ProjectCard key={index} project={project}></ProjectCard>
             ))}
         </Wrapper>
