@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/user.js";
 import projectRoutes from "./routes/project.js";
 import listRoutes from "./routes/list.js";
+import taskRoutes from "./routes/task.js";
 
 // setup app
 const app = express();
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 5000;
 app.use("/user", userRoutes);
 app.use("/project", projectRoutes);
 app.use("/list", listRoutes);
+app.use("/task", taskRoutes);
 
 // connect to local database
 const CONNECTION_URL = "mongodb://localhost:27017/userDB";

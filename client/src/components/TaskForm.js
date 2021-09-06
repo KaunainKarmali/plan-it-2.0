@@ -18,8 +18,15 @@ import ClosePopup from "./ClosePopup";
 import FormTitle from "./styledComponents/FormTitle.styles";
 
 const TaskForm = (props) => {
-  const { openTask, setOpenTask, editTask, setEditTask, taskObj, taskId } =
-    props;
+  const {
+    setOpenCreateTaskForm,
+    createTask,
+    // openTask,
+    // editTask,
+    // setEditTask,
+    // taskObj,
+    // taskId,
+  } = props;
 
   const today = getTodaysDate();
 
@@ -56,17 +63,17 @@ const TaskForm = (props) => {
   });
 
   // Hold dbref between re-renders
-  const dbRef = useRef(null);
+  // const dbRef = useRef(null);
 
-  useEffect(() => {
-    // Create reference to firebase db on mount
-    dbRef.current = firebase.database().ref("tasks/");
+  // useEffect(() => {
+  //   // Create reference to firebase db on mount
+  //   dbRef.current = firebase.database().ref("tasks/");
 
-    // Set task if its an edit operation
-    if (editTask) {
-      setTask(taskObj);
-    }
-  }, [editTask, taskObj]);
+  //   // Set task if its an edit operation
+  //   if (editTask) {
+  //     setTask(taskObj);
+  //   }
+  // }, [editTask, taskObj]);
 
   // Update state on changes to form element
   const handleChange = (e) => {
@@ -104,27 +111,28 @@ const TaskForm = (props) => {
     if (Object.keys(validationErrors).length !== 0) {
       setIsValid({ ...isValid, ...validationErrors });
     } else {
-      // Create a new task if its a new task
-      if (openTask) {
-        // Submit to firebase
-        const newRef = dbRef.current.push();
-        newRef.set(task, (error) => {
-          if (error) {
-            // TODO: Error handling if data is not saved, create prompt to user
-          } else {
-            // Reset form and states after submit
-            handleReset();
-          }
-        });
-      }
-
-      // update the existing task on firebase
-      else {
-        const response = dbRef.current.child(taskId).update(task);
-        response.then(() => {
-          handleReset();
-        });
-      }
+      createTask(task);
+      handleReset();
+      // // Create a new task if its a new task
+      // if (openTask) {
+      //   // Submit to firebase
+      //   const newRef = dbRef.current.push();
+      //   newRef.set(task, (error) => {
+      //     if (error) {
+      //       // TODO: Error handling if data is not saved, create prompt to user
+      //     } else {
+      //       // Reset form and states after submit
+      //       handleReset();
+      //     }
+      //   });
+      // }
+      // // update the existing task on firebase
+      // else {
+      //   const response = dbRef.current.child(taskId).update(task);
+      //   response.then(() => {
+      //     handleReset();
+      //   });
+      // }
     }
   };
 
@@ -150,8 +158,8 @@ const TaskForm = (props) => {
 
   const handleClose = (e) => {
     e.preventDefault();
-    openTask && setOpenTask(false);
-    editTask && setEditTask(false);
+    setOpenCreateTaskForm(false);
+    // editTask && setEditTask(false);
   };
 
   return (
@@ -161,7 +169,8 @@ const TaskForm = (props) => {
           {/* Form header */}
           <FormHeader>
             <FormTitle>
-              {editTask ? "Edit task" : "Create a new task"}
+              Create a new task
+              {/* {editTask ? "Edit task" : "Create a new task"} */}
             </FormTitle>
             <ClosePopup handleClose={handleClose} />
           </FormHeader>
@@ -235,7 +244,8 @@ const TaskForm = (props) => {
               </SecondaryButton>
             </ButtonContainer>
             <PrimaryButton type="submit" onClick={handleSubmit}>
-              {editTask ? "Edit" : "Create"}
+              Create
+              {/* {editTask ? "Edit" : "Create"} */}
             </PrimaryButton>
           </FormFooter>
         </form>

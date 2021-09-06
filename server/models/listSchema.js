@@ -9,7 +9,7 @@ const listSchema = new mongoose.Schema({
     default: new Date(),
     required: true,
   },
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "List" }],
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
 });
 
 export default listSchema;

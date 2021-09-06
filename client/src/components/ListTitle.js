@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled, { css } from "styled-components/macro";
 import {
   black,
@@ -12,15 +11,12 @@ import {
 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { IconButton } from "./styledComponents/Buttons.styles";
-import TaskForm from "./TaskForm";
 
 const ListTitle = (props) => {
-  const { list } = props;
-
-  const [openTask, setOpenTask] = useState(false);
+  const { list, setOpenCreateTaskForm } = props;
 
   const handleAddClick = () => {
-    setOpenTask(true);
+    setOpenCreateTaskForm(true);
   };
 
   return (
@@ -37,7 +33,6 @@ const ListTitle = (props) => {
       <OptionsIconBtn>
         <i className="fas fa-ellipsis-h"></i>
       </OptionsIconBtn>
-      {openTask && <TaskForm openTask={openTask} setOpenTask={setOpenTask} />}
     </ListTitleWrapper>
   );
 };

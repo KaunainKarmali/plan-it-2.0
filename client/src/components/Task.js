@@ -16,7 +16,7 @@ import Card, {
 import TaskForm from "./TaskForm";
 
 const Task = (props) => {
-  const { task, taskId } = props;
+  const { task } = props;
   const { title, description, dueDate } = task;
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
@@ -35,20 +35,20 @@ const Task = (props) => {
   const handleTimerClick = () => {
     // Scenario 1: Counter is off and user is turning it on
     if (!timer.on) {
-      setTimer({ on: true, taskId: taskId });
+      setTimer({ on: true, taskId: task._id });
     }
 
     // Scenario 2 / 3: Counter is turned on
     else {
       // Scenario 2: counter is on and user is clicking the same button to toggle it off
-      if (taskId === timer.taskId) {
+      if (task._id === timer.taskId) {
         setTimer({ ...timer, on: false });
       }
 
       // Scenario 3: counter is on and user is clicking a different button to transfer the counter
       else {
         // Turn off the counter to save the old task's counter
-        setTimer({ on: true, taskId: taskId });
+        setTimer({ on: true, taskId: task._id });
       }
     }
   };
@@ -87,14 +87,14 @@ const Task = (props) => {
           editTask={editTask}
           setEditTask={setEditTask}
           taskObj={task}
-          taskId={taskId}
+          taskId={task._id}
         />
       )}
 
       {/* Show deletion confirmation dialogue */}
       {deleteTask && (
         <DeleteConfirmation
-          taskId={taskId}
+          taskId={task._id}
           taskObj={task}
           setDeleteTask={setDeleteTask}
         />

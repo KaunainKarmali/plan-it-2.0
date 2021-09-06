@@ -13,7 +13,7 @@ export const createList = async (req, res) => {
     res.end();
   } else {
     // Find project to save foreign key in it
-    Project.findOne({ projectId: projectId }, (error, project) => {
+    Project.findOne({ id: projectId }, (error, project) => {
       // Send error if there is an error finding the user
       if (error) {
         console.log(
@@ -70,7 +70,7 @@ export const getLists = (req, res) => {
   } else {
     // Find lists from the database
     List.find({ projectId: projectId }, (error, lists) => {
-      // Send error if there is an error finding the projects
+      // Send error if there is an error finding the list
       if (error) {
         console.log("Error: An error occurred while retrieving lists");
 
@@ -79,7 +79,7 @@ export const getLists = (req, res) => {
         res.send(error);
       }
 
-      // Send success message with the projects found
+      // Send success message with the lists found
       else if (lists) {
         console.log("Lists found successfully");
 
@@ -88,7 +88,7 @@ export const getLists = (req, res) => {
         res.send(lists);
       }
 
-      // If projects are not found, send success message stating project was not found
+      // If lists are not found, send success message stating list was not found
       else {
         console.log("Error: Lists not found");
 

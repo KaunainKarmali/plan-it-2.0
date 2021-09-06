@@ -6,9 +6,11 @@ import ProjectCard from "./ProjectCard";
 import { serverUrl } from "../settings";
 import UserContext from "../contexts/UserContext";
 import CreateButton from "./CreateButton";
+import ErrorModal from "./ErrorModal";
 
-const Projects = (props) => {
-  const { setError } = props;
+const Projects = () => {
+  // Tracks if an error occurred during the fetch and displays message to the user
+  const [error, setError] = useState({ error: false, message: "" });
 
   const [user, setUser] = useContext(UserContext);
 
@@ -22,7 +24,7 @@ const Projects = (props) => {
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
   useEffect(() => {
-    if (user.fp !== undefined) {
+    if (user.fp && user.fp !== undefined) {
       const url = new URL(`${serverUrl}/project/get-projects`);
       const params = { fp: user.fp };
       url.search = new URLSearchParams(params).toString();
@@ -130,6 +132,7 @@ const Projects = (props) => {
           createProject={createProject}
         />
       )}
+      {error.error && <ErrorModal error={error} setError={setError} />}
     </div>
   );
 };

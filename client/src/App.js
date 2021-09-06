@@ -26,13 +26,13 @@ const App = () => {
               <MainWrapper>
                 <Switch>
                   <Route exact path="/">
-                    <Projects setError={setError} />
+                    <Projects />
                   </Route>
                   <Route exact path="/projects">
-                    <Projects setError={setError} />
+                    <Projects />
                   </Route>
                   <Route exact path="/tasks/:projectId">
-                    <Tasks setError={setError} />
+                    <Tasks />
                   </Route>
                 </Switch>
               </MainWrapper>

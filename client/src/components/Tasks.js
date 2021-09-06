@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-// import firebase from "firebase";
 import styled from "styled-components";
 import List from "./List";
-// import UserContext from "../contexts/UserContext";
 import TimerContext from "../contexts/TimerContext/TimerContext";
 import Timer from "./Timer";
 import CreateList from "./CreateList";
 import MainHeader from "./MainHeader";
 import CreateListForm from "./CreateListForm";
 import { serverUrl } from "../settings";
+import ErrorModal from "./ErrorModal";
 
-const Tasks = (props) => {
-  const { setError } = props;
+const Tasks = () => {
+  // Tracks if an error occurred during the fetch and displays message to the user
+  const [error, setError] = useState({ error: false, message: "" });
 
   // Retrieve the project id that the tasks are associated with
   const { projectId } = useParams();
@@ -29,6 +29,7 @@ const Tasks = (props) => {
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
 
+  // Tracks the names of all the lists that the
   useEffect(() => {
     if (projectId !== undefined) {
       const url = new URL(`${serverUrl}/list/get-lists`);
@@ -140,6 +141,7 @@ const Tasks = (props) => {
           createList={createList}
         />
       )}
+      {error.error && <ErrorModal error={error} setError={setError} />}
     </div>
   );
 };
