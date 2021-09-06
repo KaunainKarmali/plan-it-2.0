@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import firebase from "../firebase";
 import { blue1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
@@ -18,34 +17,19 @@ import { mobile, tablet } from "../variables/screen";
 import ClosePopup from "./ClosePopup";
 import FormTitle from "./styledComponents/FormTitle.styles";
 import { serverUrl } from "../settings";
+import priorityOptions from "../variables/priority";
+import ErrorModal from "./ErrorModal";
 
 const TaskForm = (props) => {
-  const {
-    setOpenCreateTaskForm,
-    createTask,
-    // openTask,
-    // editTask,
-    // setEditTask,
-    // taskObj,
-    // taskId,
-  } = props;
+  const { setOpenCreateTaskForm, createTask } = props;
 
   // Retrieve the project id that the tasks are associated with
   const { projectId } = useParams();
 
+  // Stores today's date
   const today = getTodaysDate();
 
-  const priorityOptions = [
-    { value: "low", name: "Low" },
-    { value: "medium", name: "Medium" },
-    { value: "high", name: "High" },
-  ];
-
-  // const listOptions = [
-  //   { value: "to do", name: "To do" },
-  //   { value: "doing", name: "Doing" },
-  //   { value: "done", name: "Done" },
-  // ];
+  const [error, setError] = useState(false);
 
   // Saves the list names of all the lists created under a given project
   const [listOptions, setListOptions] = useState([]);
@@ -123,23 +107,10 @@ const TaskForm = (props) => {
             message = "An error occurred while retrieving your lists.";
           }
 
-          // setError({ error: true, message: message });
+          setError({ error: true, message: message });
         });
     }
   }, [projectId]);
-
-  // Hold dbref between re-renders
-  // const dbRef = useRef(null);
-
-  // useEffect(() => {
-  //   // Create reference to firebase db on mount
-  //   dbRef.current = firebase.database().ref("tasks/");
-
-  //   // Set task if its an edit operation
-  //   if (editTask) {
-  //     setTask(taskObj);
-  //   }
-  // }, [editTask, taskObj]);
 
   // Update state on changes to form element
   const handleChange = (e) => {
@@ -179,26 +150,6 @@ const TaskForm = (props) => {
     } else {
       createTask(task);
       handleReset();
-      // // Create a new task if its a new task
-      // if (openTask) {
-      //   // Submit to firebase
-      //   const newRef = dbRef.current.push();
-      //   newRef.set(task, (error) => {
-      //     if (error) {
-      //       // TODO: Error handling if data is not saved, create prompt to user
-      //     } else {
-      //       // Reset form and states after submit
-      //       handleReset();
-      //     }
-      //   });
-      // }
-      // // update the existing task on firebase
-      // else {
-      //   const response = dbRef.current.child(taskId).update(task);
-      //   response.then(() => {
-      //     handleReset();
-      //   });
-      // }
     }
   };
 
@@ -225,98 +176,96 @@ const TaskForm = (props) => {
   const handleClose = (e) => {
     e.preventDefault();
     setOpenCreateTaskForm(false);
-    // editTask && setEditTask(false);
   };
 
   return (
-    <ModalOuter>
-      <ModalInner>
-        <form action="submit">
-          {/* Form header */}
-          <FormHeader>
-            <FormTitle>
-              Create a new task
-              {/* {editTask ? "Edit task" : "Create a new task"} */}
-            </FormTitle>
-            <ClosePopup handleClose={handleClose} />
-          </FormHeader>
+    <div>
+      <ModalOuter>
+        <ModalInner>
+          <form action="submit">
+            {/* Form header */}
+            <FormHeader>
+              <FormTitle>Create a new task</FormTitle>
+              <ClosePopup handleClose={handleClose} />
+            </FormHeader>
 
-          {/* Form main */}
-          <FormMainWrapper>
-            <FormMain>
-              <InputField
-                type="text"
-                id="title"
-                name="title"
-                value={task.title}
-                onChange={handleChange}
-                isValid={isValid.title}
-                inputLength={task.title.length}
-                label="Task title"
-              />
-              <TextareaField
-                id="description"
-                name="description"
-                rows="5"
-                value={task.description}
-                onChange={handleChange}
-                isValid={isValid.description}
-                inputLength={task.description.length}
-                label="Description"
-              />
-              <DropdownContainer>
-                <Dropdown
+            {/* Form main */}
+            <FormMainWrapper>
+              <FormMain>
+                <InputField
                   type="text"
-                  id="priority"
-                  name="priority"
+                  id="title"
+                  name="title"
+                  value={task.title}
                   onChange={handleChange}
-                  isValid={isValid.priority}
-                  value={task.priority}
-                  options={priorityOptions}
-                  inputLength={task.priority.length}
-                  label="Priority"
+                  isValid={isValid.title}
+                  inputLength={task.title.length}
+                  label="Task title"
                 />
-
-                <Dropdown
-                  id="listId"
-                  name="listId"
+                <TextareaField
+                  id="description"
+                  name="description"
+                  rows="5"
+                  value={task.description}
                   onChange={handleChange}
-                  isValid={isValid.listId}
-                  value={task.listId}
-                  options={listOptions}
-                  inputLength={task.listId.length}
-                  label="List"
+                  isValid={isValid.description}
+                  inputLength={task.description.length}
+                  label="Description"
                 />
-              </DropdownContainer>
+                <DropdownContainer>
+                  <Dropdown
+                    type="text"
+                    id="priority"
+                    name="priority"
+                    onChange={handleChange}
+                    isValid={isValid.priority}
+                    value={task.priority}
+                    options={priorityOptions}
+                    inputLength={task.priority.length}
+                    label="Priority"
+                  />
 
-              <InputField
-                type="date"
-                id="dueDate"
-                name="dueDate"
-                value={task.dueDate}
-                onChange={handleChange}
-                isValid={isValid.dueDate}
-                inputLength={task.dueDate.length}
-                label="Due date"
-              />
-            </FormMain>
-          </FormMainWrapper>
+                  <Dropdown
+                    id="listId"
+                    name="listId"
+                    onChange={handleChange}
+                    isValid={isValid.listId}
+                    value={task.listId}
+                    options={listOptions}
+                    inputLength={task.listId.length}
+                    label="List"
+                  />
+                </DropdownContainer>
 
-          {/* Form footer */}
-          <FormFooter>
-            <ButtonContainer>
-              <SecondaryButton type="reset" onClick={handleReset}>
-                Clear
-              </SecondaryButton>
-            </ButtonContainer>
-            <PrimaryButton type="submit" onClick={handleSubmit}>
-              Create
-              {/* {editTask ? "Edit" : "Create"} */}
-            </PrimaryButton>
-          </FormFooter>
-        </form>
-      </ModalInner>
-    </ModalOuter>
+                <InputField
+                  type="date"
+                  id="dueDate"
+                  name="dueDate"
+                  value={task.dueDate}
+                  onChange={handleChange}
+                  isValid={isValid.dueDate}
+                  inputLength={task.dueDate.length}
+                  label="Due date"
+                />
+              </FormMain>
+            </FormMainWrapper>
+
+            {/* Form footer */}
+            <FormFooter>
+              <ButtonContainer>
+                <SecondaryButton type="reset" onClick={handleReset}>
+                  Clear
+                </SecondaryButton>
+              </ButtonContainer>
+              <PrimaryButton type="submit" onClick={handleSubmit}>
+                Create
+              </PrimaryButton>
+            </FormFooter>
+          </form>
+        </ModalInner>
+      </ModalOuter>
+      {error.error && <ErrorModal error={error} setError={setError} />}
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
 import { useState } from "react";
 import { blue1, white1 } from "../variables/colours";
-import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
 import { stdSpace } from "../variables/spacing";
 import {

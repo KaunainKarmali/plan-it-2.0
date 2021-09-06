@@ -11,7 +11,7 @@ import {
 } from "./styledComponents/Buttons.styles";
 import { ModalInner, ModalOuter } from "./styledComponents/Modal.styles";
 import InputField from "./InputField";
-import { mobile } from "../variables/screen";
+import { mobile, tablet } from "../variables/screen";
 
 // TODO: Refactor with task form
 const CreateProjectForm = (props) => {
@@ -178,13 +178,13 @@ const CreateProjectForm = (props) => {
           {/* Form footer */}
           <FormFooter>
             <ButtonContainer>
-              <SecondaryButton type="reset" onClick={handleReset}>
+              <ClearButton type="reset" onClick={handleReset}>
                 Clear
-              </SecondaryButton>
+              </ClearButton>
             </ButtonContainer>
-            <PrimaryButton type="submit" onClick={handleSubmit}>
+            <CreateButton type="submit" onClick={handleSubmit}>
               Create
-            </PrimaryButton>
+            </CreateButton>
           </FormFooter>
         </form>
       </ModalInner>
@@ -220,6 +220,10 @@ const FormFooter = styled.div`
   margin-top: ${stdSpace};
   margin-right: 5px;
 
+  @media (max-width: ${tablet}) {
+    margin: 0px;
+  }
+
   @media (max-width: ${mobile}) {
     text-align: center;
   }
@@ -228,6 +232,11 @@ const FormFooter = styled.div`
 const ButtonContainer = styled.div`
   display: inline-block;
   margin-right: 20px;
+
+  @media (max-width: ${tablet}) {
+    margin: 0px;
+    display: block;
+  }
 `;
 
 const TaskFormCloseIconBtn = styled(CloseIconBtn)`
@@ -262,4 +271,18 @@ const Title = styled.h3`
 
 const FormMain = styled.div`
   margin-right: 5px;
+`;
+
+const CreateButton = styled(PrimaryButton)`
+  @media (max-width: ${tablet}) {
+    margin-top: 10px;
+    width: 100%;
+  }
+`;
+
+const ClearButton = styled(SecondaryButton)`
+  @media (max-width: ${tablet}) {
+    margin-top: 10px;
+    width: 100%;
+  }
 `;

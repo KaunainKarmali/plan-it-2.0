@@ -9,6 +9,7 @@ import { serverUrl } from "../settings";
 import ErrorModal from "./ErrorModal";
 import { black, blue3, green1, green3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
+import { tabletWidthLrg } from "../variables/screen";
 
 const Board = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
@@ -24,7 +25,7 @@ const Board = () => {
   const [lists, setLists] = useState([]);
 
   // Tracks when list has been created and triggers useEffect to pull latest lists
-  const [listCreated, setListCreated] = useState(false);
+  const [toggleListCreated, setToggleListCreated] = useState(false);
 
   // Tracks whether a tasks has been created or not and triggers useEffect to pull latest lists and tasks beneath it
   const [toggleTaskCreated, setToggleTaskCreated] = useState(false);
@@ -80,7 +81,7 @@ const Board = () => {
           setError({ error: true, message: message });
         });
     }
-  }, [projectId, setError, listCreated]);
+  }, [projectId, setError, toggleListCreated]);
 
   // Create a new list in the database
   const createList = (listName) => {
@@ -102,7 +103,7 @@ const Board = () => {
         }
       })
       .then((res) => {
-        setListCreated(true);
+        setToggleListCreated(!toggleListCreated);
       })
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
@@ -121,7 +122,7 @@ const Board = () => {
           message = "An error occurred. List cannot be created.";
         }
 
-        setListCreated(false);
+        setToggleListCreated(!toggleListCreated);
         setError({ error: true, message: message });
       });
   };
@@ -174,6 +175,10 @@ const Wrapper = styled.ul`
     grid-template-columns: 1fr;
     grid-auto-flow: row;
     row-gap: 10px;
+  }
+
+  @media (max-width: ${tabletWidthLrg}) {
+    width: 100%;
   }
 `;
 

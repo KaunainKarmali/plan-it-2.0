@@ -10,6 +10,7 @@ import Task from "./Task";
 import { serverUrl } from "../settings";
 import TaskForm from "./TaskForm";
 import ErrorModal from "./ErrorModal";
+import { mobile } from "../variables/screen";
 
 const List = (props) => {
   const { list, setToggleTaskCreated, toggleTaskCreated } = props;
@@ -142,6 +143,10 @@ const ListWrapper = styled.li`
   padding: ${stdSpace};
   border: 2px solid ${grey2};
   min-width: 300px;
+
+  @media (max-width: ${mobile}) {
+    min-width: 95%;
+  }
 `;
 
 const Tasks = styled.ul`

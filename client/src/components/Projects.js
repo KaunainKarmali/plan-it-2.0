@@ -8,24 +8,25 @@ import { black, green1, green3 } from "../variables/colours";
 import ErrorModal from "./ErrorModal";
 import { blue3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
+import { tablet, mobile } from "../variables/screen";
 
 const Projects = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
   const [error, setError] = useState({ error: false, message: "" });
 
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   // Store the projects found for the user
   const [projects, setProjects] = useState([]);
 
   // Tracks when project has been created and triggers useEffect to pull latest lists
-  const [projectCreated, setProjectCreated] = useState(false);
+  const [toggleProjectCreated, setToggleProjectCreated] = useState(false);
 
   // Tracks whether to open or close the modal to allow user to create a new project
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
   useEffect(() => {
-    if (user.fp && user.fp !== undefined) {
+    if ("fp" in user && user.fp !== undefined) {
       const url = new URL(`${serverUrl}/project/get-projects`);
       const params = { fp: user.fp };
       url.search = new URLSearchParams(params).toString();
@@ -71,7 +72,7 @@ const Projects = () => {
           setError({ error: true, message: message });
         });
     }
-  }, [user, setError, projectCreated]);
+  }, [user, setError, toggleProjectCreated]);
 
   // Function that submits api post request to create a new project in the database
   const createProject = (projectDetails) => {
@@ -89,7 +90,7 @@ const Projects = () => {
           throw new Error(res.status);
         }
       })
-      .then((res) => setProjectCreated(true))
+      .then((res) => setToggleProjectCreated(!toggleProjectCreated))
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
         const status = parseInt(error.message);
@@ -107,7 +108,7 @@ const Projects = () => {
           message = "An error occurred. Project cannot be created.";
         }
 
-        setProjectCreated(false);
+        setToggleProjectCreated(!toggleProjectCreated);
         setError({ error: true, message: message });
       });
   };
@@ -146,6 +147,14 @@ const Wrapper = styled.ul`
   grid-template-columns: repeat(4, 1fr);
   row-gap: 10px;
   column-gap: 10px;
+
+  @media (max-width: ${tablet}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: ${mobile}) {
+    grid-template-columns: 1fr;
+  } ;
 `;
 
 const Container = styled.div`

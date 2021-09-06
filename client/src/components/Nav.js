@@ -4,7 +4,7 @@ import { black, grey1 } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { navWidth } from "../variables/widths";
 import NavLink from "./NavLink";
-import { tabletWidthLrg } from "../variables/widths";
+import { tabletWidthLrg } from "../variables/screen";
 
 const Nav = () => {
   const navLinks = [

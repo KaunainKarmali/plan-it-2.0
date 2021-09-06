@@ -134,7 +134,7 @@ const UserContextProvider = (props) => {
 
     // Go to database and try to get or create the user
     getOrCreateUser();
-  }, []);
+  }, [setError]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>

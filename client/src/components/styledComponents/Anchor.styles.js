@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { black, blue2, grey2, orange1, white2 } from "../../variables/colours";
 import { stdSpace } from "../../variables/spacing";
 
-const Anchor = styled.a`
+const Anchor = styled(Link)`
   font-size: 1rem;
   width: 100%;
   display: inline-block;
