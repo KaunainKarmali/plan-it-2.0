@@ -22,7 +22,9 @@ const Tasks = (props) => {
 
   // Tracks and saves list details
   const [lists, setLists] = useState([]);
-  // const [tasksByList, setTasksByList] = useState([]);
+
+  // Tracks when list has been created and triggers useEffect to pull latest lists
+  const [listCreated, setListCreated] = useState(false);
 
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
@@ -54,7 +56,6 @@ const Tasks = (props) => {
           }
         })
         .then((res) => {
-          console.log(res);
           // Save lists found
           setLists(res);
         })
@@ -75,36 +76,11 @@ const Tasks = (props) => {
           setError({ error: true, message: message });
         });
     }
-  }, [projectId, setError]);
-
-  // useEffect(() => {
-  //   const dbRef = firebase.database().ref("/tasks");
-  //   dbRef.on("value", (response) => {
-  //     const data = response.val();
-
-  //     const tempTasksByList = {};
-
-  //     // Organize the data retrieved into an object with each property being a list of tasks
-  //     for (const key in data) {
-  //       const list = data[key].list;
-  //       const taskObj = { key: key, value: data[key] };
-
-  //       if (list in tempTasksByList) {
-  //         tempTasksByList[list].push(taskObj);
-  //       } else {
-  //         tempTasksByList[list] = [taskObj];
-  //       }
-  //     }
-
-  //     setTasksByList(tempTasksByList);
-  //   });
-  // }, []);
+  }, [projectId, setError, listCreated]);
 
   // Create a new list in the database
   const createList = (listName) => {
     const url = `${serverUrl}/list/create-list`;
-
-    console.log(projectId);
 
     fetch(url, {
       method: "POST",
@@ -121,7 +97,9 @@ const Tasks = (props) => {
           throw new Error(res.status);
         }
       })
-      .then((res) => setLists(res[1]))
+      .then((res) => {
+        setListCreated(true);
+      })
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
         const status = parseInt(error.message);
@@ -139,6 +117,7 @@ const Tasks = (props) => {
           message = "An error occurred. List cannot be created.";
         }
 
+        setListCreated(false);
         setError({ error: true, message: message });
       });
   };
@@ -148,7 +127,9 @@ const Tasks = (props) => {
       <MainHeader heading="Your tasks" />
       <Container>
         <Wrapper>
-          {lists && lists.map((list) => <List key={list._id} list={list} />)}
+          {lists &&
+            lists.length > 0 &&
+            lists.map((list) => <List key={list._id} list={list} />)}
           <CreateList handleClick={() => setOpenCreateListForm(true)} />
           {timer.on && <Timer />}
         </Wrapper>

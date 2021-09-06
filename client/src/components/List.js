@@ -10,17 +10,21 @@ import Task from "./Task";
 const List = (props) => {
   const { list } = props;
 
+  // Fetch tasks from the database
+
+  // Create tasks and save it in the database
+
   return (
     <ListWrapper>
       <ListTitle list={list.listName} />
-      {/* <TasksWrapper>
+      <TasksWrapper>
         <Tasks>
-          {tasks &&
+          {/* {tasks &&
             tasks.map((task) => (
               <Task key={task.key} taskId={task.key} task={task.value} />
-            ))}
+            ))} */}
         </Tasks>
-      </TasksWrapper> */}
+      </TasksWrapper>
     </ListWrapper>
   );
 };

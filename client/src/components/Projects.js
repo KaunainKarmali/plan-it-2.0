@@ -15,6 +15,9 @@ const Projects = (props) => {
   // Store the projects found for the user
   const [projects, setProjects] = useState([]);
 
+  // Tracks when project has been created and triggers useEffect to pull latest lists
+  const [projectCreated, setProjectCreated] = useState(false);
+
   // Tracks whether to open or close the modal to allow user to create a new project
   const [openCreateProjectForm, setOpenCreateProjectForm] = useState(false);
 
@@ -45,8 +48,6 @@ const Projects = (props) => {
           }
         })
         .then((res) => {
-          console.log(typeof res);
-
           // Save projects found
           setProjects(res);
         })
@@ -67,7 +68,7 @@ const Projects = (props) => {
           setError({ error: true, message: message });
         });
     }
-  }, [user, setError]);
+  }, [user, setError, projectCreated]);
 
   // Function that submits api post request to create a new project in the database
   const createProject = (projectDetails) => {
@@ -85,7 +86,7 @@ const Projects = (props) => {
           throw new Error(res.status);
         }
       })
-      .then((res) => setUser(res[1]))
+      .then((res) => setProjectCreated(true))
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
         const status = parseInt(error.message);
@@ -103,6 +104,7 @@ const Projects = (props) => {
           message = "An error occurred. Project cannot be created.";
         }
 
+        setProjectCreated(false);
         setError({ error: true, message: message });
       });
   };

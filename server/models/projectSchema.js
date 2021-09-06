@@ -3,20 +3,25 @@ import listSchema from "./listSchema.js";
 
 // project schema
 const projectSchema = new mongoose.Schema({
-  projectName: {
+  fp: { type: String, required: true },
+  name: {
     type: String,
+    required: true,
   },
   projectCreationDate: {
     type: Date,
     default: new Date(),
+    required: true,
   },
   startDate: {
-    type: Date,
+    type: String,
+    required: true,
   },
   dueDate: {
-    type: Date,
+    type: String,
+    required: true,
   },
-  lists: [listSchema],
+  lists: [{ type: mongoose.Schema.Types.ObjectId, ref: "List" }],
 });
 
 export default projectSchema;

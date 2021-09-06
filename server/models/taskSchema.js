@@ -6,7 +6,7 @@ const taskSchema = new mongoose.Schema({
   taskName: String,
   taskDescription: String,
   taskPriority: String,
-  taskDueDate: Date,
+  taskDueDate: String,
   taskList: String,
   taskDuration: Number,
   taskTracking: [timeSchema],

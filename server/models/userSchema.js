@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import projectSchema from "./projectSchema.js";
 
 // user schema
 const userSchema = new mongoose.Schema({
-  fp: String,
+  fp: { type: String, required: true },
   userCreationDate: {
     type: Date,
     default: new Date(),
+    required: true,
   },
-  projects: [projectSchema],
+  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
 });
 
 export default userSchema;

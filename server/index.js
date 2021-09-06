@@ -1,8 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 // module imports
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user.js";
+import projectRoutes from "./routes/project.js";
+import listRoutes from "./routes/list.js";
 
 // setup app
 const app = express();
@@ -14,6 +19,8 @@ const PORT = process.env.PORT || 5000;
 
 // setup app middleware
 app.use("/user", userRoutes);
+app.use("/project", projectRoutes);
+app.use("/list", listRoutes);
 
 // connect to local database
 const CONNECTION_URL = "mongodb://localhost:27017/userDB";
