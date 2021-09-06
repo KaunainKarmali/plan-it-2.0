@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import CreateProjectForm from "./CreateProjectForm";
-import MainHeader from "./MainHeader";
 import ProjectCard from "./ProjectCard";
 import { serverUrl } from "../settings";
 import UserContext from "../contexts/UserContext";
-import CreateButton from "./CreateButton";
+import { black, green1, green3 } from "../variables/colours";
 import ErrorModal from "./ErrorModal";
+import { blue3 } from "../variables/colours";
+import { PrimaryButton } from "./styledComponents/Buttons.styles";
 
 const Projects = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
@@ -113,13 +114,14 @@ const Projects = () => {
 
   return (
     <div>
-      <MainHeader heading="Your projects" />
+      <HeaderContainer>
+        <Header>Your projects</Header>
+        <CreateButton onClick={() => setOpenCreateProjectForm(true)}>
+          Create project
+        </CreateButton>
+      </HeaderContainer>
       <Container>
         <Wrapper>
-          <CreateButton
-            text="Create a project"
-            handleClick={() => setOpenCreateProjectForm(true)}
-          />
           {projects &&
             projects.map((project, index) => (
               <ProjectCard key={index} project={project}></ProjectCard>
@@ -150,4 +152,28 @@ const Container = styled.div`
   overflow-y: auto;
   max-height: calc(100vh - 47px - 64px - 35px - 22px);
   border-radius: 5px;
+`;
+
+const Header = styled.h2``;
+
+const HeaderContainer = styled.div`
+  padding-bottom: 10px;
+  border-bottom: 2px solid ${blue3};
+  margin-bottom: 20px;
+  color: ${blue3};
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CreateButton = styled(PrimaryButton)`
+  background-color: ${green1};
+  font-size: 1rem;
+  padding: 10px;
+  font-weight: 700;
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${green3};
+    color: ${black};
+  }
 `;

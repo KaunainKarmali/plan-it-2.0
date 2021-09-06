@@ -8,7 +8,6 @@ const taskSchema = new mongoose.Schema({
   priority: { type: String, required: true },
   dueDate: { type: String, required: true },
   listId: { type: String, required: true },
-  list: { type: String, required: true },
   creationDate: {
     type: Date,
     default: new Date(),

@@ -3,6 +3,9 @@ import { List, Task } from "../models/index.js";
 export const createTask = async (req, res) => {
   const { data, listId } = req.body;
 
+  console.log(data);
+  console.log(listId);
+
   // Provide error response if request is missing necessary parameters to create the project
   if (!data || !listId) {
     console.log("Error: Insufficient data provided in the request");

@@ -4,13 +4,13 @@ import styled from "styled-components";
 import List from "./List";
 import TimerContext from "../contexts/TimerContext/TimerContext";
 import Timer from "./Timer";
-import CreateList from "./CreateList";
-import MainHeader from "./MainHeader";
 import CreateListForm from "./CreateListForm";
 import { serverUrl } from "../settings";
 import ErrorModal from "./ErrorModal";
+import { black, blue3, green1, green3 } from "../variables/colours";
+import { PrimaryButton } from "./styledComponents/Buttons.styles";
 
-const Tasks = () => {
+const Board = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
   const [error, setError] = useState({ error: false, message: "" });
 
@@ -25,6 +25,9 @@ const Tasks = () => {
 
   // Tracks when list has been created and triggers useEffect to pull latest lists
   const [listCreated, setListCreated] = useState(false);
+
+  // Tracks whether a tasks has been created or not and triggers useEffect to pull latest lists and tasks beneath it
+  const [toggleTaskCreated, setToggleTaskCreated] = useState(false);
 
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
@@ -125,13 +128,24 @@ const Tasks = () => {
 
   return (
     <div>
-      <MainHeader heading="Your tasks" />
+      <HeaderContainer>
+        <Header>Your board</Header>
+        <CreateButton onClick={() => setOpenCreateListForm(true)}>
+          Create list
+        </CreateButton>
+      </HeaderContainer>
       <Container>
         <Wrapper>
           {lists &&
             lists.length > 0 &&
-            lists.map((list) => <List key={list._id} list={list} />)}
-          <CreateList handleClick={() => setOpenCreateListForm(true)} />
+            lists.map((list) => (
+              <List
+                key={list._id}
+                list={list}
+                setToggleTaskCreated={setToggleTaskCreated}
+                toggleTaskCreated={toggleTaskCreated}
+              />
+            ))}
           {timer.on && <Timer />}
         </Wrapper>
       </Container>
@@ -146,7 +160,7 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default Board;
 
 const Wrapper = styled.ul`
   display: grid;
@@ -167,4 +181,28 @@ const Container = styled.div`
   overflow-y: auto;
   max-height: calc(100vh - 47px - 64px - 35px - 23px);
   border-radius: 5px;
+`;
+
+const Header = styled.h2``;
+
+const HeaderContainer = styled.div`
+  padding-bottom: 10px;
+  border-bottom: 2px solid ${blue3};
+  margin-bottom: 20px;
+  color: ${blue3};
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CreateButton = styled(PrimaryButton)`
+  background-color: ${green1};
+  font-size: 1rem;
+  padding: 10px;
+  font-weight: 700;
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${green3};
+    color: ${black};
+  }
 `;

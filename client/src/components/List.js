@@ -12,16 +12,13 @@ import TaskForm from "./TaskForm";
 import ErrorModal from "./ErrorModal";
 
 const List = (props) => {
-  const { list } = props;
+  const { list, setToggleTaskCreated, toggleTaskCreated } = props;
 
   // Tracks if an error occurred during the fetch and displays message to the user
   const [error, setError] = useState({ error: false, message: "" });
 
   // Stores the user's tasks
   const [tasks, setTasks] = useState([]);
-
-  // Tracks whether a tasks has been created or not
-  const [taskCreated, setTaskCreated] = useState(false);
 
   // Tracks whether to create a new task or not
   const [openCreateTaskForm, setOpenCreateTaskForm] = useState(false);
@@ -74,18 +71,16 @@ const List = (props) => {
           setError({ error: true, message: message });
         });
     }
-  }, [list, taskCreated]);
+  }, [list, toggleTaskCreated]);
 
   // Create tasks and save it in the database
   const createTask = (taskDetails) => {
     const url = `${serverUrl}/task/create-task`;
 
-    console.log(list._id);
-
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: taskDetails, listId: list._id }),
+      body: JSON.stringify({ data: taskDetails, listId: taskDetails.listId }),
     })
       .then((res) => {
         if (res.ok) {
@@ -94,7 +89,7 @@ const List = (props) => {
           throw new Error(res.status);
         }
       })
-      .then((res) => setTaskCreated(true))
+      .then((res) => setToggleTaskCreated(!toggleTaskCreated))
       .catch((error) => {
         // If errors are found, generate an error message and update error state to display error to user
         const status = parseInt(error.message);
@@ -112,7 +107,7 @@ const List = (props) => {
           message = "An error occurred. Task cannot be created.";
         }
 
-        setTaskCreated(false);
+        setToggleTaskCreated(!toggleTaskCreated);
         setError({ error: true, message: message });
       });
   };

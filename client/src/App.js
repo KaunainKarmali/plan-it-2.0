@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import TimerContextProvider from "./contexts/TimerContext/TimerContextProvider";
 import UserContextProvider from "./contexts/UserContext/UserContextProvider";
-import Tasks from "./components/Tasks";
+import Board from "./components/Board";
 import Projects from "./components/Projects";
 import MainWrapper from "./components/styledComponents/MainWrapper.styles";
 import ErrorModal from "./components/ErrorModal";
@@ -32,7 +32,7 @@ const App = () => {
                     <Projects />
                   </Route>
                   <Route exact path="/tasks/:projectId">
-                    <Tasks />
+                    <Board />
                   </Route>
                 </Switch>
               </MainWrapper>

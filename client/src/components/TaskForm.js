@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import firebase from "../firebase";
 import { blue1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
@@ -16,6 +17,7 @@ import Dropdown from "./Dropdown";
 import { mobile, tablet } from "../variables/screen";
 import ClosePopup from "./ClosePopup";
 import FormTitle from "./styledComponents/FormTitle.styles";
+import { serverUrl } from "../settings";
 
 const TaskForm = (props) => {
   const {
@@ -28,6 +30,9 @@ const TaskForm = (props) => {
     // taskId,
   } = props;
 
+  // Retrieve the project id that the tasks are associated with
+  const { projectId } = useParams();
+
   const today = getTodaysDate();
 
   const priorityOptions = [
@@ -36,18 +41,21 @@ const TaskForm = (props) => {
     { value: "high", name: "High" },
   ];
 
-  const listOptions = [
-    { value: "to do", name: "To do" },
-    { value: "doing", name: "Doing" },
-    { value: "done", name: "Done" },
-  ];
+  // const listOptions = [
+  //   { value: "to do", name: "To do" },
+  //   { value: "doing", name: "Doing" },
+  //   { value: "done", name: "Done" },
+  // ];
+
+  // Saves the list names of all the lists created under a given project
+  const [listOptions, setListOptions] = useState([]);
 
   // Tracks if the form inputs
   const [task, setTask] = useState({
     title: "",
     description: "",
     priority: "low",
-    list: "to do",
+    listId: "",
     dueDate: today,
     creationDate: today,
   });
@@ -57,10 +65,68 @@ const TaskForm = (props) => {
     title: true,
     description: true,
     priority: true,
-    list: true,
+    listId: true,
     dueDate: true,
     creationDate: true,
   });
+
+  // Retrieve all the list names in a given project
+  useEffect(() => {
+    if (projectId !== undefined) {
+      const url = new URL(`${serverUrl}/list/get-lists`);
+      const params = { projectId: projectId };
+      url.search = new URLSearchParams(params).toString();
+
+      fetch(url)
+        .then((res) => {
+          // Check if response was successful
+          if (res.ok) {
+            // If projects were found, 200 status is returned
+            if (res.status === 200) {
+              return res.json();
+            }
+
+            // If request was successful, but project cannot be found, return false to indicate that no project was found
+            else {
+              throw new Error(res.status);
+            }
+          }
+
+          // Throw error if errors are found
+          else {
+            throw new Error(res.status);
+          }
+        })
+        .then((res) => {
+          // Save list names for a given project to be rendered to the user
+          const listNamesTemp = [];
+          res.forEach((list) => {
+            const listObj = {
+              name: list.listName,
+              value: list._id,
+            };
+            listNamesTemp.push(listObj);
+          });
+          setListOptions(listNamesTemp);
+        })
+        .catch((error) => {
+          // If errors are found, generate an error message and update error state to display error to user
+          const status = parseInt(error.message);
+          let message = "";
+
+          if (status === 500) {
+            message = "Lists cannot be found. Please try again later.";
+          } else if (status === 400) {
+            message =
+              "Project ID was not provided. Please contact the database administrator.";
+          } else {
+            message = "An error occurred while retrieving your lists.";
+          }
+
+          // setError({ error: true, message: message });
+        });
+    }
+  }, [projectId]);
 
   // Hold dbref between re-renders
   // const dbRef = useRef(null);
@@ -141,7 +207,7 @@ const TaskForm = (props) => {
       title: "",
       description: "",
       priority: "low",
-      list: "to do",
+      listId: "",
       dueDate: today,
       creationDate: today,
     });
@@ -150,7 +216,7 @@ const TaskForm = (props) => {
       title: true,
       description: true,
       priority: true,
-      list: true,
+      listId: true,
       dueDate: true,
       creationDate: true,
     });
@@ -212,13 +278,13 @@ const TaskForm = (props) => {
                 />
 
                 <Dropdown
-                  id="list"
-                  name="list"
+                  id="listId"
+                  name="listId"
                   onChange={handleChange}
-                  isValid={isValid.list}
-                  value={task.list}
+                  isValid={isValid.listId}
+                  value={task.listId}
                   options={listOptions}
-                  inputLength={task.list.length}
+                  inputLength={task.listId.length}
                   label="List"
                 />
               </DropdownContainer>
