@@ -10,7 +10,7 @@ import {
   purple1,
 } from "../../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../../variables/spacing";
-import { CloseIconBtn, IconButton } from "./Buttons.styles";
+import PrimaryButton, { CloseIconBtn, IconButton } from "./Buttons.styles";
 
 export const Title = styled.h3`
   font-size: 1.3rem;
@@ -28,8 +28,10 @@ export const Description = styled.p`
 export const TaskCloseIconBtn = styled(CloseIconBtn)`
   visibility: hidden;
   transition: none;
-  position: absolute;
-  top: 0px;
+  /* padding: 0px; */
+  /* margin: 10px; */
+  /* position: absolute; */
+  /* top: 0px; */
 `;
 
 export const CardFooter = styled.div`
@@ -91,7 +93,7 @@ const Card = styled.div`
   min-height: 50px;
   background-color: ${grey1};
   border-radius: ${stdBR};
-  position: relative;
+  /* position: relative; */
   padding: ${stdSpace};
 
   &:active

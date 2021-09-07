@@ -23,7 +23,7 @@ const Footer = () => {
     <Wrapper>
       <p>
         Created by{" "}
-        <FooterAnchor href="https://github.com/KaunainKarmali">
+        <FooterAnchor to="https://github.com/KaunainKarmali">
           Kaunain Karmali
         </FooterAnchor>{" "}
         &copy; at Juno College {year}

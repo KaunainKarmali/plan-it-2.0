@@ -9,7 +9,7 @@ import { serverUrl } from "../settings";
 import ErrorModal from "./ErrorModal";
 import { black, blue3, green1, green3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
-import { tabletWidthLrg } from "../variables/screen";
+import { mobile, tabletWidthLrg } from "../variables/screen";
 
 const Board = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
@@ -132,7 +132,7 @@ const Board = () => {
       <HeaderContainer>
         <Header>Your board</Header>
         <CreateButton onClick={() => setOpenCreateListForm(true)}>
-          Create list
+          New list
         </CreateButton>
       </HeaderContainer>
       <Container>
@@ -184,11 +184,17 @@ const Wrapper = styled.ul`
 
 const Container = styled.div`
   overflow-y: auto;
-  max-height: calc(100vh - 47px - 64px - 35px - 23px);
+  max-height: calc(100vh - 47px - 64px - 35px - 35px);
   border-radius: 5px;
 `;
 
-const Header = styled.h2``;
+const Header = styled.h2`
+  font-size: 2rem;
+
+  @media (max-width: ${mobile}) {
+    font-size: 1.5rem;
+  }
+`;
 
 const HeaderContainer = styled.div`
   padding-bottom: 10px;
@@ -209,5 +215,10 @@ const CreateButton = styled(PrimaryButton)`
   &:focus-visible {
     background-color: ${green3};
     color: ${black};
+  }
+
+  @media (max-width: ${mobile}) {
+    font-size: 0.9rem;
+    padding: 8px 10px;
   }
 `;

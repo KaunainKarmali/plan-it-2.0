@@ -15,14 +15,22 @@ const App = () => {
   // Tracks if an error occurred when trying to fetch or create a user
   const [error, setError] = useState({ error: false, message: "" });
 
+  const [toggleNavMenu, setToggleNavMenu] = useState(false);
+
   return (
     <div>
       <UserContextProvider setError={setError}>
         <TimerContextProvider>
           <Router>
             <Wrapper>
-              <Header />
-              <Nav />
+              <Header
+                toggleNavMenu={toggleNavMenu}
+                setToggleNavMenu={setToggleNavMenu}
+              />
+              <Nav
+                toggleNavMenu={toggleNavMenu}
+                setToggleNavMenu={setToggleNavMenu}
+              />
               <MainWrapper>
                 <Switch>
                   <Route exact path="/">

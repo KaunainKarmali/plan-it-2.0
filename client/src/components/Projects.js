@@ -118,7 +118,7 @@ const Projects = () => {
       <HeaderContainer>
         <Header>Your projects</Header>
         <CreateButton onClick={() => setOpenCreateProjectForm(true)}>
-          Create project
+          New project
         </CreateButton>
       </HeaderContainer>
       <Container>
@@ -163,7 +163,13 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-const Header = styled.h2``;
+const Header = styled.h2`
+  font-size: 2rem;
+
+  @media (max-width: ${mobile}) {
+    font-size: 1.5rem;
+  }
+`;
 
 const HeaderContainer = styled.div`
   padding-bottom: 10px;
@@ -184,5 +190,10 @@ const CreateButton = styled(PrimaryButton)`
   &:focus-visible {
     background-color: ${green3};
     color: ${black};
+  }
+
+  @media (max-width: ${mobile}) {
+    font-size: 0.9rem;
+    padding: 8px 10px;
   }
 `;

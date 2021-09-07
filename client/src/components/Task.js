@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import styled from "styled-components";
 import TimerContext from "../contexts/TimerContext";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Card, {
@@ -56,11 +57,15 @@ const Task = (props) => {
   return (
     <li>
       <Card>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
-        <TaskCloseIconBtn onClick={handleDeleteClick}>
-          <i className="fas fa-times" />
-        </TaskCloseIconBtn>
+        <CardMain>
+          <Title>{title}</Title>
+          {/* <Description>{description}</Description> */}
+          <CloseContainer>
+            <TaskCloseIconBtn onClick={handleDeleteClick}>
+              <i className="fas fa-times" />
+            </TaskCloseIconBtn>
+          </CloseContainer>
+        </CardMain>
 
         {/* Card Footer */}
         <CardFooter>
@@ -104,3 +109,13 @@ const Task = (props) => {
 };
 
 export default Task;
+
+const CardMain = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CloseContainer = styled.div`
+  margin-top: -5px;
+  margin-right: -5px;
+`;
