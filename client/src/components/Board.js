@@ -10,6 +10,8 @@ import ErrorModal from "./ErrorModal";
 import { black, blue3, green1, green3 } from "../variables/colours";
 import { PrimaryButton } from "./styledComponents/Buttons.styles";
 import { mobile, tabletWidthLrg } from "../variables/screen";
+import LoadingContext from "../contexts/LoadingContext";
+import Loading from "./Loading";
 
 const Board = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
@@ -32,6 +34,9 @@ const Board = () => {
 
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
+
+  // Tracks if the timer is loading or not
+  const [isLoading, setIsLoading] = useContext(LoadingContext);
 
   // Tracks the names of all the lists that the
   useEffect(() => {
@@ -147,7 +152,6 @@ const Board = () => {
                 toggleTaskCreated={toggleTaskCreated}
               />
             ))}
-          {timer.on && <Timer />}
         </Wrapper>
       </Container>
       {openCreateListForm && (
@@ -157,6 +161,8 @@ const Board = () => {
         />
       )}
       {error.error && <ErrorModal error={error} setError={setError} />}
+      {timer.on && <Timer />}
+      {isLoading && <Loading />}
     </div>
   );
 };

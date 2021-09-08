@@ -10,7 +10,7 @@ import {
   purple1,
 } from "../../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../../variables/spacing";
-import PrimaryButton, { CloseIconBtn, IconButton } from "./Buttons.styles";
+import { CloseIconBtn, IconButton } from "./Buttons.styles";
 
 export const Title = styled.h3`
   font-size: 1.3rem;
@@ -28,10 +28,6 @@ export const Description = styled.p`
 export const TaskCloseIconBtn = styled(CloseIconBtn)`
   visibility: hidden;
   transition: none;
-  /* padding: 0px; */
-  /* margin: 10px; */
-  /* position: absolute; */
-  /* top: 0px; */
 `;
 
 export const CardFooter = styled.div`
@@ -52,7 +48,7 @@ export const DateIconBtn = styled(IconButton)`
   transition: none;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: ${green4};
   }
 `;
@@ -73,7 +69,7 @@ export const DurationIconBtn = styled(IconButton)`
   transition: none;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: ${orange1};
   }
 `;
@@ -84,7 +80,7 @@ export const EditIconBtn = styled(IconButton)`
   transition: none;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: ${purple1};
   }
 `;
@@ -93,7 +89,6 @@ const Card = styled.div`
   min-height: 50px;
   background-color: ${grey1};
   border-radius: ${stdBR};
-  /* position: relative; */
   padding: ${stdSpace};
 
   &:active

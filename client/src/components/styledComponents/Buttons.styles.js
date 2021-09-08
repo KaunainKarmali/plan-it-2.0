@@ -1,7 +1,16 @@
 import styled from "styled-components";
 import { stdBR } from "../../variables/borders";
-import { blue1, blue3, blue4, grey1, white1 } from "../../variables/colours";
-import { smlSpace } from "../../variables/spacing";
+import {
+  blue1,
+  blue3,
+  blue4,
+  grey1,
+  white1,
+  black,
+  grey3,
+  grey4,
+} from "../../variables/colours";
+import { smlSpace, stdSpace } from "../../variables/spacing";
 import { getRGBvalue } from "../../utils";
 
 const Button = styled.button`
@@ -65,6 +74,29 @@ export const CloseIconBtn = styled(IconButton)`
   margin: ${smlSpace};
   right: ${smlSpace};
 
+  &:hover,
+  &:focus-visible {
+    background-color: ${blue3};
+  }
+`;
+
+export const DragIconBtn = styled(IconButton)`
+  font-size: 1rem;
+  margin-right: ${stdSpace};
+  padding-left: 0px;
+  padding-right: 0px;
+  background-color: ${black};
+  color: ${grey3};
+
+  &:hover,
+  &:focus-visible {
+    color: ${grey4};
+    background-color: ${black};
+  }
+`;
+
+export const OptionsIconBtn = styled(IconButton)`
+  color: ${blue3};
   &:hover,
   &:focus-visible {
     background-color: ${blue3};

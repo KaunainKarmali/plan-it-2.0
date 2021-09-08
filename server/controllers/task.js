@@ -104,3 +104,85 @@ export const getTasks = async (req, res) => {
     });
   }
 };
+
+export const getTaskById = async (req, res) => {
+  const { taskId } = req.query;
+
+  // Provide error response if request is missing necessary parameters to get the tasks
+  if (!taskId) {
+    console.log("Error: Insufficient data provided in the request");
+
+    res.statusCode = 400;
+    res.statusMessage =
+      "Cannot complete request due to insufficient data provided in the request";
+    res.end();
+  } else {
+    // Find tasks from the database
+    Task.findById(taskId, (error, task) => {
+      // Send error if there is an error finding the task
+      if (error) {
+        console.log("Error: An error occurred while retrieving the task");
+
+        res.statusCode = 500;
+        res.statusMessage = "Task cannot be found due to database error";
+        res.send(error);
+      }
+
+      // Send success message with the task found
+      else if (task) {
+        console.log("Task was found successfully");
+
+        res.statusCode = 200;
+        res.statusMessage = "Task found successfully";
+        res.send(task);
+      }
+
+      // If tasks are not found, send success message stating tasks were not found
+      else {
+        console.log("Error: Task not found");
+
+        res.statusCode = 204;
+        res.statusMessage = "Task not found";
+        res.send(task);
+      }
+    });
+  }
+};
+
+export const updateDuration = async (req, res) => {
+  const { data, taskId } = req.body;
+
+  if (!taskId) {
+    console.log("Error: Insufficient data provided in the request");
+
+    res.statusCode = 400;
+    res.statusMessage =
+      "Cannot complete request due to insufficient data provided in the request";
+    res.end();
+  } else {
+    // Find tasks from the database and update the duration
+    Task.findByIdAndUpdate(taskId, { $set: { ...data } }, (error, task) => {
+      // Send error if there is an error finding the task
+      if (error) {
+        console.log("Error: An error occurred while retrieving the task");
+        res.statusCode = 500;
+        res.statusMessage = "Task cannot be found due to database error";
+        res.send(error);
+      }
+      // Send success message with the task found
+      else if (task) {
+        console.log("Task duration was updated successfully");
+        res.statusCode = 200;
+        res.statusMessage = "Task was updated successfully";
+        res.send(task);
+      }
+      // If tasks are not found, send success message stating tasks were not found
+      else {
+        console.log("Error: Task not found");
+        res.statusCode = 204;
+        res.statusMessage = "Task not found";
+        res.send(task);
+      }
+    });
+  }
+};

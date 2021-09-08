@@ -22,7 +22,10 @@ export const NavAnchor = styled(Anchor)`
   }
 `;
 
-export const FooterAnchor = styled(Anchor)`
+export const FooterAnchor = styled.a`
+  width: 100%;
+  text-decoration: none;
+  transition: 0.2s all ease-in-out;
   color: ${blue2};
   display: inline;
   position: relative;

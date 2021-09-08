@@ -15,6 +15,7 @@ import Card, {
   EditIconBtn,
 } from "./styledComponents/Task.styles";
 import TaskForm from "./TaskForm";
+import LoadingContext from "../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;
@@ -25,6 +26,9 @@ const Task = (props) => {
   // State to track when timer details
   const [timer, setTimer] = useContext(TimerContext);
 
+  // Tracks if the timer is loading or not
+  const [isLoading, setIsLoading] = useContext(LoadingContext);
+
   const handleEditClick = () => {
     setEditTask(true);
   };
@@ -34,22 +38,32 @@ const Task = (props) => {
   };
 
   const handleTimerClick = () => {
+    setIsLoading(true);
+
     // Scenario 1: Counter is off and user is turning it on
     if (!timer.on) {
-      setTimer({ on: true, taskId: task._id });
+      setTimer({
+        on: true,
+        taskId: task._id,
+        scenario: "Scenario 1",
+      });
     }
 
     // Scenario 2 / 3: Counter is turned on
     else {
       // Scenario 2: counter is on and user is clicking the same button to toggle it off
       if (task._id === timer.taskId) {
-        setTimer({ ...timer, on: false });
+        setTimer({ ...timer, taskId: "", scenario: "Scenario 2" });
       }
 
       // Scenario 3: counter is on and user is clicking a different button to transfer the counter
       else {
         // Turn off the counter to save the old task's counter
-        setTimer({ on: true, taskId: task._id });
+        setTimer({
+          ...timer,
+          taskId: task._id,
+          scenario: "Scenario 3",
+        });
       }
     }
   };

@@ -157,10 +157,11 @@ const Tasks = styled.ul`
 
 const TasksWrapper = styled.div`
   overflow: auto;
-  height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px - 150px);
+  height: calc(100vh - ${footerHeight} - ${headerHeight} - 30px - 160px);
 
   @media (max-width: ${tabletWidthLrg}) {
     max-height: 50vh;
+    height: auto;
   }
 `;
 

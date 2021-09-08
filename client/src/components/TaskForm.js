@@ -253,13 +253,13 @@ const TaskForm = (props) => {
             {/* Form footer */}
             <FormFooter>
               <ButtonContainer>
-                <SecondaryButton type="reset" onClick={handleReset}>
+                <ClearButton type="reset" onClick={handleReset}>
                   Clear
-                </SecondaryButton>
+                </ClearButton>
               </ButtonContainer>
-              <PrimaryButton type="submit" onClick={handleSubmit}>
+              <CreateButton type="submit" onClick={handleSubmit}>
                 Create
-              </PrimaryButton>
+              </CreateButton>
             </FormFooter>
           </form>
         </ModalInner>
@@ -303,6 +303,11 @@ const FormFooter = styled.div`
 const ButtonContainer = styled.div`
   display: inline-block;
   margin-right: 20px;
+
+  @media (max-width: ${tablet}) {
+    margin: 0px;
+    display: block;
+  }
 `;
 
 const DropdownContainer = styled.div`
@@ -320,6 +325,20 @@ const DropdownContainer = styled.div`
 
 const FormMain = styled.div`
   margin-right: 5px;
+`;
+
+const CreateButton = styled(PrimaryButton)`
+  @media (max-width: ${tablet}) {
+    margin-top: 10px;
+    width: 100%;
+  }
+`;
+
+const ClearButton = styled(SecondaryButton)`
+  @media (max-width: ${tablet}) {
+    margin-top: 10px;
+    width: 100%;
+  }
 `;
 
 export default TaskForm;

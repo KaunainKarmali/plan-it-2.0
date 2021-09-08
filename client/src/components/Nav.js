@@ -55,8 +55,9 @@ const NavWrapper = styled.nav`
     top: 0;
     bottom: 0;
     right: 0;
-    width: 90%;
+    width: 75%;
     max-width: 300px;
+    z-index: 1000;
 
     ${({ toggleNavMenu }) =>
       toggleNavMenu === false

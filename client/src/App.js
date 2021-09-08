@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import TimerContextProvider from "./contexts/TimerContext/TimerContextProvider";
 import UserContextProvider from "./contexts/UserContext/UserContextProvider";
+import LoadingContextProvider from "./contexts/LoadingContext/LoadingContextProvider";
 import Board from "./components/Board";
 import Projects from "./components/Projects";
 import MainWrapper from "./components/styledComponents/MainWrapper.styles";
@@ -19,37 +20,39 @@ const App = () => {
 
   return (
     <div>
-      <UserContextProvider setError={setError}>
-        <TimerContextProvider>
-          <Router>
-            <Wrapper>
-              <Header
-                toggleNavMenu={toggleNavMenu}
-                setToggleNavMenu={setToggleNavMenu}
-              />
-              <Nav
-                toggleNavMenu={toggleNavMenu}
-                setToggleNavMenu={setToggleNavMenu}
-              />
-              <MainWrapper>
-                <Switch>
-                  <Route exact path="/">
-                    <Projects />
-                  </Route>
-                  <Route exact path="/projects">
-                    <Projects />
-                  </Route>
-                  <Route exact path="/tasks/:projectId">
-                    <Board />
-                  </Route>
-                </Switch>
-              </MainWrapper>
-            </Wrapper>
-            <Footer />
-            {error.error && <ErrorModal error={error} setError={setError} />}
-          </Router>
-        </TimerContextProvider>
-      </UserContextProvider>
+      <LoadingContextProvider>
+        <UserContextProvider setError={setError}>
+          <TimerContextProvider>
+            <Router>
+              <Wrapper>
+                <Header
+                  toggleNavMenu={toggleNavMenu}
+                  setToggleNavMenu={setToggleNavMenu}
+                />
+                <Nav
+                  toggleNavMenu={toggleNavMenu}
+                  setToggleNavMenu={setToggleNavMenu}
+                />
+                <MainWrapper>
+                  <Switch>
+                    <Route exact path="/">
+                      <Projects />
+                    </Route>
+                    <Route exact path="/projects">
+                      <Projects />
+                    </Route>
+                    <Route exact path="/tasks/:projectId">
+                      <Board />
+                    </Route>
+                  </Switch>
+                </MainWrapper>
+              </Wrapper>
+              <Footer />
+              {error.error && <ErrorModal error={error} setError={setError} />}
+            </Router>
+          </TimerContextProvider>
+        </UserContextProvider>
+      </LoadingContextProvider>
     </div>
   );
 };

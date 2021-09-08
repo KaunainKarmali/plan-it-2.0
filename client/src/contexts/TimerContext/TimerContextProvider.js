@@ -6,6 +6,7 @@ const TimerContextProvider = (props) => {
   const [timer, setTimer] = useState({
     on: false,
     taskId: "",
+    scenario: "",
   });
 
   return (
