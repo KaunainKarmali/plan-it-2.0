@@ -9,6 +9,7 @@ import userRoutes from "./routes/user.js";
 import projectRoutes from "./routes/project.js";
 import listRoutes from "./routes/list.js";
 import taskRoutes from "./routes/task.js";
+import mongoUrl from "./settings.js";
 
 // setup app
 const app = express();
@@ -24,10 +25,8 @@ app.use("/project", projectRoutes);
 app.use("/list", listRoutes);
 app.use("/task", taskRoutes);
 
-// connect to local database
-const CONNECTION_URL = "mongodb://localhost:27017/userDB";
-// connect to mongoDB Atlas
-// const CONNECTION_URL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.xwdfx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+// connect to mongo
+const CONNECTION_URL = mongoUrl;
 
 mongoose
   .connect(CONNECTION_URL, {
