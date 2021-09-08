@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { blue3, red1, black } from "../variables/colours";
+import { red1, black } from "../variables/colours";
 import { smlSpace, stdSpace } from "../variables/spacing";
 import { IconButton } from "./styledComponents/Buttons.styles";
 

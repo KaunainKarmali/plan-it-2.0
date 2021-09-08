@@ -1,12 +1,11 @@
 import { NavAnchor } from "./styledComponents/Anchor.styles";
 
 const NavLink = (props) => {
-  const { to, name, setToggleNavMenu, toggleNavMenu } = props;
+  const { to, name, setToggleNavMenu } = props;
 
   return (
     <li
       onClick={() => {
-        console.log(toggleNavMenu);
         setToggleNavMenu(false);
       }}
     >
