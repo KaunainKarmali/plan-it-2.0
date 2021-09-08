@@ -11,6 +11,7 @@ import Board from "./components/Board";
 import Projects from "./components/Projects";
 import MainWrapper from "./components/styledComponents/MainWrapper.styles";
 import ErrorModal from "./components/ErrorModal";
+import Dashboard from "./components/Dashboard";
 
 const App = () => {
   // Tracks if an error occurred when trying to fetch or create a user
@@ -37,6 +38,9 @@ const App = () => {
                   <Switch>
                     <Route exact path="/">
                       <Projects />
+                    </Route>
+                    <Route exact path="/dashboard">
+                      <Dashboard />
                     </Route>
                     <Route exact path="/projects">
                       <Projects />
