@@ -4,7 +4,6 @@ import TimerContext from "../contexts/TimerContext";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Card, {
   Title,
-  Description,
   TaskCloseIconBtn,
   CardFooter,
   DateContainer,
@@ -19,7 +18,7 @@ import LoadingContext from "../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;
-  const { title, description, dueDate } = task;
+  const { title, dueDate } = task;
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
@@ -27,7 +26,7 @@ const Task = (props) => {
   const [timer, setTimer] = useContext(TimerContext);
 
   // Tracks if the timer is loading or not
-  const [isLoading, setIsLoading] = useContext(LoadingContext);
+  const [, setIsLoading] = useContext(LoadingContext);
 
   const handleEditClick = () => {
     setEditTask(true);

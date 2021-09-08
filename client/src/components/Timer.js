@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import TimerContext from "../contexts/TimerContext";
-import firebase from "../firebase";
 import { stdBR } from "../variables/borders";
 import {
   blue1,
@@ -37,7 +36,7 @@ const Timer = () => {
   const [error, setError] = useState(false);
 
   // Tracks if the timer is loading or not
-  const [isLoading, setIsLoading] = useContext(LoadingContext);
+  const [, setIsLoading] = useContext(LoadingContext);
 
   useEffect(() => {
     // Goes to the back end to fetch the start time for the task

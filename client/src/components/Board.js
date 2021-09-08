@@ -36,7 +36,7 @@ const Board = () => {
   const [timer] = useContext(TimerContext);
 
   // Tracks if the timer is loading or not
-  const [isLoading, setIsLoading] = useContext(LoadingContext);
+  const [isLoading] = useContext(LoadingContext);
 
   // Tracks the names of all the lists that the
   useEffect(() => {
