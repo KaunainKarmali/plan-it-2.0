@@ -36,7 +36,7 @@ Begin using the app by performing the following:
   * Run `npm start` while in the client folder
 
 3. Update the .env file which stores mongoDB credentials
- * Rename the `.env.local` file to `.env`
+ * Rename the `.env.example` file to `.env`
  * In the file, update the mongo DB username under `MONGODB_USERNAME=` and the mongo DB password under `MONGODB_PASSWORD=`
 
 4. Begin running the server
