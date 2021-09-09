@@ -11,18 +11,18 @@ This is a re-factored version of planIt (version 1.0). The original version's re
 ### Key features
 
 The following key features exist:
-* Create, edit, and delete multiple tasks with deadlines
+* Create multiple projects, lists and tasks with deadlines
 * Track time spent on each task
+* Tracks and saves user progress without requiring a user to sign-in or log-in
 
 ### Project status
 
 While this project is functional, it is a re-factored version of the original planIt (version 1) app, and I am working on migrating additional key functionalities. Therefore, this project is currently in development. 
 
 Currently working on the following features:
-* Shifting away from firebase and migrating the backend functionality from version 1.0
-* Migrating the functionality for each user to have a personal task board
-* Migrating the functionality to create multiple projects
-* Improving site responsiveness
+* Migrating the ability to edit and delete tasks
+* Adding the ability to edit and delete projects and lists
+* Building a dashboard for users to oversee their progress
 
 ## Getting started
 
@@ -30,11 +30,25 @@ Begin using the app by performing the following:
 
 1. Clone down this repository. You will need `node` or `nodemon` and `npm` installed globally on your machine.
 
-2. Begin running the app in your terminal
+2. Begin running the UI
+  * Run `cd client` to get into the client folder
   * Run `npm i` to install dependencies
-  * Run `npm start` while in the root folder
+  * Run `npm start` while in the client folder
 
-3. To use the app, go to `localhost:3000` on your browser
+3. Update the .env file which stores mongoDB credentials
+ * Rename the `.env.local` file to `.env`
+ * In the file, update the mongo DB username under `MONGODB_USERNAME=` and the mongo DB password under `MONGODB_PASSWORD=`
+
+4. Begin running the server
+  * Run `cd server` to get into the server folder
+  * Run `npm i` to install dependencies
+  * Run `node index.js` or `nodemon index.js` while in the server folder
+
+5. To visit and use the app:
+  * Go to `localhost:3000` on your browser
+  * Click on start free trial button to use the app as a guest
+  * Create a new project by selecting the `+` button
+  * Clicking on the project once it is created to begin adding tasks
 
 ## Technology used
 
@@ -44,9 +58,8 @@ The following tech stack was used in the development of planIt:
 * JavaScript (ES6)
 * React
 * Node JS
-* Express
+* Express JS
 * MongoDB
-* Material-UI library
 
 ## Reflection
 
@@ -62,9 +75,20 @@ My technical challenge for planIt (version 2) was around making incremental deci
 
 Refer to the README of planIt (version 1) [here](https://github.com/KaunainKarmali/planIt/tree/production) for technical challenges in version 1. 
 
+### Update #1
+
+There have been significant updates and refactoring progress made. Below is a highlight of key features added:
+* Migrated the backend from firebase and to node, express, and mongoDB 
+* Redesigned the model schemas from version 1.0 to improve code quality 
+* Added the functionality for users to create multiple projects and lists
+* Added the functionality for each user to have their own projects, boards, and tasks instead of one shared globally across all users
+* Refactored the Timer component tracking time spent on a task to improve simplify its logic and increase code readability  
+* Improved site responsiveness and made styling fixes to provide a consistent user experience 
+* Included fixes to achieve the goal of incorporating coding best practices and accessibility considerations that I learned throughout my bootcamp
+
 ### Next steps
 
-I am currently working on developing version 2.0 of planIt using my own custom components, instead of relying on the material-UI library. Version 2.0 is also aimed at incorporating coding best practices and accessibility considerations that I learned throughout my bootcamp.
+The refactoring of version 1.0 of planIt is well on its way! My next steps are to add edit and delete functionality for projects, lists and tasks. 
 
 ## Contribute
 
