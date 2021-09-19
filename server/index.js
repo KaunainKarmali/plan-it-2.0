@@ -1,15 +1,19 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 // module imports
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import { mongoUrl, graphiql } from "./settings.js";
+
+// graphql imports
+import { graphqlHTTP } from "express-graphql";
+import rootValue from "./graphql/resolver/index.js";
+import schema from "./graphql/schema/index.js";
+
+// routes imports
 import userRoutes from "./routes/user.js";
 import projectRoutes from "./routes/project.js";
 import listRoutes from "./routes/list.js";
 import taskRoutes from "./routes/task.js";
-import mongoUrl from "./settings.js";
 
 // setup app
 const app = express();
@@ -19,22 +23,32 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 5000;
 
-// setup app middleware
+// graphQl route
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: rootValue,
+    graphiql: graphiql,
+  })
+);
+
+// REST api middleware
 app.use("/user", userRoutes);
 app.use("/project", projectRoutes);
 app.use("/list", listRoutes);
 app.use("/task", taskRoutes);
 
-// connect to mongo
+// connect to mongoose
 const CONNECTION_URL = mongoUrl;
 
-mongoose
-  .connect(CONNECTION_URL, {
+try {
+  await mongoose.connect(CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.get("/", (req, res) => res.send("Greetings from the back-end!"));
-    app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
-  })
-  .catch((error) => console.log(error));
+  });
+  app.get("/", (req, res) => res.send("Greetings from the back-end!"));
+  app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+} catch (error) {
+  console.log(error);
+}
