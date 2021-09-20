@@ -1,4 +1,4 @@
-import { List, Project } from "../models/index.js";
+import { List, Project } from "../mongo/models/index.js";
 
 export const createList = async (req, res) => {
   const { data, projectId } = req.body;

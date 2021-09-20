@@ -1,4 +1,4 @@
-import User from "../models/index.js";
+import User from "../mongo/models/index.js";
 
 export const getUser = async (req, res) => {
   const { fp } = req.query;

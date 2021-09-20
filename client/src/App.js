@@ -1,62 +1,54 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Wrapper from "./components/styledComponents/Wrapper.styles";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
+import { useState, useEffect } from "react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { uri } from "./settings";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import TimerContextProvider from "./contexts/TimerContext/TimerContextProvider";
 import UserContextProvider from "./contexts/UserContext/UserContextProvider";
 import LoadingContextProvider from "./contexts/LoadingContext/LoadingContextProvider";
-import Board from "./components/Board";
-import Projects from "./components/Projects";
-import MainWrapper from "./components/styledComponents/MainWrapper.styles";
+import Routes from "./Routes";
 import ErrorModal from "./components/ErrorModal";
-import Dashboard from "./components/Dashboard";
+import Loading from "./components/Loading";
 
 const App = () => {
-  // Tracks if an error occurred when trying to fetch or create a user
-  const [error, setError] = useState({ error: false, message: "" });
+  // Connect to Apollo
+  const client = new ApolloClient({
+    uri: uri,
+    cache: new InMemoryCache(),
+  });
 
-  const [toggleNavMenu, setToggleNavMenu] = useState(false);
+  const [fp, setFp] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Generate the user's fingerprint
+  // Library reference: https://github.com/fingerprintjs/fingerprintjs
+  const createFp = async () => {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+    return result.visitorId;
+  };
+
+  useEffect(() => {
+    createFp()
+      .then((result) => setFp(result))
+      .catch((error) => setError(true))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorModal />;
 
   return (
     <div>
-      <LoadingContextProvider>
-        <UserContextProvider setError={setError}>
-          <TimerContextProvider>
-            <Router>
-              <Wrapper>
-                <Header
-                  toggleNavMenu={toggleNavMenu}
-                  setToggleNavMenu={setToggleNavMenu}
-                />
-                <Nav
-                  toggleNavMenu={toggleNavMenu}
-                  setToggleNavMenu={setToggleNavMenu}
-                />
-                <MainWrapper>
-                  <Switch>
-                    <Route exact path="/">
-                      <Projects />
-                    </Route>
-                    <Route exact path="/dashboard">
-                      <Dashboard />
-                    </Route>
-                    <Route exact path="/projects">
-                      <Projects />
-                    </Route>
-                    <Route exact path="/tasks/:projectId">
-                      <Board />
-                    </Route>
-                  </Switch>
-                </MainWrapper>
-              </Wrapper>
-              <Footer />
-              {error.error && <ErrorModal error={error} setError={setError} />}
-            </Router>
-          </TimerContextProvider>
-        </UserContextProvider>
-      </LoadingContextProvider>
+      <ApolloProvider client={client}>
+        <LoadingContextProvider>
+          <UserContextProvider fp={fp}>
+            <TimerContextProvider>
+              <Routes />
+            </TimerContextProvider>
+          </UserContextProvider>
+        </LoadingContextProvider>
+      </ApolloProvider>
     </div>
   );
 };
