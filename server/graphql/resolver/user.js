@@ -7,7 +7,11 @@ export const createUser = async (fp) => {
     const exists = await User.findOne({ fp: fp });
 
     if (exists) {
-      throw new Error("User already exists");
+      return {
+        __typename: "UserExists",
+        fp: fp,
+        message: "User exists.",
+      };
     }
 
     // Create and save new user
@@ -15,6 +19,7 @@ export const createUser = async (fp) => {
     const result = await user.save();
 
     return {
+      __typename: "User",
       ...result._doc,
       _id: result.id,
       created: new Date(result._doc.created).toISOString(),
@@ -31,10 +36,11 @@ export const getUser = async (fp) => {
     const result = await User.findOne({ fp: fp });
 
     if (!result) {
-      throw new Error("User not found");
+      return { __typename: "UserNotFound", fp: fp, message: "User not found." };
     }
 
     return {
+      __typename: "User",
       ...result._doc,
       _id: result.id,
       created: new Date(result._doc.created).toISOString(),

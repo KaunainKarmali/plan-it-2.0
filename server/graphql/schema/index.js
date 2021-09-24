@@ -2,11 +2,25 @@ import { buildSchema } from "graphql";
 
 const schema = buildSchema(`
   type User {
-      _id: ID!
-      fp: String!
-      created: String!
-      projects: [Project!]
+    _id: ID!
+    fp: String!
+    created: String!
+    projects: [Project!]
   }
+
+  type UserNotFound {
+    fp: String!
+    message: String!
+  }
+
+  type UserExists {
+    fp: String!
+    message: String!
+  }
+
+  union GetUserResult = User | UserNotFound
+
+  union CreateUserResult = User | UserExists
 
   type Project {
     _id: ID!
@@ -16,11 +30,11 @@ const schema = buildSchema(`
   }
 
   type RootQuery {
-    user(fp: String!): User!
+    user(fp: String!): GetUserResult!
   }
 
   type RootMutation {
-    createUser(fp: String!): User!
+    createUser(fp: String!): CreateUserResult!
   }
 
   schema {
