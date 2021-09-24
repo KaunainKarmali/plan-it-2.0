@@ -44,18 +44,3 @@ const schema = buildSchema(`
 `);
 
 export default schema;
-
-// {
-//   user(fp:"bd32f20bb33a6c01b75d60ac90e0a8d7") {
-//     fp
-//     _id
-//     created
-//   }
-// }
-
-// mutation{
-//   createUser(fp:"bd32f20bb33a6c01b75d60ac90e0a8d7") {
-//     fp
-//     created
-//   }
-// }
