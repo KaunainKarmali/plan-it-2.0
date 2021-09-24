@@ -30,25 +30,24 @@ Begin using the app by performing the following:
 
 1. Clone down this repository. You will need `node` or `nodemon` and `npm` installed globally on your machine.
 
-2. Begin running the UI
+2. Install dependencies for UI and sever
   * Run `cd client` to get into the client folder
-  * Run `npm i` to install dependencies
-  * Run `npm start` while in the client folder
+  * Run `npm i` to install dependencies in the client folder
+  * Run `cd server` to get into the server folder
+  * Run `npm i` to install dependencies in the client folder
 
 3. Update the .env file which stores mongoDB credentials
  * Rename the `.env.example` file to `.env`
  * In the file, update the mongo DB username under `MONGODB_USERNAME=` and the mongo DB password under `MONGODB_PASSWORD=`
 
-4. Begin running the server
-  * Run `cd server` to get into the server folder
-  * Run `npm i` to install dependencies
-  * Run `node index.js` or `nodemon index.js` while in the server folder
+4. Begin running the ap
+  * Run `cd server` to get into server folder
+  * Run `npm run dev` to start client and server
 
 5. To visit and use the app:
   * Go to `localhost:3000` on your browser
-  * Click on start free trial button to use the app as a guest
-  * Create a new project by selecting the `+` button
-  * Clicking on the project once it is created to begin adding tasks
+  * Create a new project `NEW PROJECT` button
+  * Click on the project once it is created to begin adding lists and tasks
 
 ## Technology used
 
@@ -60,6 +59,8 @@ The following tech stack was used in the development of planIt:
 * Node JS
 * Express JS
 * MongoDB
+* GraphQL
+* RESTful APIs
 
 ## Reflection
 
@@ -85,6 +86,14 @@ There have been significant updates and refactoring progress made. Below is a hi
 * Refactored the Timer component tracking time spent on a task to improve simplify its logic and increase code readability  
 * Improved site responsiveness and made styling fixes to provide a consistent user experience 
 * Included fixes to achieve the goal of incorporating coding best practices and accessibility considerations that I learned throughout my bootcamp
+
+### Update #2
+
+I began learning GraphQL and have started to incorporate it! Below are highlights of GraphQL additions made:
+* Create `/graphql` route, schemas, and resolvers in the back end to `GET_USER` and `CREATE_USER`
+* Connected `/graphql` route to mongoDB
+* Created query to `GET_USER` and mutation to `CREATE_USER` in the front-end and connected it to the back-end `/graphql` route
+* Added loading and error states to manage `GET_USER` and `CREATE_USER` functionality
 
 ### Next steps
 
