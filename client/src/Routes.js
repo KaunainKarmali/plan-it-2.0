@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Wrapper from "./components/styledComponents/Wrapper.styles";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
-import Board from "./components/Board";
-import Projects from "./components/Projects";
+import Header from "./components/header/index.js";
+import Footer from "./components/footer/index.js";
+import Nav from "./components/nav/index.js";
+import Board from "./components/board/index.js";
+import Projects from "./components/projects/index.js";
 import MainWrapper from "./components/styledComponents/MainWrapper.styles";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/dashboard/index.js";
 
 const Routes = () => {
   const [toggleNavMenu, setToggleNavMenu] = useState(false);

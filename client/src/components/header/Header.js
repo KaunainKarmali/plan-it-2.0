@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Logo from "./Logo";
-import { tabletWidthLrg } from "../variables/screen";
-import { IconButton } from "./styledComponents/Buttons.styles";
-import { black, blue3 } from "../variables/colours";
+import Logo from "../Logo";
+import { tabletWidthLrg } from "../../variables/screen";
+import { IconButton } from "../styledComponents/Buttons.styles";
+import { black, blue3 } from "../../variables/colours";
 
 const Header = (props) => {
   const { toggleNavMenu, setToggleNavMenu } = props;

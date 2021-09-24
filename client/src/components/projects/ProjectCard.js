@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import ProjectCardWrapper from "./styledComponents/ProjectCardWrapper.styles";
-import { black, blue1, blue3, white1 } from "../variables/colours";
-import { stdBR } from "../variables/borders";
+import ProjectCardWrapper from "../styledComponents/ProjectCardWrapper.styles";
+import { black, blue1, blue3, white1 } from "../../variables/colours";
+import { stdBR } from "../../variables/borders";
 
 const ProjectCard = (props) => {
   const { project } = props;

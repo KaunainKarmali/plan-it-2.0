@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components/macro";
-import { stdBR } from "../variables/borders";
-import { black, grey1 } from "../variables/colours";
-import { smlSpace, stdSpace } from "../variables/spacing";
-import { navWidth } from "../variables/widths";
+import { stdBR } from "../../variables/borders";
+import { black, grey1 } from "../../variables/colours";
+import { smlSpace, stdSpace } from "../../variables/spacing";
+import { navWidth } from "../../variables/widths";
 import NavLink from "./NavLink";
-import { tabletWidthLrg } from "../variables/screen";
-import { getRGBvalue } from "../utils";
+import { tabletWidthLrg } from "../../variables/screen";
+import { getRGBvalue } from "../../utils";
 
 const Nav = (props) => {
   const { toggleNavMenu, setToggleNavMenu } = props;

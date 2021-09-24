@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import List from "./List";
-import TimerContext from "../contexts/TimerContext/TimerContext";
-import Timer from "./Timer";
-import CreateListForm from "./CreateListForm";
-import { serverUrl } from "../settings";
-import ErrorModal from "./ErrorModal";
-import { black, blue3, green1, green3 } from "../variables/colours";
-import { PrimaryButton } from "./styledComponents/Buttons.styles";
-import { mobile, tabletWidthLrg } from "../variables/screen";
-import LoadingContext from "../contexts/LoadingContext";
-import Loading from "./Loading";
+import List from "../List";
+import TimerContext from "../../contexts/TimerContext/TimerContext";
+import Timer from "../Timer";
+import CreateListForm from "../CreateListForm";
+import { serverUrl } from "../../settings";
+import ErrorModal from "../ErrorModal";
+import { black, blue3, green1, green3 } from "../../variables/colours";
+import { PrimaryButton } from "../styledComponents/Buttons.styles";
+import { mobile, tabletWidthLrg } from "../../variables/screen";
+import LoadingContext from "../../contexts/LoadingContext";
+import Loading from "../Loading";
 
 const Board = () => {
   // Tracks if an error occurred during the fetch and displays message to the user

@@ -1,14 +1,16 @@
 import { useState, useContext, useEffect } from "react";
-import styled from "styled-components";
-import CreateProjectForm from "./CreateProjectForm";
+import CreateProjectForm from "../CreateProjectForm";
 import ProjectCard from "./ProjectCard";
-import { serverUrl } from "../settings";
-import UserContext from "../contexts/UserContext";
-import { black, green1, green3 } from "../variables/colours";
-import ErrorModal from "./ErrorModal";
-import { blue3 } from "../variables/colours";
-import { PrimaryButton } from "./styledComponents/Buttons.styles";
-import { tablet, mobile } from "../variables/screen";
+import { serverUrl } from "../../settings";
+import UserContext from "../../contexts/UserContext";
+import ErrorModal from "../ErrorModal";
+import {
+  MainHeaderContainer,
+  MainHeaderTitle,
+} from "../generalStyledComponents/MainHeader.styles";
+import { MainContainer } from "../generalStyledComponents/MainContainer.styles";
+import { PrimaryButton } from "../generalStyledComponents/Buttons.styles";
+import { ProjectsListContainer } from "./Projects.styles";
 
 const Projects = () => {
   // Tracks if an error occurred during the fetch and displays message to the user
@@ -113,87 +115,35 @@ const Projects = () => {
       });
   };
 
+  if (openCreateProjectForm) {
+    return (
+      <CreateProjectForm
+        setOpenCreateProjectForm={setOpenCreateProjectForm}
+        createProject={createProject}
+      />
+    );
+  }
+
+  if (error.error) return <ErrorModal error={error} setError={setError} />;
+
   return (
     <div>
-      <HeaderContainer>
-        <Header>Your projects</Header>
-        <CreateButton onClick={() => setOpenCreateProjectForm(true)}>
+      <MainHeaderContainer>
+        <MainHeaderTitle>Your projects</MainHeaderTitle>
+        <PrimaryButton onClick={() => setOpenCreateProjectForm(true)}>
           New project
-        </CreateButton>
-      </HeaderContainer>
-      <Container>
-        <Wrapper>
+        </PrimaryButton>
+      </MainHeaderContainer>
+      <MainContainer>
+        <ProjectsListContainer>
           {projects &&
             projects.map((project, index) => (
               <ProjectCard key={index} project={project}></ProjectCard>
             ))}
-        </Wrapper>
-      </Container>
-      {openCreateProjectForm && (
-        <CreateProjectForm
-          setOpenCreateProjectForm={setOpenCreateProjectForm}
-          createProject={createProject}
-        />
-      )}
-      {error.error && <ErrorModal error={error} setError={setError} />}
+        </ProjectsListContainer>
+      </MainContainer>
     </div>
   );
 };
 
 export default Projects;
-
-const Wrapper = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  row-gap: 10px;
-  column-gap: 10px;
-
-  @media (max-width: ${tablet}) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: ${mobile}) {
-    grid-template-columns: 1fr;
-  } ;
-`;
-
-const Container = styled.div`
-  overflow-y: auto;
-  max-height: calc(100vh - 47px - 64px - 35px - 22px);
-  border-radius: 5px;
-`;
-
-const Header = styled.h2`
-  font-size: 2rem;
-
-  @media (max-width: ${mobile}) {
-    font-size: 1.5rem;
-  }
-`;
-
-const HeaderContainer = styled.div`
-  padding-bottom: 10px;
-  border-bottom: 2px solid ${blue3};
-  margin-bottom: 20px;
-  color: ${blue3};
-  display: flex;
-  justify-content: space-between;
-`;
-
-const CreateButton = styled(PrimaryButton)`
-  background-color: ${green1};
-  font-size: 1rem;
-  padding: 10px;
-  font-weight: 700;
-
-  &:hover,
-  &:focus-visible {
-    background-color: ${green3};
-    color: ${black};
-  }
-
-  @media (max-width: ${mobile}) {
-    font-size: 0.9rem;
-    padding: 8px 10px;
-  }
-`;

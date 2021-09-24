@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
-import firebase from "../firebase";
+// import firebase from "../firebase";
 import { black, blue1, grey3, grey4, grey5 } from "../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
@@ -15,20 +15,20 @@ const DeleteConfirmation = (props) => {
   const { taskId, taskObj, setDeleteTask } = props;
 
   // Hold dbref between re-renders
-  const dbRef = useRef(null);
+  // const dbRef = useRef(null);
 
   useEffect(() => {
     // Create reference to firebase db on mount
-    dbRef.current = firebase.database().ref("tasks/" + taskId);
+    // dbRef.current = firebase.database().ref("tasks/" + taskId);
   }, [taskId]);
 
   const handleDeleteClick = () => {
-    dbRef.current.remove();
-    setDeleteTask(false);
+    // dbRef.current.remove();
+    // setDeleteTask(false);
   };
 
   const handleCancelClick = () => {
-    setDeleteTask(false);
+    // setDeleteTask(false);
   };
 
   return (

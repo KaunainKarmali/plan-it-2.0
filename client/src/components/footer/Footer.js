@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { grey1, white2 } from "../variables/colours";
-import { footerHeight } from "../variables/heights";
-import { stdSpace } from "../variables/spacing";
-import { FooterAnchor } from "./styledComponents/Anchor.styles";
+import { grey1, white2 } from "../../variables/colours";
+import { footerHeight } from "../../variables/heights";
+import { stdSpace } from "../../variables/spacing";
+import { FooterAnchor } from "../styledComponents/Anchor.styles";
 
 const Footer = () => {
   const date = new Date();
