@@ -42,6 +42,8 @@ app.use("/task", taskRoutes);
 // connect to mongoose
 const CONNECTION_URL = mongoUrl;
 
+console.log(CONNECTION_URL);
+
 try {
   await mongoose.connect(CONNECTION_URL, {
     useNewUrlParser: true,

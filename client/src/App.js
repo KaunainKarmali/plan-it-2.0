@@ -14,6 +14,9 @@ const App = () => {
   const client = new ApolloClient({
     uri: uri,
     cache: new InMemoryCache(),
+    fetchOptions: {
+      mode: "no-cors",
+    },
   });
 
   const [fp, setFp] = useState("");
