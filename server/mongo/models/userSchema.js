@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 // user schema
 const userSchema = new mongoose.Schema({
   fp: { type: String, required: true },
-  userCreationDate: {
+  created: {
     type: Date,
     default: new Date(),
     required: true,

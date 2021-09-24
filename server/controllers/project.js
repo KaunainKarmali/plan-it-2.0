@@ -1,4 +1,4 @@
-import User, { Project } from "../models/index.js";
+import User, { Project } from "../mongo/models/index.js";
 
 export const createProject = async (req, res) => {
   const { data, fp } = req.body;

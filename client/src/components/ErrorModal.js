@@ -8,21 +8,20 @@ import ClosePopup from "./ClosePopup";
 
 // TODO: Refactor styles with DeleteConfirmation component
 const ErrorModal = (props) => {
-  const { error, setError } = props;
-
-  const handleClose = () => {
-    setError({ error: false, message: "" });
-  };
+  const { setError } = props;
 
   return (
     <ModalOuter>
       <CustomModalInner>
         <Header>
           <Heading>Error</Heading>
-          <ClosePopup handleClose={handleClose} />
+          <ClosePopup handleClose={() => setError(false)} />
         </Header>
         <Main>
-          <TaskDescription>{error.message}</TaskDescription>
+          <TaskDescription>
+            An error occurred when processing your request. Please try again
+            later.
+          </TaskDescription>
         </Main>
       </CustomModalInner>
     </ModalOuter>

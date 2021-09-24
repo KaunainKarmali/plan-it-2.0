@@ -1,4 +1,4 @@
-import { List, Task } from "../models/index.js";
+import { List, Task } from "../mongo/models/index.js";
 
 export const createTask = async (req, res) => {
   const { data, listId } = req.body;
