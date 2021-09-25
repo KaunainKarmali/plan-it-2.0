@@ -16,3 +16,23 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_PROJECTS = gql`
+  query GetProjects($fp: String!) {
+    projects(fp: $fp) {
+      __typename
+      ... on Projects {
+        projects {
+          _id
+          name
+          lists {
+            _id
+          }
+        }
+      }
+      ... on ProjectsNotFound {
+        message
+      }
+    }
+  }
+`;

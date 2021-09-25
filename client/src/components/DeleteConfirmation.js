@@ -14,21 +14,12 @@ import { mobile, tablet } from "../variables/screen";
 const DeleteConfirmation = (props) => {
   const { taskId, taskObj, setDeleteTask } = props;
 
-  // Hold dbref between re-renders
-  // const dbRef = useRef(null);
-
-  useEffect(() => {
-    // Create reference to firebase db on mount
-    // dbRef.current = firebase.database().ref("tasks/" + taskId);
-  }, [taskId]);
-
   const handleDeleteClick = () => {
-    // dbRef.current.remove();
-    // setDeleteTask(false);
+    setDeleteTask(false);
   };
 
   const handleCancelClick = () => {
-    // setDeleteTask(false);
+    setDeleteTask(false);
   };
 
   return (

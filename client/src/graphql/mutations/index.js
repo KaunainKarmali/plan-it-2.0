@@ -17,3 +17,22 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const CREATE_PROJECT = gql`
+  mutation CreateProject($projectInput: ProjectInput!) {
+    createProject(projectInput: $projectInput) {
+      __typename
+      ... on Project {
+        _id
+        name
+        lists {
+          _id
+        }
+      }
+      ... on UserNotFound {
+        fp
+        message
+      }
+    }
+  }
+`;

@@ -16,7 +16,7 @@ import { mobile, tablet } from "../variables/screen";
 // TODO: Refactor with task form
 const CreateProjectForm = (props) => {
   // Used to open / close the modal
-  const { setOpenCreateProjectForm, createProject } = props;
+  const { setOpenCreateProjectForm, createProjectMutation } = props;
 
   // Generates the current date
   const today = getTodaysDate();
@@ -119,7 +119,7 @@ const CreateProjectForm = (props) => {
 
     // Create a project in the back end if validations pass
     if (readyToSubmit) {
-      createProject(projectDetails);
+      createProjectMutation(projectDetails);
       setOpenCreateProjectForm(false);
     }
   };
