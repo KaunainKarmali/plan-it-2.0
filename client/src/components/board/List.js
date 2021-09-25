@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { stdBR } from "../variables/borders";
-import { black, grey2 } from "../variables/colours";
-import { footerHeight, headerHeight } from "../variables/heights";
-import { stdSpace } from "../variables/spacing";
-import { tabletWidthLrg } from "../variables/widths";
+import { stdBR } from "../../variables/borders";
+import { black, grey2 } from "../../variables/colours";
+import { footerHeight, headerHeight } from "../../variables/heights";
+import { stdSpace } from "../../variables/spacing";
+import { tabletWidthLrg } from "../../variables/widths";
 import ListTitle from "./ListTitle";
 import Task from "./Task";
-import { serverUrl } from "../settings";
-import TaskForm from "./TaskForm";
-import ErrorModal from "./ErrorModal";
-import { mobile } from "../variables/screen";
+import { serverUrl } from "../../settings";
+import TaskForm from "../TaskForm";
+import ErrorModal from "../ErrorModal";
+import { mobile } from "../../variables/screen";
 
 const List = (props) => {
   const { list, setToggleTaskCreated, toggleTaskCreated } = props;
@@ -117,7 +117,7 @@ const List = (props) => {
     <div>
       <ListWrapper>
         <ListTitle
-          list={list.listName}
+          list={list.name}
           setOpenCreateTaskForm={setOpenCreateTaskForm}
         />
         <TasksWrapper>

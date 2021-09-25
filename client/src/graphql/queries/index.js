@@ -25,12 +25,29 @@ export const GET_PROJECTS = gql`
         projects {
           _id
           name
+          dueDate
           lists {
             _id
           }
         }
       }
       ... on ProjectsNotFound {
+        message
+      }
+    }
+  }
+`;
+
+export const GET_LISTS = gql`
+  query GetLists($projectId: String!) {
+    lists(projectId: $projectId) {
+      __typename
+      ... on Lists {
+        lists {
+          name
+        }
+      }
+      ... on ListsNotFound {
         message
       }
     }

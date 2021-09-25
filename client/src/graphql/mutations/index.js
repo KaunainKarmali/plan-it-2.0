@@ -25,12 +25,23 @@ export const CREATE_PROJECT = gql`
       ... on Project {
         _id
         name
-        lists {
-          _id
-        }
       }
       ... on UserNotFound {
-        fp
+        message
+      }
+    }
+  }
+`;
+
+export const CREATE_LIST = gql`
+  mutation CreateList($listInput: ListInput!) {
+    createList(listInput: $listInput) {
+      __typename
+      ... on List {
+        _id
+        name
+      }
+      ... on ProjectNotFound {
         message
       }
     }

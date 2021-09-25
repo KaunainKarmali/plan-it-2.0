@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { red1, black } from "../variables/colours";
-import { smlSpace, stdSpace } from "../variables/spacing";
-import { IconButton } from "./styledComponents/Buttons.styles";
+import { red1, black } from "../../variables/colours";
+import { smlSpace, stdSpace } from "../../variables/spacing";
+import { IconButton } from "../styledComponents/Buttons.styles";
 
 const ListTitle = (props) => {
   const { list, setOpenCreateTaskForm } = props;

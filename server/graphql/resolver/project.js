@@ -24,7 +24,6 @@ export const getProjects = async (fp) => {
           created: new Date(project._doc.created).toISOString(),
           startDate: new Date(project._doc.startDate).toISOString(),
           dueDate: new Date(project._doc.dueDate).toISOString(),
-          lists: project.lists ? project.lists.map((list) => list.id) : [],
         };
       }),
     };
@@ -65,7 +64,6 @@ export const createProject = async (projectInput) => {
       created: new Date(project._doc.created).toISOString(),
       startDate: new Date(project._doc.startDate).toISOString(),
       dueDate: new Date(project._doc.dueDate).toISOString(),
-      lists: project.lists ? project.lists.map((list) => list.id) : [],
     };
   } catch (error) {
     console.log(error);

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import TimerContext from "../contexts/TimerContext";
-import { stdBR } from "../variables/borders";
+import TimerContext from "../../contexts/TimerContext";
+import { stdBR } from "../../variables/borders";
 import {
   blue1,
   grey3,
@@ -9,12 +9,12 @@ import {
   grey5,
   white1,
   black,
-} from "../variables/colours";
-import { mobile, tablet } from "../variables/screen";
-import { DurationIconBtn } from "./styledComponents/Task.styles";
-import { serverUrl } from "../settings";
-import ErrorModal from "./ErrorModal";
-import LoadingContext from "../contexts/LoadingContext";
+} from "../../variables/colours";
+import { mobile, tablet } from "../../variables/screen";
+import { DurationIconBtn } from "../styledComponents/Task.styles";
+import { serverUrl } from "../../settings";
+import ErrorModal from "../ErrorModal";
+import LoadingContext from "../../contexts/LoadingContext/index.js";
 
 const Timer = () => {
   // Tracks timer details

@@ -3,12 +3,13 @@ import timeSchema from "./timeSchema.js";
 
 // task schema
 const taskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  priority: { type: String, required: true },
-  dueDate: { type: String, required: true },
+  projectId: { type: String, required: true },
   listId: { type: String, required: true },
-  creationDate: {
+  name: { type: String, required: true },
+  description: { type: String, required: false },
+  priority: { type: String, required: true },
+  dueDate: { type: Date, required: true },
+  created: {
     type: Date,
     default: new Date(),
     required: true,

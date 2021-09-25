@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
-import TimerContext from "../contexts/TimerContext";
-import DeleteConfirmation from "./DeleteConfirmation";
+import TimerContext from "../../contexts/TimerContext";
+import DeleteConfirmation from "../DeleteConfirmation";
 import Card, {
   Title,
   TaskCloseIconBtn,
@@ -12,9 +12,9 @@ import Card, {
   Options,
   DurationIconBtn,
   EditIconBtn,
-} from "./styledComponents/Task.styles";
-import TaskForm from "./TaskForm";
-import LoadingContext from "../contexts/LoadingContext";
+} from "../styledComponents/Task.styles";
+import TaskForm from "../TaskForm";
+import LoadingContext from "../../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;

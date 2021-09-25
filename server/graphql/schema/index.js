@@ -32,6 +32,15 @@ const schema = buildSchema(`
     lists: [List!]
   }
 
+  type Projects {
+    projects: [Project!]
+  }
+
+   type ProjectNotFound {
+    projectId: String!
+    message: String!
+  }
+
   type ProjectsNotFound {
     fp: String!
     message: String!
@@ -44,10 +53,6 @@ const schema = buildSchema(`
     dueDate: String!
   }
 
-  type Projects {
-    projects: [Project!]
-  }
-
   union GetProjectsResult = Projects | ProjectsNotFound
 
   union CreateProjectResult = Project | UserNotFound
@@ -57,16 +62,56 @@ const schema = buildSchema(`
     projectId: String!
     name: String!
     created: String!
+    tasks: [Task!]
+  }
+
+  type Lists {
+    lists: [List!]
+  }
+
+  type ListsNotFound {
+    projectId: String!
+    message: String!
+  }
+
+  input ListInput {
+    projectId: String!
+    name: String!
+  }
+
+  union GetListsResult = Lists | ListsNotFound
+
+  union CreateListResult = List | ProjectNotFound
+
+  type Task {
+    _id: ID!
+    projectId: String!
+    listId: String!
+    name: String!
+    description: String
+    priority: String!
+    dueDate: String!
+    created: String!
+    duration: Int!
+    tracking: [Time]
+  }
+
+  type Time {
+    start: String!
+    end: String!
+    duration: Int!
   }
 
   type RootQuery {
     user(fp: String!): GetUserResult!
     projects(fp: String!): GetProjectsResult!
+    lists(projectId: String!): GetListsResult!
   }
 
   type RootMutation {
     createUser(fp: String!): CreateUserResult!
     createProject(projectInput: ProjectInput!): CreateProjectResult!
+    createList(listInput: ListInput!): CreateListResult!
   }
 
   schema {
