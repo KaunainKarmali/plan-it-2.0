@@ -8,17 +8,17 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  projectCreationDate: {
+  created: {
     type: Date,
     default: new Date(),
     required: true,
   },
   startDate: {
-    type: String,
+    type: Date,
     required: true,
   },
   dueDate: {
-    type: String,
+    type: Date,
     required: true,
   },
   lists: [{ type: mongoose.Schema.Types.ObjectId, ref: "List" }],
