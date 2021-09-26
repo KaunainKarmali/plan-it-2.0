@@ -47,3 +47,22 @@ export const CREATE_LIST = gql`
     }
   }
 `;
+
+export const CREATE_TASK = gql`
+  mutation CreateTask($taskInput: TaskInput!) {
+    createTask(taskInput: $taskInput) {
+      __typename
+      ... on Task {
+        name
+        dueDate
+        description
+        listId
+        priority
+      }
+      ... on ListNotFound {
+        message
+        listId
+      }
+    }
+  }
+`;

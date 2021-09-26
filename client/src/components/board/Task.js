@@ -13,7 +13,7 @@ import Card, {
   DurationIconBtn,
   EditIconBtn,
 } from "../styledComponents/Task.styles";
-import TaskForm from "../TaskForm";
+import CreateTaskForm from "../CreateTaskForm";
 import LoadingContext from "../../contexts/LoadingContext";
 
 const Task = (props) => {
@@ -101,7 +101,7 @@ const Task = (props) => {
 
       {/* Show task to edit if user decides to edit */}
       {editTask && (
-        <TaskForm
+        <CreateTaskForm
           editTask={editTask}
           setEditTask={setEditTask}
           taskObj={task}

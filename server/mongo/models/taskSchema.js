@@ -14,7 +14,7 @@ const taskSchema = new mongoose.Schema({
     default: new Date(),
     required: true,
   },
-  duration: { type: Number },
+  duration: { type: Number, default: 0 },
   tracking: [{ type: mongoose.Schema.Types.ObjectId, ref: "Time" }],
 });
 

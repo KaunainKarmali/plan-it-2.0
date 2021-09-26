@@ -66,8 +66,8 @@ const Projects = () => {
       <MainContainer>
         <ProjectsListContainer>
           {getProjects.data.projects.__typename === "Projects" &&
-            getProjects.data.projects.projects.map((project, index) => (
-              <ProjectCard key={index} project={project} />
+            getProjects.data.projects.projects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
             ))}
         </ProjectsListContainer>
       </MainContainer>

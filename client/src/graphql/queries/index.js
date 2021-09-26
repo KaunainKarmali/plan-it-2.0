@@ -45,10 +45,37 @@ export const GET_LISTS = gql`
       ... on Lists {
         lists {
           name
+          _id
         }
       }
       ... on ListsNotFound {
         message
+      }
+    }
+  }
+`;
+
+export const GET_TASKS = gql`
+  query GetTasks($projectId: String!) {
+    tasks(projectId: $projectId) {
+      __typename
+      ... on Tasks {
+        tasks {
+          _id
+          name
+          dueDate
+          description
+          listId
+          priority
+          duration
+          tracking {
+            _id
+          }
+        }
+      }
+      ... on TasksNotFound {
+        message
+        projectId
       }
     }
   }

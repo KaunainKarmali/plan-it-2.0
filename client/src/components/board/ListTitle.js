@@ -6,16 +6,12 @@ import { IconButton } from "../styledComponents/Buttons.styles";
 const ListTitle = (props) => {
   const { list, setOpenCreateTaskForm } = props;
 
-  const handleAddClick = () => {
-    setOpenCreateTaskForm(true);
-  };
-
   return (
     <ListTitleWrapper list={list}>
       <TitleContainer>
         <h2>{list}</h2>
       </TitleContainer>
-      <AddIconBtn onClick={handleAddClick}>
+      <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
         <i className="fas fa-plus"></i>
       </AddIconBtn>
     </ListTitleWrapper>

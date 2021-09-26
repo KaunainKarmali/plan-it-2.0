@@ -1,6 +1,5 @@
 import styled from "styled-components/macro";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useRef } from "react";
 import { blue1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
@@ -16,101 +15,31 @@ import Dropdown from "./Dropdown";
 import { mobile, tablet } from "../variables/screen";
 import ClosePopup from "./ClosePopup";
 import FormTitle from "./styledComponents/FormTitle.styles";
-import { serverUrl } from "../settings";
 import priorityOptions from "../variables/priority";
-import ErrorModal from "./ErrorModal";
 
-const TaskForm = (props) => {
-  const { setOpenCreateTaskForm, createTask } = props;
+const CreateTaskForm = (props) => {
+  const { setOpenCreateTaskForm, createTask, listOptions } = props;
 
-  // Retrieve the project id that the tasks are associated with
-  const { projectId } = useParams();
+  // Store today's date
+  const today = useRef(getTodaysDate());
 
-  // Stores today's date
-  const today = getTodaysDate();
-
-  const [error, setError] = useState(false);
-
-  // Saves the list names of all the lists created under a given project
-  const [listOptions, setListOptions] = useState([]);
-
-  // Tracks if the form inputs
+  // Tracks the form inputs
   const [task, setTask] = useState({
-    title: "",
+    name: "",
     description: "",
     priority: "low",
     listId: "",
-    dueDate: today,
-    creationDate: today,
+    dueDate: today.current,
   });
 
   // Tracks if the form inputs are valid
   const [isValid, setIsValid] = useState({
-    title: true,
+    name: true,
     description: true,
     priority: true,
     listId: true,
     dueDate: true,
-    creationDate: true,
   });
-
-  // Retrieve all the list names in a given project
-  useEffect(() => {
-    if (projectId !== undefined) {
-      const url = new URL(`${serverUrl}/list/get-lists`);
-      const params = { projectId: projectId };
-      url.search = new URLSearchParams(params).toString();
-
-      fetch(url)
-        .then((res) => {
-          // Check if response was successful
-          if (res.ok) {
-            // If projects were found, 200 status is returned
-            if (res.status === 200) {
-              return res.json();
-            }
-
-            // If request was successful, but project cannot be found, return false to indicate that no project was found
-            else {
-              throw new Error(res.status);
-            }
-          }
-
-          // Throw error if errors are found
-          else {
-            throw new Error(res.status);
-          }
-        })
-        .then((res) => {
-          // Save list names for a given project to be rendered to the user
-          const listNamesTemp = [];
-          res.forEach((list) => {
-            const listObj = {
-              name: list.listName,
-              value: list._id,
-            };
-            listNamesTemp.push(listObj);
-          });
-          setListOptions(listNamesTemp);
-        })
-        .catch((error) => {
-          // If errors are found, generate an error message and update error state to display error to user
-          const status = parseInt(error.message);
-          let message = "";
-
-          if (status === 500) {
-            message = "Lists cannot be found. Please try again later.";
-          } else if (status === 400) {
-            message =
-              "Project ID was not provided. Please contact the database administrator.";
-          } else {
-            message = "An error occurred while retrieving your lists.";
-          }
-
-          setError({ error: true, message: message });
-        });
-    }
-  }, [projectId]);
 
   // Update state on changes to form element
   const handleChange = (e) => {
@@ -155,21 +84,19 @@ const TaskForm = (props) => {
 
   const handleReset = () => {
     setTask({
-      title: "",
+      name: "",
       description: "",
       priority: "low",
       listId: "",
-      dueDate: today,
-      creationDate: today,
+      dueDate: today.current,
     });
 
     setIsValid({
-      title: true,
+      name: true,
       description: true,
       priority: true,
       listId: true,
       dueDate: true,
-      creationDate: true,
     });
   };
 
@@ -194,13 +121,13 @@ const TaskForm = (props) => {
               <FormMain>
                 <InputField
                   type="text"
-                  id="title"
-                  name="title"
-                  value={task.title}
+                  id="name"
+                  name="name"
+                  value={task.name}
                   onChange={handleChange}
-                  isValid={isValid.title}
-                  inputLength={task.title.length}
-                  label="Task title"
+                  isValid={isValid.name}
+                  inputLength={task.name.length}
+                  label="Task name"
                 />
                 <TextareaField
                   id="description"
@@ -264,7 +191,6 @@ const TaskForm = (props) => {
           </form>
         </ModalInner>
       </ModalOuter>
-      {error.error && <ErrorModal error={error} setError={setError} />}
     </div>
   );
 };
@@ -341,4 +267,4 @@ const ClearButton = styled(SecondaryButton)`
   }
 `;
 
-export default TaskForm;
+export default CreateTaskForm;

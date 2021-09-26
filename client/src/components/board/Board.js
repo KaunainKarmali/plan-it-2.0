@@ -1,20 +1,22 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_LISTS } from "../../graphql/queries";
-import { CREATE_LIST } from "../../graphql/mutations";
-import styled from "styled-components";
+import { GET_LISTS, GET_TASKS } from "../../graphql/queries";
+import { CREATE_LIST, CREATE_TASK } from "../../graphql/mutations";
 import List from "./List";
 import TimerContext from "../../contexts/TimerContext/index.js";
 import Timer from "./Timer";
 import CreateListForm from "../CreateListForm";
-import { serverUrl } from "../../settings";
 import ErrorModal from "../ErrorModal";
-import { black, blue3, green1, green3 } from "../../variables/colours";
-import { PrimaryButton } from "../styledComponents/Buttons.styles";
-import { mobile, tabletWidthLrg } from "../../variables/screen";
-import LoadingContext from "../../contexts/LoadingContext/index.js";
+import { PrimaryButton } from "../generalStyledComponents/Buttons.styles";
 import Loading from "../Loading";
+import {
+  MainHeaderContainer,
+  MainHeaderTitle,
+} from "../generalStyledComponents/MainHeader.styles";
+import { MainContainer } from "../generalStyledComponents/MainContainer.styles";
+import { ListsContainer } from "./Board.styles";
+import CreateTaskForm from "../CreateTaskForm";
 
 const Board = () => {
   // Extract project id associated with the board
@@ -22,6 +24,9 @@ const Board = () => {
 
   // Tracks when the user clicks on the button to create a new custom list
   const [openCreateListForm, setOpenCreateListForm] = useState(false);
+
+  // Tracks when the user clicks on the button to create a new custom task
+  const [openCreateTaskForm, setOpenCreateTaskForm] = useState(false);
 
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
@@ -31,7 +36,7 @@ const Board = () => {
     variables: { projectId },
   });
 
-  // Create new ;ost in db
+  // Create new list in the db
   const [createListMutation, createList] = useMutation(CREATE_LIST, {
     refetchQueries: [
       {
@@ -42,9 +47,64 @@ const Board = () => {
     awaitRefetchQueries: true,
   });
 
+  // Get tasks using project id
+  const getTasks = useQuery(GET_TASKS, {
+    variables: { projectId },
+  });
+
+  // Create new list in the db
+  const [createTaskMutation, createTask] = useMutation(CREATE_TASK, {
+    refetchQueries: [
+      {
+        query: GET_TASKS,
+        variables: { projectId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
+
+  const extractLists = (getLists) => {
+    const { __typename, lists } = getLists.data.lists;
+
+    if (__typename === "Lists") {
+      return lists.map((list) => {
+        return { value: list._id, name: list.name };
+      });
+    } else {
+      return [];
+    }
+  };
+
+  // Re-arrange tasks to be organized by list id
+  const extractTasks = (getTasks) => {
+    const { __typename, tasks } = getTasks.data.tasks;
+
+    const tasksByList = {};
+
+    if (__typename === "Tasks") {
+      tasks.forEach((task) => {
+        const listId = task.listId;
+
+        if (listId in tasksByList) {
+          tasksByList[listId].push(task);
+        } else {
+          tasksByList[listId] = [task];
+        }
+      });
+    }
+    return tasksByList;
+  };
+
   // Loading and error states
-  if (getLists.error || createList.error) return <ErrorModal />;
-  if (getLists.loading || createList.loading) return <Loading />;
+  if (getLists.error || createList.error || getTasks.error || createTask.error)
+    return <ErrorModal />;
+  if (
+    getLists.loading ||
+    createList.loading ||
+    getTasks.loading ||
+    createTask.loading
+  )
+    return <Loading />;
 
   // Toggle form to create a new list
   if (openCreateListForm)
@@ -58,92 +118,43 @@ const Board = () => {
       />
     );
 
-  const { lists } = getLists.data;
+  // Toggle form to create a new task
+  if (openCreateTaskForm)
+    return (
+      <CreateTaskForm
+        setOpenCreateTaskForm={setOpenCreateTaskForm}
+        createTask={(taskDetails) => {
+          const data = { taskInput: { ...taskDetails, projectId: projectId } };
+          createTaskMutation({ variables: data });
+        }}
+        listOptions={extractLists(getLists)}
+      />
+    );
 
   return (
     <div>
-      <HeaderContainer>
-        <Header>Your board</Header>
-        <CreateButton onClick={() => setOpenCreateListForm(true)}>
+      <MainHeaderContainer>
+        <MainHeaderTitle>Your board</MainHeaderTitle>
+        <PrimaryButton onClick={() => setOpenCreateListForm(true)}>
           New list
-        </CreateButton>
-      </HeaderContainer>
-      <Container>
-        <Wrapper>
-          {lists.__typename === "Lists" &&
-            lists.lists.map((list) => (
+        </PrimaryButton>
+      </MainHeaderContainer>
+      <MainContainer>
+        <ListsContainer>
+          {getLists.data.lists.__typename === "Lists" &&
+            getLists.data.lists.lists.map((list) => (
               <List
                 key={list._id}
                 list={list}
-                // setToggleTaskCreated={setToggleTaskCreated}
-                // toggleTaskCreated={toggleTaskCreated}
+                setOpenCreateTaskForm={setOpenCreateTaskForm}
+                // tasks={tasks.current[list._id]}
               />
             ))}
-        </Wrapper>
-      </Container>
+        </ListsContainer>
+      </MainContainer>
       {timer.on && <Timer />}
     </div>
   );
 };
 
 export default Board;
-
-const Wrapper = styled.ul`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-auto-flow: column;
-  column-gap: 10px;
-  overflow-x: auto;
-  width: calc(100vw - 230px);
-
-  @media (max-width: 1000px) {
-    grid-template-columns: 1fr;
-    grid-auto-flow: row;
-    row-gap: 10px;
-  }
-
-  @media (max-width: ${tabletWidthLrg}) {
-    width: 100%;
-  }
-`;
-
-const Container = styled.div`
-  overflow-y: auto;
-  max-height: calc(100vh - 47px - 64px - 35px - 35px);
-  border-radius: 5px;
-`;
-
-const Header = styled.h2`
-  font-size: 2rem;
-
-  @media (max-width: ${mobile}) {
-    font-size: 1.5rem;
-  }
-`;
-
-const HeaderContainer = styled.div`
-  padding-bottom: 10px;
-  border-bottom: 2px solid ${blue3};
-  margin-bottom: 20px;
-  color: ${blue3};
-  display: flex;
-  justify-content: space-between;
-`;
-
-const CreateButton = styled(PrimaryButton)`
-  background-color: ${green1};
-  font-size: 1rem;
-  padding: 10px;
-  font-weight: 700;
-
-  &:hover,
-  &:focus-visible {
-    background-color: ${green3};
-    color: ${black};
-  }
-
-  @media (max-width: ${mobile}) {
-    font-size: 0.9rem;
-    padding: 8px 10px;
-  }
-`;

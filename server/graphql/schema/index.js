@@ -79,6 +79,11 @@ const schema = buildSchema(`
     name: String!
   }
 
+  type ListNotFound {
+    listId: String!
+    message: String!
+  }
+
   union GetListsResult = Lists | ListsNotFound
 
   union CreateListResult = List | ProjectNotFound
@@ -93,10 +98,33 @@ const schema = buildSchema(`
     dueDate: String!
     created: String!
     duration: Int!
-    tracking: [Time]
+    tracking: [Time!]
   }
 
+  type Tasks {
+    tasks: [Task!]
+  }
+
+  type TasksNotFound {
+    projectId: String!
+    message: String!
+  }
+
+  input TaskInput {
+    projectId: String!
+    listId: String!
+    name: String!
+    description: String
+    priority: String!
+    dueDate: String!
+  }
+  
+  union GetTasksResult = Tasks | TasksNotFound
+
+  union CreateTaskResult = Task | ListNotFound
+  
   type Time {
+    _id: ID!
     start: String!
     end: String!
     duration: Int!
@@ -106,12 +134,14 @@ const schema = buildSchema(`
     user(fp: String!): GetUserResult!
     projects(fp: String!): GetProjectsResult!
     lists(projectId: String!): GetListsResult!
+    tasks(projectId: String!): GetTasksResult!
   }
 
   type RootMutation {
     createUser(fp: String!): CreateUserResult!
     createProject(projectInput: ProjectInput!): CreateProjectResult!
     createList(listInput: ListInput!): CreateListResult!
+    createTask(taskInput: TaskInput!): CreateTaskResult!
   }
 
   schema {

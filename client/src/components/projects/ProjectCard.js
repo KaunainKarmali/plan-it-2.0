@@ -9,17 +9,19 @@ const ProjectCard = (props) => {
   const { project } = props;
 
   return (
-    <ProjectLink
-      to={`/board/${project._id}`}
-      params={{ projectId: project._id }}
-    >
-      <ProjectCardWrapper>
-        <h3>{project.name}</h3>
-        <ProjectDueDate>
-          Due {moment(new Date(project.dueDate)).fromNow()}
-        </ProjectDueDate>
-      </ProjectCardWrapper>
-    </ProjectLink>
+    <li>
+      <ProjectLink
+        to={`/board/${project._id}`}
+        params={{ projectId: project._id }}
+      >
+        <ProjectCardWrapper>
+          <h3>{project.name}</h3>
+          <ProjectDueDate>
+            Due {moment(new Date(project.dueDate)).fromNow()}
+          </ProjectDueDate>
+        </ProjectCardWrapper>
+      </ProjectLink>
+    </li>
   );
 };
 
