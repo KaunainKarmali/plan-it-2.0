@@ -77,11 +77,15 @@ const Board = () => {
 
   // Re-arrange tasks to be organized by list id
   const extractTasks = (getTasks) => {
-    const { __typename, tasks } = getTasks.data.tasks;
-
     const tasksByList = {};
 
-    if (__typename === "Tasks") {
+    if (
+      getTasks &&
+      getTasks.data &&
+      getTasks.data.tasks.__typename === "Tasks"
+    ) {
+      const { tasks } = getTasks.data.tasks;
+
       tasks.forEach((task) => {
         const listId = task.listId;
 
@@ -131,6 +135,9 @@ const Board = () => {
       />
     );
 
+  // Tasks organized by list id
+  const tasksByList = extractTasks(getTasks);
+
   return (
     <div>
       <MainHeaderContainer>
@@ -147,7 +154,7 @@ const Board = () => {
                 key={list._id}
                 list={list}
                 setOpenCreateTaskForm={setOpenCreateTaskForm}
-                // tasks={tasks.current[list._id]}
+                tasks={list._id in tasksByList ? tasksByList[list._id] : []}
               />
             ))}
         </ListsContainer>

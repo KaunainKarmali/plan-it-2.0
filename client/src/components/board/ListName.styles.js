@@ -3,22 +3,7 @@ import { red1, black } from "../../variables/colours";
 import { smlSpace, stdSpace } from "../../variables/spacing";
 import { IconButton } from "../styledComponents/Buttons.styles";
 
-const ListTitle = (props) => {
-  const { list, setOpenCreateTaskForm } = props;
-
-  return (
-    <ListTitleWrapper list={list}>
-      <TitleContainer>
-        <h2>{list}</h2>
-      </TitleContainer>
-      <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
-        <i className="fas fa-plus"></i>
-      </AddIconBtn>
-    </ListTitleWrapper>
-  );
-};
-
-const ListTitleWrapper = styled.div`
+export const ListNameContainer = styled.div`
   display: flex;
   padding: ${stdSpace} 0px;
   margin-bottom: ${stdSpace};
@@ -28,13 +13,13 @@ const ListTitleWrapper = styled.div`
   border-bottom-color: ${red1};
 `;
 
-const TitleContainer = styled.div`
+export const Name = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: center;
 `;
 
-const AddIconBtn = styled(IconButton)`
+export const AddIconBtn = styled(IconButton)`
   margin-right: ${smlSpace};
   color: ${red1};
   background-color: ${black};
@@ -45,5 +30,3 @@ const AddIconBtn = styled(IconButton)`
     color: ${black};
   }
 `;
-
-export default ListTitle;

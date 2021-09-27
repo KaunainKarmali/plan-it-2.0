@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
+import moment from "moment";
 import TimerContext from "../../contexts/TimerContext";
 import DeleteConfirmation from "../DeleteConfirmation";
 import Card, {
@@ -18,7 +19,7 @@ import LoadingContext from "../../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;
-  const { title, dueDate } = task;
+  const { name, dueDate } = task;
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
@@ -71,7 +72,7 @@ const Task = (props) => {
     <li>
       <Card>
         <CardMain>
-          <Title>{title}</Title>
+          <Title>{name}</Title>
           {/* <Description>{description}</Description> */}
           <CloseContainer>
             <TaskCloseIconBtn onClick={handleDeleteClick}>
@@ -86,7 +87,7 @@ const Task = (props) => {
             <DateIconBtn>
               <i className="fas fa-calendar-alt" />
             </DateIconBtn>
-            <DueDate>{dueDate}</DueDate>
+            <DueDate>{moment(dueDate).format("ddd, MMM Do YYYY")}</DueDate>
           </DateContainer>
           <Options>
             <DurationIconBtn onClick={handleTimerClick}>
