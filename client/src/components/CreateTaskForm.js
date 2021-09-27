@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { blue1 } from "../variables/colours";
 import { getTodaysDate } from "../utils";
 import { stdBR } from "../variables/borders";
@@ -18,7 +18,15 @@ import FormTitle from "./styledComponents/FormTitle.styles";
 import priorityOptions from "../variables/priority";
 
 const CreateTaskForm = (props) => {
-  const { setOpenCreateTaskForm, createTask, listOptions } = props;
+  const {
+    openCreateListForm,
+    setOpenCreateTaskForm,
+    createTask,
+    listOptions,
+    editTask,
+    setEditTask,
+    taskObj,
+  } = props;
 
   // Store today's date
   const today = useRef(getTodaysDate());
@@ -40,6 +48,19 @@ const CreateTaskForm = (props) => {
     listId: true,
     dueDate: true,
   });
+
+  // Update task state if user is editing
+  useEffect(() => {
+    if (editTask) {
+      setTask({
+        name: taskObj.name,
+        description: taskObj.description,
+        priority: taskObj.priority,
+        listId: taskObj.listId,
+        dueDate: taskObj.dueDate,
+      });
+    }
+  }, [taskObj, editTask]);
 
   // Update state on changes to form element
   const handleChange = (e) => {
@@ -79,6 +100,7 @@ const CreateTaskForm = (props) => {
     } else {
       createTask(task);
       handleReset();
+      editTask && setEditTask(false);
     }
   };
 
@@ -102,7 +124,8 @@ const CreateTaskForm = (props) => {
 
   const handleClose = (e) => {
     e.preventDefault();
-    setOpenCreateTaskForm(false);
+    openCreateListForm && setOpenCreateTaskForm(false);
+    editTask && setEditTask(false);
   };
 
   return (
@@ -152,7 +175,7 @@ const CreateTaskForm = (props) => {
                     label="Priority"
                   />
 
-                  <Dropdown
+                  {/* <Dropdown
                     id="listId"
                     name="listId"
                     onChange={handleChange}
@@ -161,7 +184,7 @@ const CreateTaskForm = (props) => {
                     options={listOptions}
                     inputLength={task.listId.length}
                     label="List"
-                  />
+                  /> */}
                 </DropdownContainer>
 
                 <InputField

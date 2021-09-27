@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { stdBR } from "../../variables/borders";
-import { green1, green3, white1, black } from "../../variables/colours";
+import { green1, green3, white1, black, grey1 } from "../../variables/colours";
 import { smlSpace } from "../../variables/spacing";
 import { mobile } from "../../variables/screen";
 
@@ -36,5 +36,23 @@ export const PrimaryButton = styled(Button)`
   @media (max-width: ${mobile}) {
     font-size: 0.9rem;
     padding: 8px 10px;
+  }
+`;
+
+export const IconButton = styled(PrimaryButton)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${grey1};
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+
+  &:hover,
+  &:focus-visible {
+    color: ${grey1};
+    outline: none;
   }
 `;

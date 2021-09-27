@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import styled from "styled-components";
 import moment from "moment";
 import TimerContext from "../../contexts/TimerContext";
 import DeleteConfirmation from "../DeleteConfirmation";
@@ -13,13 +12,16 @@ import Card, {
   Options,
   DurationIconBtn,
   EditIconBtn,
-} from "../styledComponents/Task.styles";
+  CardMain,
+  CloseContainer,
+} from "./Task.styles";
 import CreateTaskForm from "../CreateTaskForm";
 import LoadingContext from "../../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;
   const { name, dueDate } = task;
+
   const [editTask, setEditTask] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
@@ -68,6 +70,27 @@ const Task = (props) => {
     }
   };
 
+  // Show task to edit
+  if (editTask)
+    return (
+      <CreateTaskForm
+        editTask={editTask}
+        setEditTask={setEditTask}
+        taskObj={task}
+        // taskId={task._id}
+      />
+    );
+
+  // Show deletion confirmation dialogue
+  if (deleteTask)
+    return (
+      <DeleteConfirmation
+        taskId={task._id}
+        taskObj={task}
+        setDeleteTask={setDeleteTask}
+      />
+    );
+
   return (
     <li>
       <Card>
@@ -76,7 +99,9 @@ const Task = (props) => {
           {/* <Description>{description}</Description> */}
           <CloseContainer>
             <TaskCloseIconBtn onClick={handleDeleteClick}>
-              <i className="fas fa-times" />
+              <i className="fas fa-times">
+                <span className="sr-only">Delete task</span>
+              </i>
             </TaskCloseIconBtn>
           </CloseContainer>
         </CardMain>
@@ -84,52 +109,24 @@ const Task = (props) => {
         {/* Card Footer */}
         <CardFooter>
           <DateContainer>
-            <DateIconBtn>
-              <i className="fas fa-calendar-alt" />
-            </DateIconBtn>
             <DueDate>{moment(dueDate).format("ddd, MMM Do YYYY")}</DueDate>
           </DateContainer>
           <Options>
             <DurationIconBtn onClick={handleTimerClick}>
-              <i className="fas fa-stopwatch" />
+              <i className="fas fa-stopwatch">
+                <span className="sr-only">Toggle timer to track time</span>
+              </i>
             </DurationIconBtn>
             <EditIconBtn onClick={handleEditClick}>
-              <i className="fas fa-edit" />
+              <i className="fas fa-edit">
+                <span className="sr-only">Edit task</span>
+              </i>
             </EditIconBtn>
           </Options>
         </CardFooter>
       </Card>
-
-      {/* Show task to edit if user decides to edit */}
-      {editTask && (
-        <CreateTaskForm
-          editTask={editTask}
-          setEditTask={setEditTask}
-          taskObj={task}
-          taskId={task._id}
-        />
-      )}
-
-      {/* Show deletion confirmation dialogue */}
-      {deleteTask && (
-        <DeleteConfirmation
-          taskId={task._id}
-          taskObj={task}
-          setDeleteTask={setDeleteTask}
-        />
-      )}
     </li>
   );
 };
 
 export default Task;
-
-const CardMain = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const CloseContainer = styled.div`
-  margin-top: -5px;
-  margin-right: -5px;
-`;

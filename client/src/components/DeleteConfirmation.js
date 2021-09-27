@@ -32,8 +32,8 @@ const DeleteConfirmation = (props) => {
           </WarningMessage>
         </Header>
         <Main>
-          <Title>Task title</Title>
-          <TaskTitle>{taskObj.title}</TaskTitle>
+          <Title>Task name</Title>
+          <TaskTitle>{taskObj.name}</TaskTitle>
           <Title>Task description</Title>
           <TaskDescription>{taskObj.description}</TaskDescription>
         </Main>

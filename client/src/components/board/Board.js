@@ -31,6 +31,10 @@ const Board = () => {
   // State to track when timer is turned on or off
   const [timer] = useContext(TimerContext);
 
+  // ************************************************************
+  // ***************** LISTS FUNCTIONS **************************
+  // ************************************************************
+
   // Get lists using project id
   const getLists = useQuery(GET_LISTS, {
     variables: { projectId },
@@ -47,6 +51,23 @@ const Board = () => {
     awaitRefetchQueries: true,
   });
 
+  // Create an array of list names
+  const extractLists = (getLists) => {
+    const { __typename, lists } = getLists.data.lists;
+
+    if (__typename === "Lists") {
+      return lists.map((list) => {
+        return { value: list._id, name: list.name };
+      });
+    } else {
+      return [];
+    }
+  };
+
+  // ************************************************************
+  // ***************** TASKS FUNCTIONS **************************
+  // ************************************************************
+
   // Get tasks using project id
   const getTasks = useQuery(GET_TASKS, {
     variables: { projectId },
@@ -62,18 +83,6 @@ const Board = () => {
     ],
     awaitRefetchQueries: true,
   });
-
-  const extractLists = (getLists) => {
-    const { __typename, lists } = getLists.data.lists;
-
-    if (__typename === "Lists") {
-      return lists.map((list) => {
-        return { value: list._id, name: list.name };
-      });
-    } else {
-      return [];
-    }
-  };
 
   // Re-arrange tasks to be organized by list id
   const extractTasks = (getTasks) => {
@@ -99,6 +108,14 @@ const Board = () => {
     return tasksByList;
   };
 
+  // ************************************************************
+  // ******************** GENERAL FUNCTIONS *********************
+  // ************************************************************
+
+  // ************************************************************
+  // ****************** RENDER FUNCTIONS ************************
+  // ************************************************************
+
   // Loading and error states
   if (getLists.error || createList.error || getTasks.error || createTask.error)
     return <ErrorModal />;
@@ -114,6 +131,7 @@ const Board = () => {
   if (openCreateListForm)
     return (
       <CreateListForm
+        openCreateListForm={openCreateListForm}
         setOpenCreateListForm={setOpenCreateListForm}
         createList={(listName) => {
           const data = { listInput: { name: listName, projectId: projectId } };

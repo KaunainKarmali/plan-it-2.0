@@ -9,8 +9,9 @@ const ListName = (props) => {
         <h2>{listName}</h2>
       </Name>
       <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
-        <span className="sr-only">Create a new list</span>
-        <i className="fas fa-plus"></i>
+        <i className="fas fa-plus">
+          <span className="sr-only">Create a new list</span>
+        </i>
       </AddIconBtn>
     </ListNameContainer>
   );

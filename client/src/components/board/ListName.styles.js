@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { red1, black } from "../../variables/colours";
 import { smlSpace, stdSpace } from "../../variables/spacing";
-import { IconButton } from "../styledComponents/Buttons.styles";
+import { IconButton } from "../generalStyledComponents/Buttons.styles";
 
 export const ListNameContainer = styled.div`
   display: flex;
@@ -15,14 +15,13 @@ export const ListNameContainer = styled.div`
 
 export const Name = styled.div`
   flex-grow: 1;
-  display: flex;
-  align-items: center;
 `;
 
 export const AddIconBtn = styled(IconButton)`
   margin-right: ${smlSpace};
   color: ${red1};
   background-color: ${black};
+  border: 2px solid ${red1};
 
   &:hover,
   &:focus-visible {
