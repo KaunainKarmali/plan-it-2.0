@@ -1,17 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import TimerContext from "../../contexts/TimerContext";
-import { stdBR } from "../../variables/borders";
-import {
-  blue1,
-  grey3,
-  grey4,
-  grey5,
-  white1,
-  black,
-} from "../../variables/colours";
-import { mobile, tablet } from "../../variables/screen";
-import { DurationIconBtn } from "../styledComponents/Task.styles";
 import { serverUrl } from "../../settings";
 import ErrorModal from "../ErrorModal";
 import LoadingContext from "../../contexts/LoadingContext/index.js";
@@ -223,7 +211,7 @@ const Timer = () => {
 
   return (
     <div>
-      <Wrapper>
+      {/* <Wrapper>
         <Header>
           <Heading>Timer</Heading>
         </Header>
@@ -237,77 +225,9 @@ const Timer = () => {
           </CustomDurationIconBtn>
         </Footer>
       </Wrapper>
-      {error.error && <ErrorModal error={error} setError={setError} />}
+      {error.error && <ErrorModal error={error} setError={setError} />} */}
     </div>
   );
 };
 
 export default Timer;
-
-//TODO: Refactor styles with DeleteConfirmation component
-const Wrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  width: 150px;
-  z-index: 10;
-`;
-
-const StandardWrapper = styled.div`
-  padding: 10px 20px;
-
-  @media (max-width: ${tablet}) {
-    padding: 5px 10px;
-  }
-`;
-
-// Header styles
-const Header = styled(StandardWrapper)`
-  border-top-left-radius: ${stdBR};
-  border-top-right-radius: ${stdBR};
-  background-color: ${grey5};
-  border-bottom: 1px solid ${grey4};
-`;
-
-const Heading = styled.h4`
-  color: ${blue1};
-  font-size: 1.2rem;
-`;
-
-// Main styles
-const Main = styled(StandardWrapper)`
-  background-color: ${white1};
-`;
-
-const SecondaryText = styled.p`
-  color: ${grey3};
-  font-size: 1rem;
-  margin-bottom: 10px;
-`;
-
-const PrimaryText = styled(SecondaryText)`
-  font-size: 1rem;
-  color: ${black};
-`;
-
-// Footer styles
-const Footer = styled(StandardWrapper)`
-  border-bottom-left-radius: ${stdBR};
-  border-bottom-right-radius: ${stdBR};
-  background-color: ${grey5};
-  border-top: 1px solid ${grey4};
-  display: flex;
-  justify-content: flex-end;
-
-  @media (max-width: ${mobile}) {
-    justify-content: center;
-  }
-`;
-
-const CustomDurationIconBtn = styled(DurationIconBtn)`
-  visibility: visible;
-  background-color: ${grey5};
-  margin: 0px;
-`;

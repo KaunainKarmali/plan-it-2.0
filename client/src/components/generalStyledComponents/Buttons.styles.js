@@ -1,8 +1,17 @@
 import styled from "styled-components";
 import { stdBR } from "../../variables/borders";
-import { green1, green3, white1, black, grey1 } from "../../variables/colours";
+import {
+  green1,
+  green3,
+  white1,
+  black,
+  grey1,
+  grey5,
+  blue1,
+} from "../../variables/colours";
 import { smlSpace } from "../../variables/spacing";
 import { mobile } from "../../variables/screen";
+import { getRGBvalue } from "../../utils";
 
 const Button = styled.button`
   border: none;
@@ -38,6 +47,41 @@ export const PrimaryButton = styled(Button)`
     padding: 8px 10px;
   }
 `;
+
+export const SecondaryButton = styled(PrimaryButton)`
+  background-color: ${grey5};
+  color: ${blue1};
+  box-shadow: none;
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: none;
+    color: ${blue1};
+    background-color: rgba(${getRGBvalue(blue1)}, 0.2);
+  }
+`;
+
+export const AlternativeButton = styled(PrimaryButton)`
+  background-color: ${grey5};
+  color: ${blue1};
+  box-shadow: none;
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: none;
+    color: ${blue1};
+    background-color: rgba(${getRGBvalue(blue1)}, 0.2);
+  }
+`;
+
+// const SecondaryButton = styled(SecondaryButton)`
+/* background-color: ${grey5}; */
+/* margin-right: ${medSpace}; */
+
+/* @media (max-width: ${mobile}) {
+    margin-right: 5px;
+  } */
+// `;
 
 export const IconButton = styled(PrimaryButton)`
   display: flex;

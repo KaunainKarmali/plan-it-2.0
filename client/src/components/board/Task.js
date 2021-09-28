@@ -7,7 +7,6 @@ import Card, {
   TaskCloseIconBtn,
   CardFooter,
   DateContainer,
-  DateIconBtn,
   DueDate,
   Options,
   DurationIconBtn,
@@ -96,7 +95,6 @@ const Task = (props) => {
       <Card>
         <CardMain>
           <Title>{name}</Title>
-          {/* <Description>{description}</Description> */}
           <CloseContainer>
             <TaskCloseIconBtn onClick={handleDeleteClick}>
               <i className="fas fa-times">

@@ -5,11 +5,22 @@ import { black, blue1, grey3, grey4, grey5 } from "../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
 import { ModalOuter, ModalInner } from "./styledComponents/Modal.styles";
+import // PrimaryButton,
+// SecondaryButton,
+"./styledComponents/Buttons.styles";
+import { mobile, tablet } from "../variables/screen";
+import {
+  ModalBackground,
+  ModalContainer,
+  ModalHeader,
+  Heading,
+  ModalMain,
+  ModalFooter,
+} from "./generalStyledComponents/Modal.styles";
 import {
   PrimaryButton,
   SecondaryButton,
-} from "./styledComponents/Buttons.styles";
-import { mobile, tablet } from "../variables/screen";
+} from "./generalStyledComponents/Buttons.styles";
 
 const DeleteConfirmation = (props) => {
   const { taskId, taskObj, setDeleteTask } = props;
@@ -23,59 +34,57 @@ const DeleteConfirmation = (props) => {
   };
 
   return (
-    <ModalOuter>
-      <CustomModalInner>
-        <Header>
+    <ModalBackground>
+      <ModalContainer>
+        <ModalHeader>
           <Heading>Delete task</Heading>
           <WarningMessage>
             Please confirm these details before deleting this task
           </WarningMessage>
-        </Header>
-        <Main>
+        </ModalHeader>
+        <ModalMain>
           <Title>Task name</Title>
-          <TaskTitle>{taskObj.name}</TaskTitle>
+          <TaskName>{taskObj.name}</TaskName>
           <Title>Task description</Title>
           <TaskDescription>{taskObj.description}</TaskDescription>
-        </Main>
-        <Footer>
-          <CustomSecondaryButton onClick={handleCancelClick}>
-            Cancel
-          </CustomSecondaryButton>
+        </ModalMain>
+        <ModalFooter>
+          <SecondaryButton onClick={handleCancelClick}>Cancel</SecondaryButton>
           <PrimaryButton onClick={handleDeleteClick}>Delete</PrimaryButton>
-        </Footer>
-      </CustomModalInner>
-    </ModalOuter>
+        </ModalFooter>
+      </ModalContainer>
+    </ModalBackground>
   );
 };
 
 // Modal styles
-const CustomModalInner = styled(ModalInner)`
-  padding: 0;
-  max-width: 80vw;
-  width: auto;
-`;
+// const CustomModalInner = styled(ModalInner)`
+//   padding: 0;
+//   max-width: 80vw;
+//   width: auto;
+// `;
 
-const StandardWrapper = styled.div`
-  padding: 20px 30px;
+// const StandardWrapper = styled.div`
+//   padding: 20px 30px;
 
-  @media (max-width: ${tablet}) {
-    padding: 20px 20px;
-  }
-`;
+//   @media (max-width: ${tablet}) {
+//     padding: 20px 20px;
+//   }
+// `;
 
 // Header styles
-const Header = styled(StandardWrapper)`
-  border-top-left-radius: ${stdBR};
-  border-top-right-radius: ${stdBR};
-  background-color: ${grey5};
-  border-bottom: 1px solid ${grey4};
-`;
+// const Header = styled(StandardWrapper)`
+//   border-top-left-radius: ${stdBR};
+//   border-top-right-radius: ${stdBR};
+//   background-color: ${grey5};
+//   border-bottom: 1px solid ${grey4};
+// `;
 
-const Heading = styled.h4`
-  color: ${blue1};
-  font-size: 1.5rem;
-  margin-bottom: ${stdSpace};
-`;
+// const Heading = styled.h4`
+//   color: ${blue1};
+//   font-size: 1.5rem;
+//   margin-bottom: ${stdSpace};
+// `;
 
 const WarningMessage = styled.p`
   color: ${grey3};
@@ -83,22 +92,22 @@ const WarningMessage = styled.p`
 `;
 
 // Main styles
-const Main = styled(StandardWrapper)`
-  overflow-y: auto;
-  max-height: 55vh;
+// const Main = styled(StandardWrapper)`
+//   overflow-y: auto;
+//   max-height: 55vh;
 
-  /* Whole scrollbar */
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
+//   /* Whole scrollbar */
+//   &::-webkit-scrollbar {
+//     width: 6px;
+//   }
 
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    height: 3px;
-    background: ${blue1};
-    border-radius: ${stdBR};
-  }
-`;
+//   /* Handle */
+//   &::-webkit-scrollbar-thumb {
+//     height: 3px;
+//     background: ${blue1};
+//     border-radius: ${stdBR};
+//   }
+// `;
 
 const Title = styled(WarningMessage)`
   color: ${grey3};
@@ -106,13 +115,13 @@ const Title = styled(WarningMessage)`
   margin-bottom: ${smlSpace};
 `;
 
-const TaskTitle = styled(WarningMessage)`
+const TaskName = styled(WarningMessage)`
   font-size: 1rem;
   margin-bottom: 25px;
   color: ${black};
 `;
 
-const TaskDescription = styled(TaskTitle)`
+const TaskDescription = styled(TaskName)`
   margin-bottom: 0;
   width: 90%;
 
@@ -122,26 +131,26 @@ const TaskDescription = styled(TaskTitle)`
 `;
 
 // Footer styles
-const Footer = styled(StandardWrapper)`
-  border-bottom-left-radius: ${stdBR};
-  border-bottom-right-radius: ${stdBR};
-  background-color: ${grey5};
-  border-top: 1px solid ${grey4};
-  display: flex;
-  justify-content: flex-end;
+// const Footer = styled(StandardWrapper)`
+//   border-bottom-left-radius: ${stdBR};
+//   border-bottom-right-radius: ${stdBR};
+//   background-color: ${grey5};
+//   border-top: 1px solid ${grey4};
+//   display: flex;
+//   justify-content: flex-end;
 
-  @media (max-width: ${mobile}) {
-    justify-content: center;
-  }
-`;
+//   @media (max-width: ${mobile}) {
+//     justify-content: center;
+//   }
+// `;
 
-const CustomSecondaryButton = styled(SecondaryButton)`
-  background-color: ${grey5};
-  margin-right: ${medSpace};
+// const CustomSecondaryButton = styled(SecondaryButton)`
+//   background-color: ${grey5};
+//   margin-right: ${medSpace};
 
-  @media (max-width: ${mobile}) {
-    margin-right: 5px;
-  }
-`;
+//   @media (max-width: ${mobile}) {
+//     margin-right: 5px;
+//   }
+// `;
 
 export default DeleteConfirmation;
