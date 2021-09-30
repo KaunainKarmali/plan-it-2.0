@@ -21,3 +21,22 @@ export const getTodaysDate = () => {
 
   return `${year}-${month}-${day}`;
 };
+
+// Formats date to YYYY-MM-DD
+export const formatDate = (rawDate) => {
+  const date = new Date(rawDate);
+
+  const year = date.getFullYear().toString();
+  let month = (date.getMonth() + 1).toString(); // add 1 as Jan is 0
+  let day = date.getDate().toString();
+
+  if (month.length < 2) {
+    month = "0" + month;
+  }
+
+  if (day.length < 2) {
+    day = "0" + day;
+  }
+
+  return `${year}-${month}-${day}`;
+};

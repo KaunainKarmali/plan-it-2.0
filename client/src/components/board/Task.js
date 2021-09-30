@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import moment from "moment";
 import TimerContext from "../../contexts/TimerContext";
-import DeleteConfirmation from "../DeleteConfirmation";
+import DeleteConfirmation from "../general/DeleteConfirmation";
 import Card, {
   Title,
   TaskCloseIconBtn,
@@ -14,14 +14,14 @@ import Card, {
   CardMain,
   CloseContainer,
 } from "./Task.styles";
-import CreateTaskForm from "../CreateTaskForm";
+import TaskForm from "./TaskForm";
 import LoadingContext from "../../contexts/LoadingContext";
 
 const Task = (props) => {
   const { task } = props;
   const { name, dueDate } = task;
 
-  const [editTask, setEditTask] = useState(false);
+  const [openEditTaskForm, setOpenEditTaskForm] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
   // State to track when timer details
@@ -31,7 +31,7 @@ const Task = (props) => {
   const [, setIsLoading] = useContext(LoadingContext);
 
   const handleEditClick = () => {
-    setEditTask(true);
+    setOpenEditTaskForm(true);
   };
 
   const handleDeleteClick = () => {
@@ -70,11 +70,11 @@ const Task = (props) => {
   };
 
   // Show task to edit
-  if (editTask)
+  if (openEditTaskForm)
     return (
-      <CreateTaskForm
-        editTask={editTask}
-        setEditTask={setEditTask}
+      <TaskForm
+        openEditTaskForm={openEditTaskForm}
+        setOpenEditTaskForm={setOpenEditTaskForm}
         taskObj={task}
         // taskId={task._id}
       />

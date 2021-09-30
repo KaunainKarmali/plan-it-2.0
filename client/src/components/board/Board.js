@@ -16,7 +16,7 @@ import {
 } from "../generalStyledComponents/MainHeader.styles";
 import { MainContainer } from "../generalStyledComponents/MainContainer.styles";
 import { ListsContainer } from "./Board.styles";
-import CreateTaskForm from "../CreateTaskForm";
+import TaskForm from "./TaskForm";
 
 const Board = () => {
   // Extract project id associated with the board
@@ -51,19 +51,6 @@ const Board = () => {
     awaitRefetchQueries: true,
   });
 
-  // Create an array of list names
-  const extractLists = (getLists) => {
-    const { __typename, lists } = getLists.data.lists;
-
-    if (__typename === "Lists") {
-      return lists.map((list) => {
-        return { value: list._id, name: list.name };
-      });
-    } else {
-      return [];
-    }
-  };
-
   // ************************************************************
   // ***************** TASKS FUNCTIONS **************************
   // ************************************************************
@@ -71,17 +58,6 @@ const Board = () => {
   // Get tasks using project id
   const getTasks = useQuery(GET_TASKS, {
     variables: { projectId },
-  });
-
-  // Create new list in the db
-  const [createTaskMutation, createTask] = useMutation(CREATE_TASK, {
-    refetchQueries: [
-      {
-        query: GET_TASKS,
-        variables: { projectId },
-      },
-    ],
-    awaitRefetchQueries: true,
   });
 
   // Re-arrange tasks to be organized by list id
@@ -117,13 +93,18 @@ const Board = () => {
   // ************************************************************
 
   // Loading and error states
-  if (getLists.error || createList.error || getTasks.error || createTask.error)
+  if (
+    getLists.error ||
+    createList.error ||
+    getTasks.error
+    // || createTask.error
+  )
     return <ErrorModal />;
   if (
     getLists.loading ||
     createList.loading ||
-    getTasks.loading ||
-    createTask.loading
+    getTasks.loading
+    // || createTask.loading
   )
     return <Loading />;
 
@@ -143,13 +124,14 @@ const Board = () => {
   // Toggle form to create a new task
   if (openCreateTaskForm)
     return (
-      <CreateTaskForm
+      <TaskForm
+        openCreateTaskForm={openCreateTaskForm}
         setOpenCreateTaskForm={setOpenCreateTaskForm}
-        createTask={(taskDetails) => {
-          const data = { taskInput: { ...taskDetails, projectId: projectId } };
-          createTaskMutation({ variables: data });
-        }}
-        listOptions={extractLists(getLists)}
+        // createTask={(taskDetails) => {
+        //   const data = { taskInput: { ...taskDetails, projectId: projectId } };
+        //   createTaskMutation({ variables: data });
+        // }}
+        // listOptions={extractLists(getLists)}
       />
     );
 

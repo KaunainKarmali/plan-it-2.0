@@ -36,7 +36,6 @@ export const ModalContainer = styled.div`
   }
 
   @media (max-width: ${mobile}) {
-    padding: 20px 20px;
     width: 95vw;
   }
 `;

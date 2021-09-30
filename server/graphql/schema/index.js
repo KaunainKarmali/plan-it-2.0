@@ -110,8 +110,22 @@ const schema = buildSchema(`
     message: String!
   }
 
+  type TaskNotUpdated {
+    taskId: String!
+    message: String!
+  }
+
   input TaskInput {
     projectId: String!
+    listId: String!
+    name: String!
+    description: String
+    priority: String!
+    dueDate: String!
+  }
+
+  input EditTaskInput {
+    _id: ID!
     listId: String!
     name: String!
     description: String
@@ -122,7 +136,9 @@ const schema = buildSchema(`
   union GetTasksResult = Tasks | TasksNotFound
 
   union CreateTaskResult = Task | ListNotFound
-  
+
+  union EditTaskResult = Task | ListNotFound | TaskNotUpdated
+
   type Time {
     _id: ID!
     start: String!
@@ -142,6 +158,7 @@ const schema = buildSchema(`
     createProject(projectInput: ProjectInput!): CreateProjectResult!
     createList(listInput: ListInput!): CreateListResult!
     createTask(taskInput: TaskInput!): CreateTaskResult!
+    editTask(editTaskInput: EditTaskInput!): EditTaskResult!
   }
 
   schema {

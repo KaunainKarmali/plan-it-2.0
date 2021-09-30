@@ -66,3 +66,29 @@ export const CREATE_TASK = gql`
     }
   }
 `;
+
+export const EDIT_TASK = gql`
+  mutation EditTask($editTaskInput: EditTaskInput!) {
+    editTask(editTaskInput: $editTaskInput) {
+      __typename
+      ... on Task {
+        _id
+        projectId
+        listId
+        name
+        description
+        priority
+        dueDate
+        created
+        duration
+        tracking {
+          _id
+        }
+      }
+      ... on ListNotFound {
+        message
+        listId
+      }
+    }
+  }
+`;

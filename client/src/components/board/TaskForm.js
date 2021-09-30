@@ -1,32 +1,40 @@
 import styled from "styled-components/macro";
 import { useState, useRef, useEffect } from "react";
-import { blue1 } from "../variables/colours";
-import { getTodaysDate } from "../utils";
-import { stdBR } from "../variables/borders";
-import { stdSpace } from "../variables/spacing";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_LISTS } from "../../graphql/queries";
+import { CREATE_TASK, EDIT_TASK } from "../../graphql/mutations";
+import { blue1 } from "../../variables/colours";
+import { formatDate, getTodaysDate } from "../../utils";
+import { stdBR } from "../../variables/borders";
+import { stdSpace } from "../../variables/spacing";
 import {
   PrimaryButton,
   SecondaryButton,
-} from "./styledComponents/Buttons.styles";
-import { ModalInner, ModalOuter } from "./styledComponents/Modal.styles";
-import InputField from "./InputField";
-import TextareaField from "./TextareaField";
-import Dropdown from "./Dropdown";
-import { mobile, tablet } from "../variables/screen";
-import ClosePopup from "./ClosePopup";
-import FormTitle from "./styledComponents/FormTitle.styles";
-import priorityOptions from "../variables/priority";
+} from "../styledComponents/Buttons.styles";
+import { ModalInner, ModalOuter } from "../styledComponents/Modal.styles";
+import InputField from "../InputField";
+import TextareaField from "../TextareaField";
+import Dropdown from "../Dropdown";
+import { mobile, tablet } from "../../variables/screen";
+import ClosePopup from "../ClosePopup";
+import FormTitle from "../styledComponents/FormTitle.styles";
+import priorityOptions from "../../variables/priority";
+import ErrorModal from "../ErrorModal";
+import Loading from "../Loading";
 
-const CreateTaskForm = (props) => {
+const TaskForm = (props) => {
   const {
-    openCreateListForm,
+    openCreateTaskForm,
     setOpenCreateTaskForm,
-    createTask,
-    listOptions,
-    editTask,
-    setEditTask,
+    // createTask,
+    openEditTaskForm,
+    setOpenEditTaskForm,
     taskObj,
   } = props;
+
+  // Extract project id associated with the board
+  const { projectId } = useParams();
 
   // Store today's date
   const today = useRef(getTodaysDate());
@@ -49,18 +57,52 @@ const CreateTaskForm = (props) => {
     dueDate: true,
   });
 
+  // Tracks list names
+  const [lists, setLists] = useState([]);
+
+  // Query to pull list data
+  const getLists = useQuery(GET_LISTS, {
+    variables: { projectId },
+  });
+
+  // Create new list in the db
+  const [createTaskMutation, createTask] = useMutation(CREATE_TASK);
+
+  // Update task in the db
+  const [editTaskMutation, editTask] = useMutation(EDIT_TASK);
+
   // Update task state if user is editing
   useEffect(() => {
-    if (editTask) {
+    if (openEditTaskForm) {
       setTask({
         name: taskObj.name,
         description: taskObj.description,
         priority: taskObj.priority,
         listId: taskObj.listId,
-        dueDate: taskObj.dueDate,
+        dueDate: formatDate(taskObj.dueDate),
       });
     }
-  }, [taskObj, editTask]);
+  }, [taskObj, openEditTaskForm]);
+
+  // Update lists state once query runs
+  useEffect(() => {
+    if (getLists.data && lists.length === 0) {
+      setLists(extractLists(getLists));
+    }
+  }, [getLists, getLists.data, lists]);
+
+  // Create an array of list names
+  const extractLists = (getLists) => {
+    const { __typename, lists } = getLists.data.lists;
+
+    if (__typename === "Lists") {
+      return lists.map((list) => {
+        return { value: list._id, name: list.name };
+      });
+    } else {
+      return [];
+    }
+  };
 
   // Update state on changes to form element
   const handleChange = (e) => {
@@ -98,9 +140,20 @@ const CreateTaskForm = (props) => {
     if (Object.keys(validationErrors).length !== 0) {
       setIsValid({ ...isValid, ...validationErrors });
     } else {
-      createTask(task);
+      // Create a task in db
+      if (openCreateTaskForm) {
+        createTaskFunction({ ...task, projectId: projectId });
+        setOpenCreateTaskForm(false);
+      }
+
+      // Update task in db
+      if (openEditTaskForm) {
+        editTaskFunction({ ...task, _id: taskObj._id });
+        setOpenEditTaskForm(false);
+      }
+
+      // Reset state
       handleReset();
-      editTask && setEditTask(false);
     }
   };
 
@@ -124,9 +177,27 @@ const CreateTaskForm = (props) => {
 
   const handleClose = (e) => {
     e.preventDefault();
-    openCreateListForm && setOpenCreateTaskForm(false);
-    editTask && setEditTask(false);
+    openCreateTaskForm && setOpenCreateTaskForm(false);
+    openEditTaskForm && setOpenEditTaskForm(false);
   };
+
+  // Function to edit task and submit to back end
+  const editTaskFunction = (editTaskInput) => {
+    const data = { editTaskInput: { ...editTaskInput } };
+    editTaskMutation({ variables: data });
+  };
+
+  // Function to create task and submit to back end
+  const createTaskFunction = (taskInput) => {
+    const data = { taskInput: { ...taskInput } };
+    createTaskMutation({ variables: data });
+  };
+
+  // Loading and error states
+  if (getLists.error || editTask.error || createTask.error)
+    return <ErrorModal />;
+  if (getLists.loading || editTask.loading || createTask.loading)
+    return <Loading />;
 
   return (
     <div>
@@ -175,16 +246,16 @@ const CreateTaskForm = (props) => {
                     label="Priority"
                   />
 
-                  {/* <Dropdown
+                  <Dropdown
                     id="listId"
                     name="listId"
                     onChange={handleChange}
                     isValid={isValid.listId}
                     value={task.listId}
-                    options={listOptions}
+                    options={lists}
                     inputLength={task.listId.length}
                     label="List"
-                  /> */}
+                  />
                 </DropdownContainer>
 
                 <InputField
@@ -290,4 +361,4 @@ const ClearButton = styled(SecondaryButton)`
   }
 `;
 
-export default CreateTaskForm;
+export default TaskForm;

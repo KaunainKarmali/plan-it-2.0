@@ -8,6 +8,9 @@ import {
   grey1,
   grey5,
   blue1,
+  blue4,
+  red3,
+  red4,
 } from "../../variables/colours";
 import { smlSpace } from "../../variables/spacing";
 import { mobile } from "../../variables/screen";
@@ -61,27 +64,15 @@ export const SecondaryButton = styled(PrimaryButton)`
   }
 `;
 
-export const AlternativeButton = styled(PrimaryButton)`
-  background-color: ${grey5};
-  color: ${blue1};
-  box-shadow: none;
+export const DeleteButton = styled(PrimaryButton)`
+  background-color: ${red3};
 
   &:hover,
   &:focus-visible {
-    box-shadow: none;
-    color: ${blue1};
-    background-color: rgba(${getRGBvalue(blue1)}, 0.2);
+    color: ${white1};
+    background-color: ${red4};
   }
 `;
-
-// const SecondaryButton = styled(SecondaryButton)`
-/* background-color: ${grey5}; */
-/* margin-right: ${medSpace}; */
-
-/* @media (max-width: ${mobile}) {
-    margin-right: 5px;
-  } */
-// `;
 
 export const IconButton = styled(PrimaryButton)`
   display: flex;
