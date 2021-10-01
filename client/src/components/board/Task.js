@@ -1,11 +1,7 @@
 import { useState, useContext } from "react";
 import moment from "moment";
-import { useMutation } from "@apollo/client";
-import { DELETE_TASK } from "../../graphql/mutations";
-import { GET_TASKS } from "../../graphql/queries";
-import { useParams } from "react-router-dom";
 import TimerContext from "../../contexts/TimerContext";
-import DeleteConfirmation from "../general/DeleteConfirmation";
+import DeleteTask from "./DeleteTask";
 import Card, {
   Title,
   TaskCloseIconBtn,
@@ -20,15 +16,10 @@ import Card, {
 } from "./Task.styles";
 import TaskForm from "./TaskForm";
 import LoadingContext from "../../contexts/LoadingContext";
-import ErrorModal from "../ErrorModal";
-import Loading from "../Loading";
 
 const Task = (props) => {
   const { task } = props;
   const { name, dueDate } = task;
-
-  // Extract project id associated with the task
-  const { projectId } = useParams();
 
   const [openEditTaskForm, setOpenEditTaskForm] = useState(false);
   const [openDeleteTaskForm, setOpenDeleteTaskForm] = useState(false);
@@ -38,17 +29,6 @@ const Task = (props) => {
 
   // Tracks if the timer is loading or not
   const [, setIsLoading] = useContext(LoadingContext);
-
-  // Update task in the db
-  const [deleteTaskMutation, deleteTask] = useMutation(DELETE_TASK, {
-    refetchQueries: [
-      {
-        query: GET_TASKS,
-        variables: { projectId },
-      },
-    ],
-    awaitRefetchQueries: true,
-  });
 
   const handleEditClick = () => {
     setOpenEditTaskForm(true);
@@ -89,16 +69,6 @@ const Task = (props) => {
     }
   };
 
-  // Function to create task and submit to back end
-  const deleteTaskFunction = (_id) => {
-    const data = { _id: _id };
-    deleteTaskMutation({ variables: data });
-  };
-
-  // Error and loading states
-  if (deleteTask.error) return <ErrorModal />;
-  if (deleteTask.loading) return <Loading />;
-
   // Show task to edit
   if (openEditTaskForm)
     return (
@@ -112,14 +82,10 @@ const Task = (props) => {
   // Show deletion confirmation dialogue
   if (openDeleteTaskForm)
     return (
-      <DeleteConfirmation
+      <DeleteTask
         taskId={task._id}
         taskObj={task}
-        cancel={() => setOpenDeleteTaskForm(false)}
-        deleteTask={(_id) => {
-          deleteTaskFunction(_id);
-          setOpenDeleteTaskForm(false);
-        }}
+        closeForm={() => setOpenDeleteTaskForm(false)}
       />
     );
 

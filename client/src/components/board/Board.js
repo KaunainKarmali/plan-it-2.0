@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_LISTS, GET_TASKS } from "../../graphql/queries";
-import { CREATE_LIST, CREATE_TASK } from "../../graphql/mutations";
+import { CREATE_LIST } from "../../graphql/mutations";
 import List from "./List";
 import TimerContext from "../../contexts/TimerContext/index.js";
 import Timer from "./Timer";

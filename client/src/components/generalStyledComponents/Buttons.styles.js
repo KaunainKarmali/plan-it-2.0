@@ -8,7 +8,6 @@ import {
   grey1,
   grey5,
   blue1,
-  blue4,
   red3,
   red4,
 } from "../../variables/colours";
