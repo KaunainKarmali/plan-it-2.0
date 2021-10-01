@@ -2,7 +2,7 @@ import styled from "styled-components/macro";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_LISTS } from "../../graphql/queries";
+import { GET_LISTS, GET_TASKS } from "../../graphql/queries";
 import { CREATE_TASK, EDIT_TASK } from "../../graphql/mutations";
 import { blue1 } from "../../variables/colours";
 import { formatDate, getTodaysDate } from "../../utils";
@@ -27,7 +27,6 @@ const TaskForm = (props) => {
   const {
     openCreateTaskForm,
     setOpenCreateTaskForm,
-    // createTask,
     openEditTaskForm,
     setOpenEditTaskForm,
     taskObj,
@@ -66,7 +65,15 @@ const TaskForm = (props) => {
   });
 
   // Create new list in the db
-  const [createTaskMutation, createTask] = useMutation(CREATE_TASK);
+  const [createTaskMutation, createTask] = useMutation(CREATE_TASK, {
+    refetchQueries: [
+      {
+        query: GET_TASKS,
+        variables: { projectId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
 
   // Update task in the db
   const [editTaskMutation, editTask] = useMutation(EDIT_TASK);

@@ -1,5 +1,9 @@
 import { useState, useContext } from "react";
 import moment from "moment";
+import { useMutation } from "@apollo/client";
+import { DELETE_TASK } from "../../graphql/mutations";
+import { GET_TASKS } from "../../graphql/queries";
+import { useParams } from "react-router-dom";
 import TimerContext from "../../contexts/TimerContext";
 import DeleteConfirmation from "../general/DeleteConfirmation";
 import Card, {
@@ -16,13 +20,18 @@ import Card, {
 } from "./Task.styles";
 import TaskForm from "./TaskForm";
 import LoadingContext from "../../contexts/LoadingContext";
+import ErrorModal from "../ErrorModal";
+import Loading from "../Loading";
 
 const Task = (props) => {
   const { task } = props;
   const { name, dueDate } = task;
 
+  // Extract project id associated with the task
+  const { projectId } = useParams();
+
   const [openEditTaskForm, setOpenEditTaskForm] = useState(false);
-  const [deleteTask, setDeleteTask] = useState(false);
+  const [openDeleteTaskForm, setOpenDeleteTaskForm] = useState(false);
 
   // State to track when timer details
   const [timer, setTimer] = useContext(TimerContext);
@@ -30,12 +39,23 @@ const Task = (props) => {
   // Tracks if the timer is loading or not
   const [, setIsLoading] = useContext(LoadingContext);
 
+  // Update task in the db
+  const [deleteTaskMutation, deleteTask] = useMutation(DELETE_TASK, {
+    refetchQueries: [
+      {
+        query: GET_TASKS,
+        variables: { projectId },
+      },
+    ],
+    awaitRefetchQueries: true,
+  });
+
   const handleEditClick = () => {
     setOpenEditTaskForm(true);
   };
 
   const handleDeleteClick = () => {
-    setDeleteTask(true);
+    setOpenDeleteTaskForm(true);
   };
 
   const handleTimerClick = () => {
@@ -69,6 +89,16 @@ const Task = (props) => {
     }
   };
 
+  // Function to create task and submit to back end
+  const deleteTaskFunction = (_id) => {
+    const data = { _id: _id };
+    deleteTaskMutation({ variables: data });
+  };
+
+  // Error and loading states
+  if (deleteTask.error) return <ErrorModal />;
+  if (deleteTask.loading) return <Loading />;
+
   // Show task to edit
   if (openEditTaskForm)
     return (
@@ -76,17 +106,20 @@ const Task = (props) => {
         openEditTaskForm={openEditTaskForm}
         setOpenEditTaskForm={setOpenEditTaskForm}
         taskObj={task}
-        // taskId={task._id}
       />
     );
 
   // Show deletion confirmation dialogue
-  if (deleteTask)
+  if (openDeleteTaskForm)
     return (
       <DeleteConfirmation
         taskId={task._id}
         taskObj={task}
-        setDeleteTask={setDeleteTask}
+        cancel={() => setOpenDeleteTaskForm(false)}
+        deleteTask={(_id) => {
+          deleteTaskFunction(_id);
+          setOpenDeleteTaskForm(false);
+        }}
       />
     );
 
@@ -107,7 +140,7 @@ const Task = (props) => {
         {/* Card Footer */}
         <CardFooter>
           <DateContainer>
-            <DueDate>{moment(dueDate).format("ddd, MMM Do YYYY")}</DueDate>
+            <DueDate>{moment.utc(dueDate).format("ddd, MMM Do YYYY")}</DueDate>
           </DateContainer>
           <Options>
             <DurationIconBtn onClick={handleTimerClick}>

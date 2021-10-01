@@ -26,9 +26,9 @@ export const getTodaysDate = () => {
 export const formatDate = (rawDate) => {
   const date = new Date(rawDate);
 
-  const year = date.getFullYear().toString();
-  let month = (date.getMonth() + 1).toString(); // add 1 as Jan is 0
-  let day = date.getDate().toString();
+  const year = date.getUTCFullYear().toString();
+  let month = (date.getUTCMonth() + 1).toString(); // add 1 as Jan is 0
+  let day = date.getUTCDate().toString();
 
   if (month.length < 2) {
     month = "0" + month;

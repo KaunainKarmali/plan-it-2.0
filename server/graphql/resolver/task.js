@@ -70,32 +70,34 @@ export const editTask = async (taskDetails) => {
   const { listId, _id } = taskDetails;
 
   try {
-    let task = await Task.findById(_id);
+    const task = await Task.findById(_id);
 
     // Return task not found if its not in db
     if (!task)
       return {
-        __typename: "TaskNotUpdated",
-        taskId: _id,
+        __typename: "TaskNotEditted",
+        _id: _id,
         message: "Task not found.",
       };
 
     // If list changed, update list objects
-    if (task._doc.listId !== listId) {
+    if (task.listId !== listId) {
       // Remove task from old list
-      const oldList = await List.findById(task._doc.listId);
+      const oldList = await List.findById(task.listId);
 
       // Return list not found if its not in db
       if (!oldList)
         return {
-          __typename: "ListNotFound",
-          listId: task.listId,
+          __typename: "TaskNotEditted",
+          _id: _id,
           message: "List not found.",
         };
 
-      oldList._doc.tasks = oldList._doc.tasks.filter(
-        (taskId) => taskId !== _id
+      oldList.tasks = oldList.tasks.filter(
+        (taskId) => taskId.toString() !== _id
       );
+
+      oldList.markModified("tasks");
       await oldList.save();
 
       // Add task to new list obj
@@ -104,21 +106,22 @@ export const editTask = async (taskDetails) => {
       // Return list not found if its not in db
       if (!newList)
         return {
-          __typename: "ListNotFound",
-          listId: listId,
+          __typename: "TaskNotEditted",
+          _id: _id,
           message: "List not found.",
         };
 
-      newList._doc.tasks.push(_id);
+      newList.tasks.push(_id);
+      newList.markModified("tasks");
       await newList.save();
     }
 
     // Update and save task
-    task._doc = {
+    task.set({
       ...task._doc,
       ...taskDetails,
       dueDate: new Date(taskDetails.dueDate),
-    };
+    });
 
     await task.save();
 
@@ -128,6 +131,47 @@ export const editTask = async (taskDetails) => {
       _id: task.id,
       created: new Date(task._doc.created).toISOString(),
       dueDate: new Date(task._doc.dueDate).toISOString(),
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteTask = async (_id) => {
+  try {
+    const task = await Task.findById(_id);
+
+    if (!task) {
+      return {
+        __typename: "TaskNotDeleted",
+        _id: _id,
+        message: "Task not found.",
+      };
+    }
+
+    // Delete task
+    await Task.deleteOne({ _id });
+
+    // Remove task from list
+    const list = await List.findById(task.listId);
+
+    // Return list not found if its not in db
+    if (!list)
+      return {
+        __typename: "TaskNotDeleted",
+        _id: _id,
+        message: "List not found.",
+      };
+
+    list.tasks = list.tasks.filter((taskId) => taskId.toString() !== _id);
+    list.markModified("tasks");
+    await list.save();
+
+    return {
+      __typename: "TaskDeleted",
+      _id: _id,
+      message: "Task successfully deleted.",
     };
   } catch (error) {
     console.log(error);

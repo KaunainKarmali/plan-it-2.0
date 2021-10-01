@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import {
   ModalBackground,
   ModalContainer,
@@ -19,15 +18,7 @@ import {
 } from "./DeleteConfirmation.styles";
 
 const DeleteConfirmation = (props) => {
-  const { taskId, taskObj, setDeleteTask } = props;
-
-  const handleDeleteClick = () => {
-    setDeleteTask(false);
-  };
-
-  const handleCancelClick = () => {
-    setDeleteTask(false);
-  };
+  const { taskObj, deleteTask, cancel } = props;
 
   return (
     <ModalBackground>
@@ -45,8 +36,10 @@ const DeleteConfirmation = (props) => {
           <TaskDescription>{taskObj.description}</TaskDescription>
         </ModalMain>
         <ModalFooter>
-          <SecondaryButton onClick={handleCancelClick}>Cancel</SecondaryButton>
-          <DeleteButton onClick={handleDeleteClick}>Delete</DeleteButton>
+          <SecondaryButton onClick={() => cancel()}>Cancel</SecondaryButton>
+          <DeleteButton onClick={() => deleteTask(taskObj._id)}>
+            Delete
+          </DeleteButton>
         </ModalFooter>
       </ModalContainer>
     </ModalBackground>

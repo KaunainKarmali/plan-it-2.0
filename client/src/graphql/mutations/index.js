@@ -85,9 +85,25 @@ export const EDIT_TASK = gql`
           _id
         }
       }
-      ... on ListNotFound {
+      ... on TaskNotEditted {
+        _id
         message
-        listId
+      }
+    }
+  }
+`;
+
+export const DELETE_TASK = gql`
+  mutation DeleteTask($_id: String!) {
+    deleteTask(_id: $_id) {
+      __typename
+      ... on TaskDeleted {
+        _id
+        message
+      }
+      ... on TaskNotDeleted {
+        _id
+        message
       }
     }
   }

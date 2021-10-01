@@ -110,8 +110,18 @@ const schema = buildSchema(`
     message: String!
   }
 
-  type TaskNotUpdated {
-    taskId: String!
+  type TaskNotEditted {
+    _id: ID!
+    message: String!
+  }
+
+  type TaskDeleted {
+    _id: ID!
+    message: String!
+  }
+
+    type TaskNotDeleted {
+    _id: ID!
     message: String!
   }
 
@@ -134,10 +144,9 @@ const schema = buildSchema(`
   }
   
   union GetTasksResult = Tasks | TasksNotFound
-
   union CreateTaskResult = Task | ListNotFound
-
-  union EditTaskResult = Task | ListNotFound | TaskNotUpdated
+  union EditTaskResult = Task | TaskNotEditted
+  union DeleteTaskResult = TaskDeleted | TaskNotDeleted
 
   type Time {
     _id: ID!
@@ -159,6 +168,7 @@ const schema = buildSchema(`
     createList(listInput: ListInput!): CreateListResult!
     createTask(taskInput: TaskInput!): CreateTaskResult!
     editTask(editTaskInput: EditTaskInput!): EditTaskResult!
+    deleteTask(_id: String!): DeleteTaskResult!
   }
 
   schema {
