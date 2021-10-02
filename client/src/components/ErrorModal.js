@@ -4,7 +4,7 @@ import { stdSpace } from "../variables/spacing";
 import { stdBR } from "../variables/borders";
 import { ModalOuter, ModalInner } from "./styledComponents/Modal.styles";
 import { tablet } from "../variables/screen";
-import ClosePopup from "./ClosePopup";
+import CloseButton from "./general/CloseButton";
 
 // TODO: Refactor styles with DeleteConfirmation component
 const ErrorModal = (props) => {
@@ -15,7 +15,7 @@ const ErrorModal = (props) => {
       <CustomModalInner>
         <Header>
           <Heading>Error</Heading>
-          <ClosePopup handleClose={() => setError(false)} />
+          <CloseButton handleClose={() => setError(false)} />
         </Header>
         <Main>
           <TaskDescription>

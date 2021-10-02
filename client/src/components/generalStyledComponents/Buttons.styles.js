@@ -8,6 +8,7 @@ import {
   grey1,
   grey5,
   blue1,
+  blue4,
   red3,
   red4,
 } from "../../variables/colours";
@@ -34,6 +35,8 @@ export const PrimaryButton = styled(Button)`
     0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   font-size: 1rem;
   font-weight: 700;
+  border: 2px solid;
+  border-color: ${green1};
 
   &:hover,
   &:focus-visible {
@@ -42,6 +45,7 @@ export const PrimaryButton = styled(Button)`
     color: ${black};
     background-color: ${green3};
     outline: none;
+    border-color: ${green3};
   }
 
   @media (max-width: ${mobile}) {
@@ -54,22 +58,39 @@ export const SecondaryButton = styled(PrimaryButton)`
   background-color: ${grey5};
   color: ${blue1};
   box-shadow: none;
+  border-color: ${blue1};
 
   &:hover,
   &:focus-visible {
     box-shadow: none;
     color: ${blue1};
     background-color: rgba(${getRGBvalue(blue1)}, 0.2);
+    border-color: ${blue1};
+  }
+`;
+
+export const SubmitButton = styled(PrimaryButton)`
+  background-color: ${blue1};
+  color: ${white1};
+  border-color: ${blue1};
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${blue4};
+    color: ${white1};
+    border-color: ${blue4};
   }
 `;
 
 export const DeleteButton = styled(PrimaryButton)`
   background-color: ${red3};
+  border-color: ${red3};
 
   &:hover,
   &:focus-visible {
     color: ${white1};
     background-color: ${red4};
+    border-color: ${red4};
   }
 `;
 
@@ -83,10 +104,30 @@ export const IconButton = styled(PrimaryButton)`
   width: 35px;
   height: 35px;
   border-radius: 50%;
+  border-color: ${grey1};
 
   &:hover,
   &:focus-visible {
     color: ${grey1};
     outline: none;
+    border-color: ${grey1};
+  }
+`;
+
+export const CloseIcon = styled(IconButton)`
+  background-color: transparent;
+  color: ${blue1};
+  border-color: transparent;
+  box-shadow: none;
+  padding: 10px;
+  margin-right: -10px;
+  margin-top: -10px;
+
+  &:hover,
+  &:focus {
+    color: ${red4};
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
   }
 `;

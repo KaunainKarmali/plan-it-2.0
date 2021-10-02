@@ -1,24 +1,27 @@
-import styled from "styled-components/macro";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_LISTS, GET_TASKS } from "../../graphql/queries";
 import { CREATE_TASK, EDIT_TASK } from "../../graphql/mutations";
-import { blue1 } from "../../variables/colours";
-import { formatDate, getTodaysDate } from "../../utils";
-import { stdBR } from "../../variables/borders";
-import { stdSpace } from "../../variables/spacing";
 import {
-  PrimaryButton,
+  SubmitButton,
   SecondaryButton,
-} from "../styledComponents/Buttons.styles";
-import { ModalInner, ModalOuter } from "../styledComponents/Modal.styles";
+} from "../generalStyledComponents/Buttons.styles";
+import {
+  ModalBackground,
+  ModalContainer,
+  ModalHeader,
+  ModalMain,
+  ModalFooter,
+  Heading,
+  ButtonContainer,
+} from "../generalStyledComponents/Modal.styles";
+import CloseButton from "../general/CloseButton";
+import { DropdownContainer } from "./TaskForm.styles";
+import { formatDate, getTodaysDate } from "../../utils";
 import InputField from "../InputField";
 import TextareaField from "../TextareaField";
 import Dropdown from "../Dropdown";
-import { mobile, tablet } from "../../variables/screen";
-import ClosePopup from "../ClosePopup";
-import FormTitle from "../styledComponents/FormTitle.styles";
 import priorityOptions from "../../variables/priority";
 import ErrorModal from "../ErrorModal";
 import Loading from "../Loading";
@@ -182,8 +185,8 @@ const TaskForm = (props) => {
     });
   };
 
-  const handleClose = (e) => {
-    e.preventDefault();
+  // Close modal
+  const handleClose = () => {
     openCreateTaskForm && setOpenCreateTaskForm(false);
     openEditTaskForm && setOpenEditTaskForm(false);
   };
@@ -207,165 +210,91 @@ const TaskForm = (props) => {
     return <Loading />;
 
   return (
-    <div>
-      <ModalOuter>
-        <ModalInner>
-          <form action="submit">
-            {/* Form header */}
-            <FormHeader>
-              <FormTitle>Create a new task</FormTitle>
-              <ClosePopup handleClose={handleClose} />
-            </FormHeader>
+    <ModalBackground>
+      <ModalContainer>
+        <form action="submit">
+          {/* Form header */}
+          <ModalHeader>
+            <Heading>
+              {openCreateTaskForm ? "Create task" : "Edit task"}
+            </Heading>
+            <CloseButton cb={handleClose} />
+          </ModalHeader>
 
-            {/* Form main */}
-            <FormMainWrapper>
-              <FormMain>
-                <InputField
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={task.name}
-                  onChange={handleChange}
-                  isValid={isValid.name}
-                  inputLength={task.name.length}
-                  label="Task name"
-                />
-                <TextareaField
-                  id="description"
-                  name="description"
-                  rows="5"
-                  value={task.description}
-                  onChange={handleChange}
-                  isValid={isValid.description}
-                  inputLength={task.description.length}
-                  label="Description"
-                />
-                <DropdownContainer>
-                  <Dropdown
-                    type="text"
-                    id="priority"
-                    name="priority"
-                    onChange={handleChange}
-                    isValid={isValid.priority}
-                    value={task.priority}
-                    options={priorityOptions}
-                    inputLength={task.priority.length}
-                    label="Priority"
-                  />
+          {/* Form main */}
+          <ModalMain>
+            <InputField
+              type="text"
+              id="name"
+              name="name"
+              value={task.name}
+              onChange={handleChange}
+              isValid={isValid.name}
+              inputLength={task.name.length}
+              label="Task name"
+            />
+            <TextareaField
+              id="description"
+              name="description"
+              rows="5"
+              value={task.description}
+              onChange={handleChange}
+              isValid={isValid.description}
+              inputLength={task.description.length}
+              label="Description"
+            />
+            <DropdownContainer>
+              <Dropdown
+                type="text"
+                id="priority"
+                name="priority"
+                onChange={handleChange}
+                isValid={isValid.priority}
+                value={task.priority}
+                options={priorityOptions}
+                inputLength={task.priority.length}
+                label="Priority"
+              />
 
-                  <Dropdown
-                    id="listId"
-                    name="listId"
-                    onChange={handleChange}
-                    isValid={isValid.listId}
-                    value={task.listId}
-                    options={lists}
-                    inputLength={task.listId.length}
-                    label="List"
-                  />
-                </DropdownContainer>
+              <Dropdown
+                id="listId"
+                name="listId"
+                onChange={handleChange}
+                isValid={isValid.listId}
+                value={task.listId}
+                options={lists}
+                inputLength={task.listId.length}
+                label="List"
+              />
+            </DropdownContainer>
 
-                <InputField
-                  type="date"
-                  id="dueDate"
-                  name="dueDate"
-                  value={task.dueDate}
-                  onChange={handleChange}
-                  isValid={isValid.dueDate}
-                  inputLength={task.dueDate.length}
-                  label="Due date"
-                />
-              </FormMain>
-            </FormMainWrapper>
+            <InputField
+              type="date"
+              id="dueDate"
+              name="dueDate"
+              value={task.dueDate}
+              onChange={handleChange}
+              isValid={isValid.dueDate}
+              inputLength={task.dueDate.length}
+              label="Due date"
+            />
+          </ModalMain>
 
-            {/* Form footer */}
-            <FormFooter>
-              <ButtonContainer>
-                <ClearButton type="reset" onClick={handleReset}>
-                  Clear
-                </ClearButton>
-              </ButtonContainer>
-              <CreateButton type="submit" onClick={handleSubmit}>
-                Create
-              </CreateButton>
-            </FormFooter>
-          </form>
-        </ModalInner>
-      </ModalOuter>
-    </div>
+          {/* Form footer */}
+          <ModalFooter>
+            <ButtonContainer>
+              <SecondaryButton type="reset" onClick={handleReset}>
+                Clear
+              </SecondaryButton>
+              <SubmitButton type="submit" onClick={handleSubmit}>
+                {openCreateTaskForm ? "Create" : "Edit"}
+              </SubmitButton>
+            </ButtonContainer>
+          </ModalFooter>
+        </form>
+      </ModalContainer>
+    </ModalBackground>
   );
 };
-
-const FormHeader = styled.div`
-  margin-bottom: ${stdSpace};
-`;
-
-const FormMainWrapper = styled.div`
-  overflow-y: auto;
-  max-height: 55vh;
-
-  /* Whole scrollbar */
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    height: 3px;
-    background: ${blue1};
-    border-radius: ${stdBR};
-  }
-`;
-
-const FormFooter = styled.div`
-  text-align: right;
-  margin-top: ${stdSpace};
-  margin-right: 5px;
-
-  @media (max-width: ${mobile}) {
-    text-align: center;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: inline-block;
-  margin-right: 20px;
-
-  @media (max-width: ${tablet}) {
-    margin: 0px;
-    display: block;
-  }
-`;
-
-const DropdownContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  column-gap: 20px;
-  justify-content: space-between;
-
-  @media (max-width: ${tablet}) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 2fr;
-  }
-`;
-
-const FormMain = styled.div`
-  margin-right: 5px;
-`;
-
-const CreateButton = styled(PrimaryButton)`
-  @media (max-width: ${tablet}) {
-    margin-top: 10px;
-    width: 100%;
-  }
-`;
-
-const ClearButton = styled(SecondaryButton)`
-  @media (max-width: ${tablet}) {
-    margin-top: 10px;
-    width: 100%;
-  }
-`;
 
 export default TaskForm;

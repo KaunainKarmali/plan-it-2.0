@@ -21,11 +21,12 @@ export const AddIconBtn = styled(IconButton)`
   margin-right: ${smlSpace};
   color: ${red1};
   background-color: ${black};
-  border: 2px solid ${red1};
+  border-color: ${red1};
 
   &:hover,
   &:focus-visible {
     background-color: ${red1};
     color: ${black};
+    border-color: ${red1};
   }
 `;

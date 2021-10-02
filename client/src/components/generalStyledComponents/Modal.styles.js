@@ -21,9 +21,9 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  width: auto;
+  width: 80vw;
   max-width: 800px;
-  max-height: 85vh;
+  max-height: 80vh;
   background-color: ${white1};
   color: ${white1};
   border-radius: ${stdBR};
@@ -50,6 +50,9 @@ export const ModalInner = styled.div`
 
 // Header styles
 export const ModalHeader = styled(ModalInner)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top-left-radius: ${stdBR};
   border-top-right-radius: ${stdBR};
   background-color: ${grey5};
@@ -69,14 +72,8 @@ export const ModalMain = styled(ModalInner)`
 
   /* Whole scrollbar */
   &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    height: 3px;
-    background: ${blue1};
-    border-radius: ${stdBR};
+    width: 0px;
+    background: transparent;
   }
 `;
 
@@ -91,5 +88,19 @@ export const ModalFooter = styled(ModalInner)`
 
   @media (max-width: ${mobile}) {
     justify-content: center;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
+
+  @media (max-width: ${mobile}) {
+    width: 100%;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    row-gap: 10px;
   }
 `;

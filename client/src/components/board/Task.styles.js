@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { stdBR } from "../../variables/borders";
 import {
-  green3 as green4,
+  green4,
   grey1,
   grey4,
   white1,

@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROJECTS } from "../../graphql/queries";
 import { CREATE_PROJECT } from "../../graphql/mutations";
-import CreateProjectForm from "../CreateProjectForm";
+import CreateProjectForm from "./CreateProjectForm";
 import ProjectCard from "./ProjectCard";
 import UserContext from "../../contexts/UserContext";
 import ErrorModal from "../ErrorModal";

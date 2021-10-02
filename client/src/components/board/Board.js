@@ -6,7 +6,7 @@ import { CREATE_LIST } from "../../graphql/mutations";
 import List from "./List";
 import TimerContext from "../../contexts/TimerContext/index.js";
 import Timer from "./Timer";
-import CreateListForm from "../CreateListForm";
+import ListForm from "./ListForm";
 import ErrorModal from "../ErrorModal";
 import { PrimaryButton } from "../generalStyledComponents/Buttons.styles";
 import Loading from "../Loading";
@@ -50,6 +50,11 @@ const Board = () => {
     ],
     awaitRefetchQueries: true,
   });
+
+  const createListFunction = (listName) => {
+    const data = { listInput: { name: listName, projectId: projectId } };
+    createListMutation({ variables: data });
+  };
 
   // ************************************************************
   // ***************** TASKS FUNCTIONS **************************
@@ -111,13 +116,10 @@ const Board = () => {
   // Toggle form to create a new list
   if (openCreateListForm)
     return (
-      <CreateListForm
+      <ListForm
         openCreateListForm={openCreateListForm}
         setOpenCreateListForm={setOpenCreateListForm}
-        createList={(listName) => {
-          const data = { listInput: { name: listName, projectId: projectId } };
-          createListMutation({ variables: data });
-        }}
+        createList={createListFunction}
       />
     );
 
@@ -127,11 +129,6 @@ const Board = () => {
       <TaskForm
         openCreateTaskForm={openCreateTaskForm}
         setOpenCreateTaskForm={setOpenCreateTaskForm}
-        // createTask={(taskDetails) => {
-        //   const data = { taskInput: { ...taskDetails, projectId: projectId } };
-        //   createTaskMutation({ variables: data });
-        // }}
-        // listOptions={extractLists(getLists)}
       />
     );
 

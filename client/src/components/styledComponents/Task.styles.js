@@ -1,13 +1,13 @@
 import styled from "styled-components/macro";
-import { stdBR } from "../../variables/borders";
+// import { stdBR } from "../../variables/borders";
 import {
-  green3 as green4,
-  grey1,
-  grey4,
-  white1,
-  grey2,
+  // green4,
+  // grey1,
+  // grey4,
+  // white1,
+  // grey2,
   orange1,
-  purple1,
+  // purple1,
 } from "../../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../../variables/spacing";
 import { CloseIconBtn, IconButton } from "./Buttons.styles";

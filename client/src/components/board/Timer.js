@@ -1,6 +1,17 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import moment from "moment";
 import TimerContext from "../../contexts/TimerContext";
 import { serverUrl } from "../../settings";
+import {
+  Wrapper,
+  Header,
+  Heading,
+  Main,
+  SecondaryText,
+  PrimaryText,
+  Footer,
+  CustomDurationIconBtn,
+} from "./Timer.styles";
 import ErrorModal from "../ErrorModal";
 import LoadingContext from "../../contexts/LoadingContext/index.js";
 
@@ -209,23 +220,52 @@ const Timer = () => {
     setTimer({ ...timer, taskId: "", scenario: "Scenario 2" });
   };
 
+  const formatDuration = (counter) => {
+    const duration = moment.duration(counter, "s");
+
+    const seconds =
+      duration.seconds() < 10
+        ? `0${duration.seconds()}s`
+        : `${duration.seconds()}s`;
+    const minutes =
+      duration.minutes() < 10
+        ? `0${duration.minutes()}m`
+        : `${duration.minutes()}m`;
+    const hours =
+      duration.hours() < 10 ? `0${duration.hours()}h` : `${duration.hours()}h`;
+    const days = `${duration.days()}d`;
+
+    if (duration.days() > 0) {
+      return `${days}:${hours}:${minutes}:${seconds}`;
+    } else if (duration.hours() > 0) {
+      return `${hours}:${minutes}:${seconds}`;
+    } else if (duration.minutes() > 0) {
+      return `${minutes}:${seconds}`;
+    } else {
+      return `${seconds}`;
+    }
+  };
+
+  if (error.error) return <ErrorModal />;
+
   return (
     <div>
-      {/* <Wrapper>
+      <Wrapper>
         <Header>
           <Heading>Timer</Heading>
         </Header>
         <Main>
           <SecondaryText>{task.title}</SecondaryText>
-          <PrimaryText>{counter}</PrimaryText>
+          <PrimaryText>{formatDuration(counter)}</PrimaryText>
         </Main>
         <Footer>
           <CustomDurationIconBtn onClick={handleTurnOffTimer}>
-            <i className="fas fa-stopwatch" />
+            <i className="fas fa-stopwatch">
+              <span className="sr-only">Toggle timer to track time</span>
+            </i>
           </CustomDurationIconBtn>
         </Footer>
       </Wrapper>
-      {error.error && <ErrorModal error={error} setError={setError} />} */}
     </div>
   );
 };

@@ -56,6 +56,7 @@ export const SecondaryText = styled.p`
 export const PrimaryText = styled(SecondaryText)`
   font-size: 1rem;
   color: ${black};
+  text-align: right;
 `;
 
 // Footer styles
