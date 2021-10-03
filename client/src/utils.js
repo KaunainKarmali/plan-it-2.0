@@ -1,3 +1,5 @@
+import moment from "moment";
+
 // Extracts the values from rgba function: rgba(255, 255, 255) returns 255, 255, 255
 export const getRGBvalue = (rgbFunction) => {
   return rgbFunction.split("rgb(")[1].split(")")[0];
@@ -39,4 +41,31 @@ export const formatDate = (rawDate) => {
   }
 
   return `${year}-${month}-${day}`;
+};
+
+// Format duration
+export const formatDuration = (counter) => {
+  const duration = moment.duration(counter, "s");
+
+  const seconds =
+    duration.seconds() < 10
+      ? `0${duration.seconds()}s`
+      : `${duration.seconds()}s`;
+  const minutes =
+    duration.minutes() < 10
+      ? `0${duration.minutes()}m`
+      : `${duration.minutes()}m`;
+  const hours =
+    duration.hours() < 10 ? `0${duration.hours()}h` : `${duration.hours()}h`;
+  const days = `${duration.days()}d`;
+
+  if (duration.days() > 0) {
+    return `${days}:${hours}:${minutes}:${seconds}`;
+  } else if (duration.hours() > 0) {
+    return `${hours}:${minutes}:${seconds}`;
+  } else if (duration.minutes() > 0) {
+    return `${minutes}:${seconds}`;
+  } else {
+    return `${seconds}`;
+  }
 };

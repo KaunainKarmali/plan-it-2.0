@@ -46,7 +46,7 @@ const Task = (props) => {
       setTimer({
         on: true,
         taskId: task._id,
-        scenario: "Scenario 1",
+        scenario: "SCENARIO 1",
       });
     }
 
@@ -54,7 +54,7 @@ const Task = (props) => {
     else {
       // Scenario 2: counter is on and user is clicking the same button to toggle it off
       if (task._id === timer.taskId) {
-        setTimer({ ...timer, taskId: "", scenario: "Scenario 2" });
+        setTimer({ ...timer, taskId: "", scenario: "SCENARIO 2" });
       }
 
       // Scenario 3: counter is on and user is clicking a different button to transfer the counter
@@ -63,7 +63,7 @@ const Task = (props) => {
         setTimer({
           ...timer,
           taskId: task._id,
-          scenario: "Scenario 3",
+          scenario: "SCENARIO 3",
         });
       }
     }

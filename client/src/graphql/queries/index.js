@@ -80,3 +80,19 @@ export const GET_TASKS = gql`
     }
   }
 `;
+
+export const GET_TASK_DURATION = gql`
+  query GetTask($taskId: String!) {
+    task(taskId: $taskId) {
+      __typename
+      ... on Task {
+        name
+        duration
+      }
+      ... on TaskNotFound {
+        message
+        _id
+      }
+    }
+  }
+`;

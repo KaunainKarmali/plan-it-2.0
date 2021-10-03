@@ -30,6 +30,30 @@ export const getTasks = async (projectId) => {
   }
 };
 
+export const getTask = async (taskId) => {
+  try {
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return {
+        __typename: "TaskNotFound",
+        _id: taskId,
+        message: "Task not found.",
+      };
+    }
+
+    return {
+      __typename: "Task",
+      ...task._doc,
+      created: new Date(task._doc.created).toISOString(),
+      dueDate: new Date(task._doc.dueDate).toISOString(),
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // Get task in db and link to list
 export const createTask = async (taskDetails) => {
   const { listId } = taskDetails;
@@ -120,7 +144,9 @@ export const editTask = async (taskDetails) => {
     task.set({
       ...task._doc,
       ...taskDetails,
-      dueDate: new Date(taskDetails.dueDate),
+      dueDate: taskDetails.dueDate
+        ? new Date(taskDetails.dueDate)
+        : task._doc.dueDate,
     });
 
     await task.save();

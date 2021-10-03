@@ -9,7 +9,7 @@ import {
   black,
 } from "../../variables/colours";
 import { mobile, tablet } from "../../variables/screen";
-import { DurationIconBtn } from "../styledComponents/Task.styles";
+import { DurationIconBtn } from "./Task.styles";
 
 export const Wrapper = styled.div`
   position: absolute;

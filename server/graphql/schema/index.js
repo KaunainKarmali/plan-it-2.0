@@ -110,6 +110,11 @@ const schema = buildSchema(`
     message: String!
   }
 
+  type TaskNotFound {
+    _id: String!
+    message: String!
+  }
+
   type TaskNotEditted {
     _id: ID!
     message: String!
@@ -120,7 +125,7 @@ const schema = buildSchema(`
     message: String!
   }
 
-    type TaskNotDeleted {
+  type TaskNotDeleted {
     _id: ID!
     message: String!
   }
@@ -144,6 +149,7 @@ const schema = buildSchema(`
   }
   
   union GetTasksResult = Tasks | TasksNotFound
+  union GetTaskResult = Task | TaskNotFound
   union CreateTaskResult = Task | ListNotFound
   union EditTaskResult = Task | TaskNotEditted
   union DeleteTaskResult = TaskDeleted | TaskNotDeleted
@@ -160,6 +166,7 @@ const schema = buildSchema(`
     projects(fp: String!): GetProjectsResult!
     lists(projectId: String!): GetListsResult!
     tasks(projectId: String!): GetTasksResult!
+    task(taskId: String!): GetTaskResult!
   }
 
   type RootMutation {

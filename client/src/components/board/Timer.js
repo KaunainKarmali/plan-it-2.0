@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import moment from "moment";
-import TimerContext from "../../contexts/TimerContext";
 import { serverUrl } from "../../settings";
+import { formatDuration } from "../../utils";
+import TimerContext from "../../contexts/TimerContext/index.js";
 import {
   Wrapper,
   Header,
@@ -13,7 +13,7 @@ import {
   CustomDurationIconBtn,
 } from "./Timer.styles";
 import ErrorModal from "../ErrorModal";
-import LoadingContext from "../../contexts/LoadingContext/index.js";
+import Loading from "../Loading";
 
 const Timer = () => {
   // Tracks timer details
@@ -25,6 +25,7 @@ const Timer = () => {
 
   // Tracks the time elapsed
   const [counter, setCounter] = useState(0); // Used to render most recent time to the screen for the user
+
   // Used to keep track of the most recent time to be accessed and saved when component unmounts. UseState values are not available when the component unmounts therefore useRef is used
   const counterRef = useRef(null);
 
@@ -35,7 +36,8 @@ const Timer = () => {
   const [error, setError] = useState(false);
 
   // Tracks if the timer is loading or not
-  const [, setIsLoading] = useContext(LoadingContext);
+  const [loading, setLoading] = useState(false);
+  // const [, setIsLoading] = useContext(LoadingContext);
 
   useEffect(() => {
     // Goes to the back end to fetch the start time for the task
@@ -74,24 +76,10 @@ const Timer = () => {
           setTask(res);
           taskRef.current = res;
         })
-        .catch((error) => {
-          // If errors are found, generate an error message and update error state to display error to user
-          const status = parseInt(error.message);
-          let message = "";
-
-          if (status === 500) {
-            message = "Task cannot be found. Please try again later.";
-          } else if (status === 400) {
-            message =
-              "Task ID was not provided. Please contact the database administrator.";
-          } else {
-            message = "An error occurred while retrieving your tasks.";
-          }
-
-          setError({ error: true, message: message });
-        });
+        .catch((error) => setError(true));
     };
 
+    // Goes to save the end timer in the back end
     const saveEndTime = async () => {
       const url = `${serverUrl}/task/update-duration`;
 
@@ -116,25 +104,7 @@ const Timer = () => {
         .then((res) => {
           taskRef.current = {};
         })
-        .catch((error) => {
-          // If errors are found, generate an error message and update error state to display error to user
-          const status = parseInt(error.message);
-          let message = "";
-
-          if (status === 400) {
-            message =
-              "Incomplete data provided in the request. Please contact the database administrator.";
-          } else if (status === 500) {
-            message = "Task cannot be found. Please try again later.";
-          } else if (status === 400) {
-            message =
-              "Task duration cannot be saved. Please contact the database administrator.";
-          } else {
-            message = "An error occurred. Task duration cannot be saved.";
-          }
-
-          setError({ error: true, message: message });
-        });
+        .catch((error) => setError(true));
     };
 
     // Start tracking time
@@ -156,9 +126,11 @@ const Timer = () => {
 
     // Async function to manage the start and stop of the timer
     const executeTimer = async () => {
+      setLoading(true);
+
       switch (timer.scenario) {
         // User is turning on the timer
-        case "Scenario 1":
+        case "SCENARIO 1":
           // Load start time
           await loadStartTime(timer.taskId);
 
@@ -166,12 +138,12 @@ const Timer = () => {
           startTimer();
 
           // Turn off loading screen
-          setTimeout(() => setIsLoading(false), 1000);
+          setTimeout(() => setLoading(false), 1000);
 
           break;
 
         // User is turning off the timer
-        case "Scenario 2":
+        case "SCENARIO 2":
           // Stop timer
           stopTimer();
 
@@ -179,7 +151,7 @@ const Timer = () => {
           await saveEndTime();
 
           // Turn off loading screen
-          setTimeout(() => setIsLoading(false), 1000);
+          setTimeout(() => setLoading(false), 1000);
 
           // Unmount component
           setTimer({
@@ -190,7 +162,7 @@ const Timer = () => {
           break;
 
         // Switch timer from one task to another
-        case "Scenario 3":
+        case "SCENARIO 3":
           // Stop timer
           stopTimer();
 
@@ -204,7 +176,7 @@ const Timer = () => {
           startTimer();
 
           // Turn off loading screen
-          setTimeout(() => setIsLoading(false), 1000);
+          setTimeout(() => setLoading(false), 1000);
 
           break;
         default:
@@ -213,60 +185,31 @@ const Timer = () => {
     };
 
     executeTimer();
-  }, [timer, setTimer, setIsLoading]);
+  }, [timer, setTimer, setLoading]);
 
   const handleTurnOffTimer = () => {
-    setIsLoading(true);
-    setTimer({ ...timer, taskId: "", scenario: "Scenario 2" });
+    setLoading(true);
+    setTimer({ ...timer, taskId: "", scenario: "SCENARIO 2" });
   };
 
-  const formatDuration = (counter) => {
-    const duration = moment.duration(counter, "s");
-
-    const seconds =
-      duration.seconds() < 10
-        ? `0${duration.seconds()}s`
-        : `${duration.seconds()}s`;
-    const minutes =
-      duration.minutes() < 10
-        ? `0${duration.minutes()}m`
-        : `${duration.minutes()}m`;
-    const hours =
-      duration.hours() < 10 ? `0${duration.hours()}h` : `${duration.hours()}h`;
-    const days = `${duration.days()}d`;
-
-    if (duration.days() > 0) {
-      return `${days}:${hours}:${minutes}:${seconds}`;
-    } else if (duration.hours() > 0) {
-      return `${hours}:${minutes}:${seconds}`;
-    } else if (duration.minutes() > 0) {
-      return `${minutes}:${seconds}`;
-    } else {
-      return `${seconds}`;
-    }
-  };
-
-  if (error.error) return <ErrorModal />;
+  if (error) return <ErrorModal />;
+  if (loading) return <Loading />;
 
   return (
-    <div>
-      <Wrapper>
-        <Header>
-          <Heading>Timer</Heading>
-        </Header>
-        <Main>
-          <SecondaryText>{task.title}</SecondaryText>
-          <PrimaryText>{formatDuration(counter)}</PrimaryText>
-        </Main>
-        <Footer>
-          <CustomDurationIconBtn onClick={handleTurnOffTimer}>
-            <i className="fas fa-stopwatch">
-              <span className="sr-only">Toggle timer to track time</span>
-            </i>
-          </CustomDurationIconBtn>
-        </Footer>
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <Header>
+        <Heading>Timer</Heading>
+      </Header>
+      <Main>
+        <SecondaryText>{task.name}</SecondaryText>
+        <PrimaryText>{formatDuration(counter)}</PrimaryText>
+      </Main>
+      <Footer>
+        <CustomDurationIconBtn onClick={handleTurnOffTimer}>
+          <i className="fas fa-stopwatch" />
+        </CustomDurationIconBtn>
+      </Footer>
+    </Wrapper>
   );
 };
 

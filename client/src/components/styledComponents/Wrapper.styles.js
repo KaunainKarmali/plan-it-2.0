@@ -15,7 +15,6 @@ const Wrapper = styled.div`
 
   @media (max-width: ${tabletWidthLrg}) {
     grid-template-columns: 1fr;
-    /* grid-template-rows: auto 1fr; */
     grid-template-areas: "header" "main";
   }
 `;
