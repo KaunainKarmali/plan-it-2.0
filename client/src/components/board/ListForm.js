@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  SubmitButton,
-  SecondaryButton,
-} from "../generalStyledComponents/Buttons.styles";
+import { SubmitButton, SecondaryButton } from "../general/Buttons.styles";
 import {
   ModalBackground,
   ModalContainer,
@@ -11,9 +8,9 @@ import {
   ModalFooter,
   Heading,
   ButtonContainer,
-} from "../generalStyledComponents/Modal.styles";
+} from "../general/Modal.styles";
 import CloseButton from "../general/CloseButton";
-import InputField from "../InputField";
+import InputField from "../general/InputField";
 
 const ListForm = (props) => {
   const { createList, setOpenCreateListForm } = props;

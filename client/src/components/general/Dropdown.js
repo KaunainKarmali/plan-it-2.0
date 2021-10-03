@@ -1,8 +1,4 @@
-import {
-  InputContainer,
-  Select,
-  TextLabel,
-} from "./styledComponents/Inputs.styles";
+import { InputContainer, Select, TextLabel } from "./Inputs.styles";
 
 const Dropdown = (props) => {
   const {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { blue1, green3 } from "../variables/colours";
+import { blue1, green3 } from "../../variables/colours";
 
 export const Spinner = styled.div`
   height: 100px;

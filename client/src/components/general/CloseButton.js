@@ -1,4 +1,4 @@
-import { CloseIcon } from "../generalStyledComponents/Buttons.styles";
+import { CloseIcon } from "../general/Buttons.styles";
 
 const CloseButton = (props) => {
   const { cb } = props;

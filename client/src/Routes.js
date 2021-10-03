@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Wrapper from "./components/styledComponents/Wrapper.styles";
+import Wrapper from "./components/general/Wrapper.styles";
 import Header from "./components/header/index.js";
 import Footer from "./components/footer/index.js";
 import Nav from "./components/nav/index.js";
 import Board from "./components/board/index.js";
 import Projects from "./components/projects/index.js";
-import MainWrapper from "./components/styledComponents/MainWrapper.styles";
+import { MainWrapper } from "./components/general/Main.styles";
 import Dashboard from "./components/dashboard/index.js";
 
 const Routes = () => {

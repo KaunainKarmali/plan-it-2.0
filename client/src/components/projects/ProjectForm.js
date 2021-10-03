@@ -1,9 +1,6 @@
 import { useState, useRef } from "react";
 import { getTodaysDate } from "../../utils";
-import {
-  SubmitButton,
-  SecondaryButton,
-} from "../generalStyledComponents/Buttons.styles";
+import { SubmitButton, SecondaryButton } from "../general/Buttons.styles";
 import {
   ModalBackground,
   ModalContainer,
@@ -12,11 +9,11 @@ import {
   ModalFooter,
   Heading,
   ButtonContainer,
-} from "../generalStyledComponents/Modal.styles";
-import InputField from "../InputField";
+} from "../general/Modal.styles";
+import InputField from "../general/InputField";
 import CloseButton from "../general/CloseButton";
 
-const CreateProjectForm = (props) => {
+const ProjectForm = (props) => {
   // Used to open / close the modal
   const { setOpenCreateProjectForm, createProjectMutation } = props;
 
@@ -184,4 +181,4 @@ const CreateProjectForm = (props) => {
   );
 };
 
-export default CreateProjectForm;
+export default ProjectForm;

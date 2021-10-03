@@ -4,6 +4,7 @@ import { tablet, mobile } from "../../variables/screen";
 export const ProjectsListContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
   row-gap: 10px;
   column-gap: 10px;
 
@@ -13,5 +14,5 @@ export const ProjectsListContainer = styled.ul`
 
   @media (max-width: ${mobile}) {
     grid-template-columns: 1fr;
-  } ;
+  }
 `;

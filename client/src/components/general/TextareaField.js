@@ -1,8 +1,4 @@
-import {
-  InputContainer,
-  Textarea,
-  TextLabel,
-} from "./styledComponents/Inputs.styles";
+import { InputContainer, Textarea, TextLabel } from "./Inputs.styles";
 
 const TextareaField = (props) => {
   const {

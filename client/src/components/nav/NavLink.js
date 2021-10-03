@@ -1,4 +1,4 @@
-import { NavAnchor } from "../generalStyledComponents/Link.styles";
+import { NavAnchor } from "../general/Link.styles";
 
 const NavLink = (props) => {
   const { to, name, setToggleNavMenu } = props;

@@ -3,25 +3,27 @@ import {
   ProjectLink,
   ProjectCardWrapper,
   ProjectDueDate,
+  ProjectItem,
+  ProjectTitle,
 } from "./ProjectCard.styles";
 
 const ProjectCard = (props) => {
   const { project } = props;
 
   return (
-    <li>
+    <ProjectItem>
       <ProjectLink
         to={`/board/${project._id}`}
         params={{ projectId: project._id }}
       >
         <ProjectCardWrapper>
-          <h3>{project.name}</h3>
+          <ProjectTitle>{project.name}</ProjectTitle>
           <ProjectDueDate>
             Due {moment(new Date(project.dueDate)).fromNow()}
           </ProjectDueDate>
         </ProjectCardWrapper>
       </ProjectLink>
-    </li>
+    </ProjectItem>
   );
 };
 

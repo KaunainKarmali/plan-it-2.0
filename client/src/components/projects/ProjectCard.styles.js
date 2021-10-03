@@ -1,9 +1,13 @@
 import styled from "styled-components";
-import { BaseLink } from "../generalStyledComponents/Link.styles";
+import { BaseLink } from "../general/Link.styles";
 import { blue1, blue3 } from "../../variables/colours";
 
+export const ProjectItem = styled.li`
+  display: flex;
+  justify-content: stretch;
+`;
+
 export const ProjectCardWrapper = styled.div`
-  height: 100px;
   padding: 10px;
   text-align: left;
   display: flex;
@@ -12,7 +16,10 @@ export const ProjectCardWrapper = styled.div`
 `;
 
 export const ProjectLink = styled(BaseLink)`
+  display: flex;
+  justify-content: stretch;
   text-transform: uppercase;
+  width: 100%;
   background-color: ${blue1};
   border-radius: 5px;
   padding: 10px;
@@ -23,6 +30,10 @@ export const ProjectLink = styled(BaseLink)`
       0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
     background-color: ${blue3};
   }
+`;
+
+export const ProjectTitle = styled.h3`
+  margin-bottom: 20px;
 `;
 
 export const ProjectDueDate = styled.p`

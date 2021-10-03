@@ -8,11 +8,13 @@ const ListName = (props) => {
       <Name>
         <h2>{listName}</h2>
       </Name>
-      <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
-        <i className="fas fa-plus">
-          <span className="sr-only">Create a new list</span>
-        </i>
-      </AddIconBtn>
+      <div>
+        <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
+          <i className="fas fa-plus">
+            <span className="sr-only">Create a new list</span>
+          </i>
+        </AddIconBtn>
+      </div>
     </ListNameContainer>
   );
 };

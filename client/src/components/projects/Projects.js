@@ -2,18 +2,18 @@ import { useState, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_PROJECTS } from "../../graphql/queries";
 import { CREATE_PROJECT } from "../../graphql/mutations";
-import CreateProjectForm from "./CreateProjectForm";
+import ProjectForm from "./ProjectForm";
 import ProjectCard from "./ProjectCard";
 import UserContext from "../../contexts/UserContext";
-import ErrorModal from "../ErrorModal";
+import ErrorModal from "../general/ErrorModal";
 import {
+  MainContainer,
   MainHeaderContainer,
   MainHeaderTitle,
-} from "../generalStyledComponents/MainHeader.styles";
-import { MainContainer } from "../generalStyledComponents/MainContainer.styles";
-import { PrimaryButton } from "../generalStyledComponents/Buttons.styles";
+} from "../general/Main.styles";
+import { PrimaryButton } from "../general/Buttons.styles";
 import { ProjectsListContainer } from "./Projects.styles";
-import Loading from "../Loading";
+import Loading from "../general/Loading";
 
 const Projects = () => {
   const [user] = useContext(UserContext);
@@ -45,7 +45,7 @@ const Projects = () => {
   // Render a new project form
   if (openCreateProjectForm) {
     return (
-      <CreateProjectForm
+      <ProjectForm
         setOpenCreateProjectForm={setOpenCreateProjectForm}
         createProjectMutation={(projectDetails) => {
           const data = { projectInput: { ...projectDetails, fp: fp } };

@@ -5,23 +5,21 @@ import { useParams } from "react-router-dom";
 import {
   ModalBackground,
   ModalContainer,
-  ModalHeader,
   Heading,
   ModalMain,
   ModalFooter,
-} from "../generalStyledComponents/Modal.styles";
+  ButtonContainer,
+} from "../general/Modal.styles";
+import { DeleteButton, SecondaryButton } from "../general/Buttons.styles";
 import {
-  DeleteButton,
-  SecondaryButton,
-} from "../generalStyledComponents/Buttons.styles";
-import {
+  ModalHeaderModified,
   WarningMessage,
   Title,
   TaskName,
   TaskDescription,
 } from "./DeleteTask.styles";
-import ErrorModal from "../ErrorModal";
-import Loading from "../Loading";
+import ErrorModal from "../general/ErrorModal";
+import Loading from "../general/Loading";
 
 const DeleteTask = (props) => {
   const { taskObj, closeForm } = props;
@@ -58,12 +56,12 @@ const DeleteTask = (props) => {
   return (
     <ModalBackground>
       <ModalContainer>
-        <ModalHeader>
+        <ModalHeaderModified>
           <Heading>Delete task</Heading>
           <WarningMessage>
             Please confirm these details before deleting this task
           </WarningMessage>
-        </ModalHeader>
+        </ModalHeaderModified>
         <ModalMain>
           <Title>Task name</Title>
           <TaskName>{taskObj.name}</TaskName>
@@ -71,8 +69,12 @@ const DeleteTask = (props) => {
           <TaskDescription>{taskObj.description}</TaskDescription>
         </ModalMain>
         <ModalFooter>
-          <SecondaryButton onClick={() => closeForm()}>Cancel</SecondaryButton>
-          <DeleteButton onClick={handleDeleteClick}>Delete</DeleteButton>
+          <ButtonContainer>
+            <SecondaryButton onClick={() => closeForm()}>
+              Cancel
+            </SecondaryButton>
+            <DeleteButton onClick={handleDeleteClick}>Delete</DeleteButton>
+          </ButtonContainer>
         </ModalFooter>
       </ModalContainer>
     </ModalBackground>

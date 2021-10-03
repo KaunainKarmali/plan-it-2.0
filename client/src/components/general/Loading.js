@@ -1,4 +1,4 @@
-import { ModalBackground } from "./generalStyledComponents/Modal.styles";
+import { ModalBackground } from "./Modal.styles";
 import { Spinner } from "./Loading.styles";
 
 const Loading = () => {

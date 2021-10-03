@@ -8,9 +8,10 @@ import {
   grey2,
   orange1,
   purple1,
+  red3,
 } from "../../variables/colours";
 import { medSpace, smlSpace, stdSpace } from "../../variables/spacing";
-import { CloseIconBtn, IconButton } from "../styledComponents/Buttons.styles";
+import { IconButton } from "../general/Buttons.styles";
 
 export const CardMain = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ export const Title = styled.h3`
   font-size: 1.3rem;
   color: ${white1};
   margin-bottom: ${medSpace};
+  margin-right: 5px;
 `;
 
 export const Description = styled.p`
@@ -35,9 +37,15 @@ export const Description = styled.p`
   margin-bottom: ${medSpace};
 `;
 
-export const TaskCloseIconBtn = styled(CloseIconBtn)`
+export const TaskCloseIconBtn = styled(IconButton)`
+  color: ${red3};
   visibility: hidden;
   transition: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${red3};
+  }
 `;
 
 export const CardFooter = styled.div`
@@ -51,16 +59,6 @@ export const DateContainer = styled.div`
   color: ${green4};
   display: flex;
   align-items: center;
-`;
-
-export const DateIconBtn = styled(IconButton)`
-  color: ${green4};
-  transition: none;
-
-  &:hover,
-  &:focus-visible {
-    background-color: ${green4};
-  }
 `;
 
 export const DueDate = styled.p`

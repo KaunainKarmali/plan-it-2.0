@@ -7,6 +7,7 @@ import {
   grey5,
   white1,
   black,
+  orange1,
 } from "../../variables/colours";
 import { mobile, tablet } from "../../variables/screen";
 import { DurationIconBtn } from "./Task.styles";
@@ -17,7 +18,7 @@ export const Wrapper = styled.div`
   left: 0;
   margin-bottom: 10px;
   margin-left: 10px;
-  width: 150px;
+  width: 175px;
   z-index: 10;
 `;
 
@@ -76,5 +77,13 @@ export const Footer = styled(StandardWrapper)`
 export const CustomDurationIconBtn = styled(DurationIconBtn)`
   visibility: visible;
   background-color: ${grey5};
+  border-color: ${grey5};
   margin: 0px;
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${orange1};
+    border-color: ${orange1};
+    color: ${grey5};
+  }
 `;

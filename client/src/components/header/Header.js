@@ -1,8 +1,5 @@
-import styled from "styled-components";
 import Logo from "./Logo";
-import { tabletWidthLrg } from "../../variables/screen";
-import { IconButton } from "../styledComponents/Buttons.styles";
-import { black, blue3 } from "../../variables/colours";
+import { HeaderWrapper, NavToggle } from "./Header.styles";
 
 const Header = (props) => {
   const { toggleNavMenu, setToggleNavMenu } = props;
@@ -20,29 +17,5 @@ const Header = (props) => {
     </HeaderWrapper>
   );
 };
-
-const HeaderWrapper = styled.header`
-  grid-area: header;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const NavToggle = styled(IconButton)`
-  color: ${blue3};
-  display: none;
-  padding: 10px;
-  margin: 5px 10px;
-  background-color: ${black};
-
-  &:hover,
-  &:focus-visible {
-    color: ${black};
-    background-color: ${blue3};
-  }
-
-  @media (max-width: ${tabletWidthLrg}) {
-    display: block;
-  }
-`;
 
 export default Header;

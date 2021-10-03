@@ -4,7 +4,7 @@ import {
   ModalHeader,
   Heading,
   ModalMain,
-} from "./generalStyledComponents/Modal.styles";
+} from "./Modal.styles";
 import { Description } from "./ErrorModal.styles";
 
 const ErrorModal = () => {

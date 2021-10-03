@@ -1,4 +1,4 @@
-import { FooterAnchor } from "../generalStyledComponents/Anchor.styles";
+import { FooterAnchor } from "../general/Anchor.styles";
 import { FooterWrapper } from "./Footer.styles";
 
 const Footer = () => {

@@ -7,14 +7,14 @@ import List from "./List";
 import TimerContext from "../../contexts/TimerContext/index.js";
 import Timer from "./Timer";
 import ListForm from "./ListForm";
-import ErrorModal from "../ErrorModal";
-import { PrimaryButton } from "../generalStyledComponents/Buttons.styles";
-import Loading from "../Loading";
+import ErrorModal from "../general/ErrorModal";
+import { PrimaryButton } from "../general/Buttons.styles";
+import Loading from "../general/Loading";
 import {
+  MainContainer,
   MainHeaderContainer,
   MainHeaderTitle,
-} from "../generalStyledComponents/MainHeader.styles";
-import { MainContainer } from "../generalStyledComponents/MainContainer.styles";
+} from "../general/Main.styles";
 import { ListsContainer } from "./Board.styles";
 import TaskForm from "./TaskForm";
 

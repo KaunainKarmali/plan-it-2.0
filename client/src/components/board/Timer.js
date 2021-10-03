@@ -12,8 +12,8 @@ import {
   Footer,
   CustomDurationIconBtn,
 } from "./Timer.styles";
-import ErrorModal from "../ErrorModal";
-import Loading from "../Loading";
+import ErrorModal from "../general/ErrorModal";
+import Loading from "../general/Loading";
 
 const Timer = () => {
   // Tracks timer details
@@ -198,7 +198,7 @@ const Timer = () => {
   return (
     <Wrapper>
       <Header>
-        <Heading>Timer</Heading>
+        <Heading>Time elapsed</Heading>
       </Header>
       <Main>
         <SecondaryText>{task.name}</SecondaryText>

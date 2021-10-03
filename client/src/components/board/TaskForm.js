@@ -3,10 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_LISTS, GET_TASKS } from "../../graphql/queries";
 import { CREATE_TASK, EDIT_TASK } from "../../graphql/mutations";
-import {
-  SubmitButton,
-  SecondaryButton,
-} from "../generalStyledComponents/Buttons.styles";
+import { SubmitButton, SecondaryButton } from "../general/Buttons.styles";
 import {
   ModalBackground,
   ModalContainer,
@@ -15,16 +12,16 @@ import {
   ModalFooter,
   Heading,
   ButtonContainer,
-} from "../generalStyledComponents/Modal.styles";
+} from "../general/Modal.styles";
 import CloseButton from "../general/CloseButton";
 import { DropdownContainer } from "./TaskForm.styles";
 import { formatDate, getTodaysDate } from "../../utils";
-import InputField from "../InputField";
-import TextareaField from "../TextareaField";
-import Dropdown from "../Dropdown";
+import InputField from "../general/InputField";
+import TextareaField from "../general/TextareaField";
+import Dropdown from "../general/Dropdown";
 import priorityOptions from "../../variables/priority";
-import ErrorModal from "../ErrorModal";
-import Loading from "../Loading";
+import ErrorModal from "../general/ErrorModal.js";
+import Loading from "../general/Loading";
 
 const TaskForm = (props) => {
   const {
