@@ -1,4 +1,9 @@
-import { ListNameContainer, Name, AddIconBtn } from "./ListName.styles";
+import {
+  ListNameContainer,
+  Name,
+  AddIconBtn,
+  ButtonContainer,
+} from "./ListName.styles";
 
 const ListName = (props) => {
   const { listName, setOpenCreateTaskForm } = props;
@@ -8,13 +13,13 @@ const ListName = (props) => {
       <Name>
         <h2>{listName}</h2>
       </Name>
-      <div>
+      <ButtonContainer>
         <AddIconBtn onClick={() => setOpenCreateTaskForm(true)}>
           <i className="fas fa-plus">
             <span className="sr-only">Create a new list</span>
           </i>
         </AddIconBtn>
-      </div>
+      </ButtonContainer>
     </ListNameContainer>
   );
 };

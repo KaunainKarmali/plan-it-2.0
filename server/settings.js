@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const production = false;
+const production = true;
 
 // connect to mongo
 const mongoLocalUrl = "mongodb://localhost:27017/userDB";

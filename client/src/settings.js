@@ -1,4 +1,4 @@
-const production = false;
+const production = true;
 
 // Server Url
 const localServerUrl = "http://localhost:5000";
