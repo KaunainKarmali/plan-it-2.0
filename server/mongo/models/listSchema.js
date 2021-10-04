@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 // list schema
 const listSchema = new mongoose.Schema({
   projectId: { type: String, required: true },
-  listName: { type: String, required: true },
-  listCreationDate: {
+  name: { type: String, required: true },
+  created: {
     type: Date,
     default: new Date(),
     required: true,

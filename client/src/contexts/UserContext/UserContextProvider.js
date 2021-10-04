@@ -3,8 +3,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../../graphql/queries";
 import { CREATE_USER } from "../../graphql/mutations";
 import UserContext from "./UserContext";
-import Loading from "../../components/Loading";
-import ErrorModal from "../../components/ErrorModal";
+import Loading from "../../components/general/Loading";
+import ErrorModal from "../../components/general/ErrorModal";
 
 const UserContextProvider = (props) => {
   const { fp } = props;

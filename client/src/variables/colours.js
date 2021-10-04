@@ -17,6 +17,8 @@ export const blue5 = "rgb(99, 123, 153)";
 
 export const red1 = "rgb(252, 81, 133)";
 export const red2 = "rgb(243, 129, 129)";
+export const red3 = "rgb(189, 22, 22)";
+export const red4 = "rgb(230, 22, 22)";
 
 export const orange1 = "rgb(238, 111, 87)";
 export const orange2 = "rgb(245, 169, 98)";

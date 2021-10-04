@@ -6,8 +6,8 @@ import TimerContextProvider from "./contexts/TimerContext/TimerContextProvider";
 import UserContextProvider from "./contexts/UserContext/UserContextProvider";
 import LoadingContextProvider from "./contexts/LoadingContext/LoadingContextProvider";
 import Routes from "./Routes";
-import ErrorModal from "./components/ErrorModal";
-import Loading from "./components/Loading";
+import ErrorModal from "./components/general/ErrorModal";
+import Loading from "./components/general/Loading";
 
 const App = () => {
   // Connect to Apollo

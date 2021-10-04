@@ -16,3 +16,83 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_PROJECTS = gql`
+  query GetProjects($fp: String!) {
+    projects(fp: $fp) {
+      __typename
+      ... on Projects {
+        projects {
+          _id
+          name
+          dueDate
+          lists {
+            _id
+          }
+        }
+      }
+      ... on ProjectsNotFound {
+        message
+      }
+    }
+  }
+`;
+
+export const GET_LISTS = gql`
+  query GetLists($projectId: String!) {
+    lists(projectId: $projectId) {
+      __typename
+      ... on Lists {
+        lists {
+          name
+          _id
+        }
+      }
+      ... on ListsNotFound {
+        message
+      }
+    }
+  }
+`;
+
+export const GET_TASKS = gql`
+  query GetTasks($projectId: String!) {
+    tasks(projectId: $projectId) {
+      __typename
+      ... on Tasks {
+        tasks {
+          _id
+          name
+          dueDate
+          description
+          listId
+          priority
+          duration
+          tracking {
+            _id
+          }
+        }
+      }
+      ... on TasksNotFound {
+        message
+        projectId
+      }
+    }
+  }
+`;
+
+export const GET_TASK_DURATION = gql`
+  query GetTask($taskId: String!) {
+    task(taskId: $taskId) {
+      __typename
+      ... on Task {
+        name
+        duration
+      }
+      ... on TaskNotFound {
+        message
+        _id
+      }
+    }
+  }
+`;
