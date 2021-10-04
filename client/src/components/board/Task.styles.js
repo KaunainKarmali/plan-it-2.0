@@ -40,7 +40,6 @@ export const Description = styled.p`
 export const TaskCloseIconBtn = styled(IconButton)`
   color: ${red3};
   opacity: 0;
-  transition: none;
 
   &:hover,
   &:focus-visible {
@@ -75,7 +74,6 @@ export const DurationIconBtn = styled(IconButton)`
   margin-right: ${stdSpace};
   color: ${orange1};
   opacity: 0;
-  transition: none;
 
   &:hover,
   &:focus-visible {
@@ -86,7 +84,6 @@ export const DurationIconBtn = styled(IconButton)`
 
 export const EditIconBtn = styled(IconButton)`
   color: ${purple1};
-  transition: none;
   opacity: 0;
 
   &:hover,
