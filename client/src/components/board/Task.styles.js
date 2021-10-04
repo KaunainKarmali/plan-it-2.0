@@ -39,11 +39,12 @@ export const Description = styled.p`
 
 export const TaskCloseIconBtn = styled(IconButton)`
   color: ${red3};
-  visibility: hidden;
+  opacity: 0;
   transition: none;
 
   &:hover,
   &:focus-visible {
+    opacity: 1;
     background-color: ${red3};
   }
 `;
@@ -73,22 +74,24 @@ export const Options = styled.div`
 export const DurationIconBtn = styled(IconButton)`
   margin-right: ${stdSpace};
   color: ${orange1};
-  visibility: hidden;
+  opacity: 0;
   transition: none;
 
   &:hover,
   &:focus-visible {
+    opacity: 1;
     background-color: ${orange1};
   }
 `;
 
 export const EditIconBtn = styled(IconButton)`
   color: ${purple1};
-  visibility: hidden;
   transition: none;
+  opacity: 0;
 
   &:hover,
   &:focus-visible {
+    opacity: 1;
     background-color: ${purple1};
   }
 `;
@@ -117,7 +120,7 @@ const Card = styled.div`
     ${DurationIconBtn},
     &:focus-within
     ${EditIconBtn} {
-    visibility: visible;
+    opacity: 1;
   }
 `;
 

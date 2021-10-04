@@ -91,7 +91,7 @@ const Task = (props) => {
 
   return (
     <li>
-      <Card>
+      <Card tabindex={0}>
         <CardMain>
           <Title>{name}</Title>
           <CloseContainer>
