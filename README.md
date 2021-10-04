@@ -13,6 +13,7 @@ This is a re-factored version of planIt (version 1.0). The original version's re
 The following key features exist:
 * Create multiple projects, lists and tasks with deadlines
 * Track time spent on each task
+* Edit and delete tasks
 * Tracks and saves user progress without requiring a user to sign-in or log-in
 
 ### Project status
@@ -95,9 +96,17 @@ I began learning GraphQL and have started to incorporate it! Below are highlight
 * Created query to `GET_USER` and mutation to `CREATE_USER` in the front-end and connected it to the back-end `/graphql` route
 * Added loading and error states to manage `GET_USER` and `CREATE_USER` functionality
 
+### Update #3
+
+I have continued the implementation of GraphQL and refactored the app's structure to be more modular! Below are highlights of the changes made:
+* Create `/graphql` route, schemas, and resolvers in the back end to manage projects, lists, and task CRUD operations
+* Added the ability to edit and delete tasks
+* App is entirely migrated from RESTful API to GraphQL (except for the Timer component)
+* Refactored front-end components directory to avoid redundant react and styled components
+
 ### Next steps
 
-The refactoring of version 1.0 of planIt is well on its way! My next steps are to add edit and delete functionality for projects, lists and tasks. 
+The refactoring of version 1.0 of planIt is well on its way! My next steps are to add edit and delete functionality for projects and lists. 
 
 ## Contribute
 
