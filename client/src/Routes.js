@@ -26,9 +26,6 @@ const Routes = () => {
         />
         <MainWrapper>
           <Switch>
-            <Route exact path="/">
-              <Projects />
-            </Route>
             <Route exact path="/dashboard">
               <Dashboard />
             </Route>
@@ -37,6 +34,9 @@ const Routes = () => {
             </Route>
             <Route exact path="/board/:projectId">
               <Board />
+            </Route>
+            <Route path="/">
+              <Projects />
             </Route>
           </Switch>
         </MainWrapper>
