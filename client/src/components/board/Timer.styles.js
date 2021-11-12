@@ -75,7 +75,7 @@ export const Footer = styled(StandardWrapper)`
 `;
 
 export const CustomDurationIconBtn = styled(DurationIconBtn)`
-  opacity: 1;
+  visibility: visible;
   background-color: ${grey5};
   border-color: ${grey5};
   margin: 0px;
